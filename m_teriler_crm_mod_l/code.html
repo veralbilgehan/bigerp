@@ -102,7 +102,51 @@
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
-        .active-tab-glow { box-shadow: 0 0 15px rgba(124, 58, 237, 0.2); }
+        .active-tab-glow { box-shadow: none !important; }
+
+        /* Minimalist Design Overrides */
+        body { background-color: #f8fafc !important; color: #334155 !important; }
+        main { background-color: #f8fafc !important; }
+        .bg-background { background-color: #f8fafc !important; }
+        header { background-color: #ffffff !important; border-bottom-color: #f1f5f9 !important; }
+        aside { background-color: #ffffff !important; border-right-color: #f1f5f9 !important; }
+        .bg-surface { background-color: #ffffff !important; }
+        .bg-surface-container-lowest { background-color: #ffffff !important; border-color: #f1f5f9 !important; }
+        .bg-surface-container-low { background-color: #ffffff !important; border-color: #f1f5f9 !important; }
+        .bg-surface-container { background-color: #f8fafc !important; }
+        .bg-surface-container-high { background-color: #f8fafc !important; border-color: #f1f5f9 !important; }
+        .bg-surface-container-highest { background-color: #f1f5f9 !important; }
+        
+        /* Sidebar active states */
+        aside h1.text-on-primary { color: #0f172a !important; }
+        aside p.text-primary-fixed\/70 { color: #64748b !important; }
+        aside nav a.text-primary-fixed { color: #475569 !important; }
+        aside nav a.text-primary-fixed:hover { background-color: #f8fafc !important; color: #0f172a !important; }
+        aside nav a.bg-surface-container-highest { background-color: #f8fafc !important; color: #0f172a !important; font-weight: 600 !important; border-left-color: #0f172a !important; }
+        aside .border-white\/10 { border-color: #f1f5f9 !important; }
+        aside a.text-primary-fixed { color: #475569 !important; }
+        aside a.text-primary-fixed:hover { background-color: #f8fafc !important; }
+        
+        /* Buttons and interactive states */
+        .bg-primary { background-color: #0f172a !important; color: #ffffff !important; }
+        .bg-primary:hover { background-color: #1e293b !important; }
+        .bg-secondary { background-color: #f1f5f9 !important; color: #334155 !important; }
+        .border-outline-variant { border-color: #f1f5f9 !important; }
+        .text-primary { color: #0f172a !important; }
+        .text-secondary { color: #0f172a !important; }
+        
+        /* Badges */
+        .bg-emerald-100 { background-color: #f0fdf4 !important; color: #166534 !important; }
+        .bg-red-100 { background-color: #fef2f2 !important; color: #991b1b !important; }
+        
+        /* Hover states */
+        .hover\:bg-surface-container-low:hover { background-color: #f8fafc !important; }
+        .hover\:bg-primary-container:hover { background-color: #f8fafc !important; }
+        .hover\:bg-on-primary-fixed-variant:hover { background-color: #f8fafc !important; }
+        
+        /* Input borders */
+        input, select { border-color: #e2e8f0 !important; outline: none !important; }
+        input:focus, select:focus { border-color: #cbd5e1 !important; }
     </style>
 </head>
 <body class="bg-background text-on-surface font-body-md selection:bg-brand-purple selection:text-white overflow-hidden">

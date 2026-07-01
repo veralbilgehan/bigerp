@@ -105,38 +105,38 @@
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        .zebra-striping tr:hover { background-color: rgba(229, 238, 255, 0.4); }
-        .bento-card { transition: all 0.2s ease; border: 1px solid #E2E8F0; }
-        .bento-card:hover { border-color: #1a365d; transform: translateY(-2px); }
+        .zebra-striping tr:hover { background-color: #f8fafc; }
+        .bento-card { transition: all 0.2s ease; border: 1px solid #f1f5f9; background: #ffffff; }
+        .bento-card:hover { border-color: #cbd5e1; transform: translateY(-1px); }
         body { scrollbar-gutter: stable; }
     </style>
 </head>
-<body class="bg-background text-on-surface font-body-md text-body-md overflow-x-hidden">
+<body class="bg-slate-50 text-slate-800 font-body-md text-body-md overflow-x-hidden">
 <!-- TopNavBar -->
-<header class="flex justify-between items-center w-full px-container-padding h-16 sticky top-0 z-50 bg-surface border-b border-outline-variant">
+<header class="flex justify-between items-center w-full px-container-padding h-16 sticky top-0 z-50 bg-white border-b border-slate-100">
 <div class="flex items-center gap-8">
-<span class="font-headline-md text-headline-md font-bold text-primary">BIGsafer CRM &amp; ERP</span>
+<span class="font-headline-md text-headline-md font-bold text-slate-900">BIGsafer CRM &amp; ERP</span>
 <div class="relative group">
-<span class="absolute inset-y-0 left-3 flex items-center text-outline-variant group-focus-within:text-primary">
+<span class="absolute inset-y-0 left-3 flex items-center text-slate-400 group-focus-within:text-slate-600">
 <span class="material-symbols-outlined">search</span>
 </span>
-<input class="bg-surface-container-low border-none rounded-lg pl-10 pr-4 py-2 text-body-sm w-64 focus:ring-2 focus:ring-primary transition-all" placeholder="Hızlı ara..." type="text"/>
+<input class="bg-slate-50 border-none rounded-lg pl-10 pr-4 py-2 text-body-sm w-64 focus:ring-2 focus:ring-slate-300 transition-all outline-none" placeholder="Hızlı ara..." type="text"/>
 </div>
 </div><nav class="hidden md:flex items-center gap-6">
-<a class="font-label-caps text-label-caps text-primary border-b-2 border-primary pb-1" href="../bigsafer_erp_ana_sayfa/code.html">Genel Bakış</a>
-<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="../erp_dashboard_genel_bak/code.html">Analitik</a>
-<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="../finansal_raporlar/code.html">Raporlar</a>
+<a class="font-label-caps text-label-caps text-slate-900 border-b-2 border-slate-900 pb-1 font-semibold" href="../bigsafer_erp_ana_sayfa/code.html">Genel Bakış</a>
+<a class="font-label-caps text-label-caps text-slate-500 hover:text-slate-950 transition-colors" href="../erp_dashboard_genel_bak/code.html">Analitik</a>
+<a class="font-label-caps text-label-caps text-slate-500 hover:text-slate-950 transition-colors" href="../finansal_raporlar/code.html">Raporlar</a>
 </nav>
 <div class="flex items-center gap-4">
 <div class="flex items-center gap-2">
-<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+<button class="p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-colors">
 <span class="material-symbols-outlined">notifications</span>
 </button>
-<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+<button class="p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-colors">
 <span class="material-symbols-outlined">settings</span>
 </button>
 </div>
-<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-caps text-label-caps hover:opacity-80 transition-opacity">
+<button class="bg-slate-900 text-white px-4 py-2 rounded-lg font-label-caps text-label-caps hover:bg-slate-800 transition-colors">
                 Yeni İşlem
             </button>
 <div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-high">
@@ -146,55 +146,55 @@
 </header>
 <div class="flex">
 <!-- SideNavBar -->
-<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-sidebar-expanded flex flex-col border-r border-outline-variant bg-surface-container-low z-40">
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-sidebar-expanded flex flex-col border-r border-slate-100 bg-white z-40">
 <div class="p-6">
 <div class="flex items-center gap-3 mb-1">
-<div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-on-primary">
+<div class="w-8 h-8 rounded bg-slate-900 flex items-center justify-center text-white">
 <span class="material-symbols-outlined">safety_divider</span>
 </div>
 <div>
-<div class="font-title-sm text-title-sm font-black text-primary">BIGsafer</div>
-<div class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Kurumsal Paket</div>
+<div class="font-title-sm text-title-sm font-bold text-slate-900">BIGsafer</div>
+<div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Kurumsal Paket</div>
 </div>
 </div>
 </div>
 <nav class="flex-1 space-y-1">
 <!-- Overview / Active -->
-<a class="flex items-center bg-secondary-container text-on-secondary-container rounded-lg px-4 py-3 mx-2 scale-95 transition-transform duration-150" href="../bigsafer_erp_ana_sayfa/code.html">
+<a class="flex items-center bg-slate-50 text-slate-900 font-semibold rounded-lg px-4 py-3 mx-2 transition-all" href="../bigsafer_erp_ana_sayfa/code.html">
 <span class="material-symbols-outlined mr-3">dashboard</span>
 <span class="font-body-md text-body-md">Genel Bakış</span>
 </a>
-<a class="flex items-center text-on-surface-variant hover:bg-surface-container-high rounded-lg px-4 py-3 mx-2 transition-all" href="../m_teriler_crm_mod_l/code.html">
+<a class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-4 py-3 mx-2 transition-all" href="../m_teriler_crm_mod_l/code.html">
 <span class="material-symbols-outlined mr-3">groups</span>
 <span class="font-body-md text-body-md">Müşteriler</span>
 </a>
-<a class="flex items-center text-on-surface-variant hover:bg-surface-container-high rounded-lg px-4 py-3 mx-2 transition-all" href="../operasyon_i_takibi/code.html">
+<a class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-4 py-3 mx-2 transition-all" href="../operasyon_i_takibi/code.html">
 <span class="material-symbols-outlined mr-3">engineering</span>
 <span class="font-body-md text-body-md">Operasyonlar</span>
 </a>
-<a class="flex items-center text-on-surface-variant hover:bg-surface-container-high rounded-lg px-4 py-3 mx-2 transition-all" href="../muhasebe_finansal_zet/code.html">
+<a class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-4 py-3 mx-2 transition-all" href="../muhasebe_finansal_zet/code.html">
 <span class="material-symbols-outlined mr-3">account_balance</span>
 <span class="font-body-md text-body-md">Muhasebe</span>
 </a>
-<a class="flex items-center text-on-surface-variant hover:bg-surface-container-high rounded-lg px-4 py-3 mx-2 transition-all" href="../envanter_y_netimi/code.html">
+<a class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-4 py-3 mx-2 transition-all" href="../envanter_y_netimi/code.html">
 <span class="material-symbols-outlined mr-3">inventory_2</span>
 <span class="font-body-md text-body-md">Envanter</span>
 </a>
-<a class="flex items-center text-on-surface-variant hover:bg-surface-container-high rounded-lg px-4 py-3 mx-2 transition-all" href="../personel_y_netimi/code.html">
+<a class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-4 py-3 mx-2 transition-all" href="../personel_y_netimi/code.html">
 <span class="material-symbols-outlined mr-3">badge</span>
 <span class="font-body-md text-body-md">İnsan Kaynakları</span>
 </a>
 </nav>
-<div class="p-4 border-t border-outline-variant mt-auto">
-<div class="bg-green-100 text-green-900 rounded-lg p-3 mb-4 flex items-center justify-between">
-<span class="text-[11px] font-bold uppercase">Sistem Sağlığı</span>
-<span class="w-2 h-2 rounded-full bg-green-600 animate-pulse"></span>
+<div class="p-4 border-t border-slate-100 mt-auto">
+<div class="bg-emerald-50 text-emerald-800 rounded-lg p-3 mb-4 flex items-center justify-between">
+<span class="text-[11px] font-bold uppercase tracking-wider">Sistem Sağlığı</span>
+<span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
 </div>
-<a class="flex items-center text-on-surface-variant hover:bg-surface-container-high rounded-lg px-4 py-2 mb-1 transition-all" href="#">
+<a class="flex items-center text-slate-500 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-4 py-2 mb-1 transition-all" href="#">
 <span class="material-symbols-outlined mr-3">rate_review</span>
 <span class="font-body-sm text-body-sm">Geri Bildirim</span>
 </a>
-<a class="flex items-center text-on-surface-variant hover:bg-surface-container-high rounded-lg px-4 py-2 transition-all" href="#">
+<a class="flex items-center text-slate-500 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-4 py-2 transition-all" href="#">
 <span class="material-symbols-outlined mr-3">logout</span>
 <span class="font-body-sm text-body-sm">Çıkış Yap</span>
 </a>
@@ -204,58 +204,58 @@
 <main class="ml-sidebar-expanded flex-1 p-container-padding">
 <!-- KPI Section -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-gutter">
-<div class="bento-card bg-surface p-5 rounded-xl shadow-sm">
+<div class="bento-card p-5 rounded-xl border border-slate-100 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
 <div class="flex justify-between items-start mb-4">
-<div class="p-2 bg-primary/5 rounded-lg text-primary">
+<div class="p-2 bg-slate-50 rounded-lg text-slate-600">
 <span class="material-symbols-outlined">groups</span>
 </div>
-<span class="text-green-600 text-[11px] font-bold">+12%</span>
+<span class="text-emerald-600 text-[11px] font-bold">+12%</span>
 </div>
-<div class="text-on-surface-variant font-label-caps text-label-caps mb-1 uppercase tracking-wider">Müşteri</div>
-<div class="text-primary font-display-lg text-display-lg">1,284</div>
-<div class="text-[11px] text-on-surface-variant mt-2 italic">Toplam kayıtlı portföy</div>
+<div class="text-slate-400 font-label-caps text-label-caps mb-1 uppercase tracking-wider">Müşteri</div>
+<div class="text-slate-900 font-display-lg text-display-lg font-semibold">1,284</div>
+<div class="text-[11px] text-slate-400 mt-2 italic">Toplam kayıtlı portföy</div>
 </div>
-<div class="bento-card bg-surface p-5 rounded-xl shadow-sm">
+<div class="bento-card p-5 rounded-xl border border-slate-100 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
 <div class="flex justify-between items-start mb-4">
-<div class="p-2 bg-primary/5 rounded-lg text-primary">
+<div class="p-2 bg-slate-50 rounded-lg text-slate-600">
 <span class="material-symbols-outlined">assignment</span>
 </div>
-<span class="text-primary text-[11px] font-bold">8 Bekliyor</span>
+<span class="text-slate-600 text-[11px] font-bold">8 Bekliyor</span>
 </div>
-<div class="text-on-surface-variant font-label-caps text-label-caps mb-1 uppercase tracking-wider">Aktif İş</div>
-<div class="text-primary font-display-lg text-display-lg">42</div>
-<div class="text-[11px] text-on-surface-variant mt-2 italic">Devam eden operasyonlar</div>
+<div class="text-slate-400 font-label-caps text-label-caps mb-1 uppercase tracking-wider">Aktif İş</div>
+<div class="text-slate-900 font-display-lg text-display-lg font-semibold">42</div>
+<div class="text-[11px] text-slate-400 mt-2 italic">Devam eden operasyonlar</div>
 </div>
-<div class="bento-card bg-surface p-5 rounded-xl shadow-sm">
+<div class="bento-card p-5 rounded-xl border border-slate-100 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
 <div class="flex justify-between items-start mb-4">
-<div class="p-2 bg-primary/5 rounded-lg text-primary">
+<div class="p-2 bg-slate-50 rounded-lg text-slate-600">
 <span class="material-symbols-outlined">assessment</span>
 </div>
-<span class="text-on-surface-variant text-[11px] font-bold">Günlük</span>
+<span class="text-slate-400 text-[11px] font-bold">Günlük</span>
 </div>
-<div class="text-on-surface-variant font-label-caps text-label-caps mb-1 uppercase tracking-wider">Kayıt</div>
-<div class="text-primary font-display-lg text-display-lg">3,890</div>
-<div class="text-[11px] text-on-surface-variant mt-2 italic">Muhasebe fiş sayısı</div>
+<div class="text-slate-400 font-label-caps text-label-caps mb-1 uppercase tracking-wider">Kayıt</div>
+<div class="text-slate-900 font-display-lg text-display-lg font-semibold">3,890</div>
+<div class="text-[11px] text-slate-400 mt-2 italic">Muhasebe fiş sayısı</div>
 </div>
-<div class="bento-card bg-surface p-5 rounded-xl shadow-sm border-l-4 border-l-green-500">
+<div class="bento-card p-5 rounded-xl border border-slate-100 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
 <div class="flex justify-between items-start mb-4">
-<div class="p-2 bg-green-50 rounded-lg text-green-700">
+<div class="p-2 bg-slate-50 rounded-lg text-slate-600">
 <span class="material-symbols-outlined">account_balance_wallet</span>
 </div>
-<div class="bg-green-100 text-green-800 px-2 py-1 rounded text-[10px] font-black">POZİTİF</div>
+<div class="bg-emerald-50 text-emerald-800 px-2 py-0.5 rounded text-[10px] font-bold">POZİTİF</div>
 </div>
-<div class="text-on-surface-variant font-label-caps text-label-caps mb-1 uppercase tracking-wider">Bakiye</div>
-<div class="text-green-700 font-display-lg text-display-lg">₺142,500.00</div>
-<div class="text-[11px] text-on-surface-variant mt-2 italic">Genel finansal durum</div>
+<div class="text-slate-400 font-label-caps text-label-caps mb-1 uppercase tracking-wider">Bakiye</div>
+<div class="text-slate-900 font-display-lg text-display-lg font-semibold">₺142,500.00</div>
+<div class="text-[11px] text-slate-400 mt-2 italic">Genel finansal durum</div>
 </div>
 </div>
 <!-- Central Content Grid -->
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-gutter">
 <!-- Today's Agenda -->
-<div class="lg:col-span-4 bg-surface rounded-xl border border-outline-variant flex flex-col h-full shadow-sm">
-<div class="p-5 border-b border-outline-variant flex justify-between items-center">
-<h3 class="font-title-sm text-title-sm text-primary">Bugünün Gündemi</h3>
-<span class="text-[11px] font-bold text-on-surface-variant bg-surface-container px-2 py-1 rounded">24 EKİM</span>
+<div class="lg:col-span-4 bg-white rounded-xl border border-slate-100 flex flex-col h-full shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+<div class="p-5 border-b border-slate-100 flex justify-between items-center">
+<h3 class="font-title-sm text-title-sm text-slate-900 font-semibold">Bugünün Gündemi</h3>
+<span class="text-[11px] font-bold text-slate-500 bg-slate-50 px-2 py-1 rounded">24 EKİM</span>
 </div>
 <div class="p-4 space-y-4 overflow-y-auto">
 <div class="flex gap-4 group cursor-pointer hover:bg-surface-container-low p-2 rounded-lg transition-colors">
@@ -288,12 +288,12 @@
 </div>
 </div>
 <!-- Recent Activities (Data Table) -->
-<div class="lg:col-span-8 bg-surface rounded-xl border border-outline-variant shadow-sm overflow-hidden flex flex-col">
-<div class="p-5 border-b border-outline-variant flex justify-between items-center bg-white">
-<h3 class="font-title-sm text-title-sm text-primary">Son İşlemler</h3>
+<div class="lg:col-span-8 bg-white rounded-xl border border-slate-100 shadow-[0_1px_3px_rgba(0,0,0,0.02)] overflow-hidden flex flex-col">
+<div class="p-5 border-b border-slate-100 flex justify-between items-center bg-white">
+<h3 class="font-title-sm text-title-sm text-slate-900 font-semibold">Son İşlemler</h3>
 <div class="flex gap-2">
-<button class="p-1 text-on-surface-variant hover:bg-surface-container-high rounded"><span class="material-symbols-outlined text-[20px]">filter_list</span></button>
-<button class="p-1 text-on-surface-variant hover:bg-surface-container-high rounded"><span class="material-symbols-outlined text-[20px]">download</span></button>
+<button class="p-1 text-slate-500 hover:bg-slate-50 rounded"><span class="material-symbols-outlined text-[20px]">filter_list</span></button>
+<button class="p-1 text-slate-500 hover:bg-slate-50 rounded"><span class="material-symbols-outlined text-[20px]">download</span></button>
 </div>
 </div>
 <div class="flex-1 overflow-x-auto">

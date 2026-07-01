@@ -7,22 +7,21 @@ document.addEventListener('DOMContentLoaded', () => {
             bottom: 24px;
             right: 24px;
             background: #ffffff;
-            color: #0b1c30;
-            border-left: 4px solid #1960a3;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            padding: 16px 20px;
-            border-radius: 8px;
+            color: #0f172a;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 8px -1px rgba(0, 0, 0, 0.02);
+            padding: 12px 18px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             z-index: 10000;
-            transform: translateY(100px) scale(0.9);
+            transform: translateY(20px) scale(0.98);
             opacity: 0;
             pointer-events: none;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             font-family: 'Inter', sans-serif;
-            max-width: 380px;
-            border: 1px solid #e5eeff;
+            max-width: 360px;
+            border: 1px solid #e2e8f0;
         }
         .custom-toast.show {
             transform: translateY(0) scale(1);
@@ -30,32 +29,35 @@ document.addEventListener('DOMContentLoaded', () => {
             pointer-events: auto;
         }
         .custom-toast .toast-icon {
-            font-size: 24px;
+            font-size: 20px;
             user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .custom-toast .toast-content {
             flex: 1;
         }
         .custom-toast .toast-title {
-            font-weight: 700;
-            font-size: 14px;
-            margin-bottom: 2px;
-            color: #1a365d;
+            font-weight: 600;
+            font-size: 13px;
+            color: #0f172a;
         }
         .custom-toast .toast-desc {
-            font-size: 12px;
-            color: #43474e;
+            font-size: 11px;
+            color: #64748b;
             line-height: 1.4;
+            margin-top: 1px;
         }
         .custom-toast .toast-close {
             cursor: pointer;
-            color: #74777f;
-            font-size: 18px;
-            margin-left: 8px;
+            color: #94a3b8;
+            font-size: 16px;
+            margin-left: 6px;
             transition: color 0.15s;
         }
         .custom-toast .toast-close:hover {
-            color: #1a365d;
+            color: #475569;
         }
     `;
     document.head.appendChild(style);
@@ -87,21 +89,21 @@ document.addEventListener('DOMContentLoaded', () => {
         descEl.textContent = desc;
         
         if (type === 'success') {
-            toast.style.borderLeftColor = '#10b981';
+            toast.style.borderColor = '#bbf7d0';
             iconEl.textContent = 'check_circle';
             iconEl.style.color = '#10b981';
         } else if (type === 'warning') {
-            toast.style.borderLeftColor = '#f59e0b';
+            toast.style.borderColor = '#fef08a';
             iconEl.textContent = 'warning';
-            iconEl.style.color = '#f59e0b';
+            iconEl.style.color = '#d97706';
         } else if (type === 'error') {
-            toast.style.borderLeftColor = '#ba1a1a';
+            toast.style.borderColor = '#fecaca';
             iconEl.textContent = 'error';
-            iconEl.style.color = '#ba1a1a';
+            iconEl.style.color = '#ef4444';
         } else {
-            toast.style.borderLeftColor = '#1960a3';
+            toast.style.borderColor = '#e2e8f0';
             iconEl.textContent = 'info';
-            iconEl.style.color = '#1960a3';
+            iconEl.style.color = '#3b82f6';
         }
         
         toast.classList.add('show');
