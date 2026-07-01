@@ -238,6 +238,11 @@
 <span class="material-symbols-outlined mr-3">history_edu</span>
 <span class="font-body-md text-body-md">Sözleşmeler</span>
 </a>
+<!-- 12. Not Defteri -->
+<a id="nav-notes" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../not_defteri_pano/code.html">
+<span class="material-symbols-outlined mr-3">sticky_note_2</span>
+<span class="font-body-md text-body-md">Not Defteri</span>
+</a>
 </nav>
 <div class="p-4 border-t border-slate-100 mt-auto">
 <div class="bg-emerald-50 text-emerald-800 rounded-lg p-2 mb-2 flex items-center justify-between text-[11px] font-bold uppercase tracking-wider">
@@ -471,87 +476,95 @@
 </section>
 <!-- Detail Panel (4 columns) -->
 <aside class="col-span-12 lg:col-span-4 flex flex-col gap-gutter">
-<div class="p-4 flex flex-col gap-1">
-<div class="flex items-center gap-3 mb-1">
-<div class="w-8 h-8 rounded bg-slate-900 flex items-center justify-center text-white">
-<span class="material-symbols-outlined">safety_divider</span>
+<!-- Selected Person Detail Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
+<div class="flex flex-col items-center text-center mb-6">
+<div class="w-24 h-24 rounded-full border-4 border-secondary-container mb-4 overflow-hidden">
+<img id="detail-img" class="w-full h-full object-cover" data-alt="Close-up portrait of a young male software engineer with glasses, wearing a casual navy blue sweater. He is positioned against a blurred background of a high-tech office with glowing screens. The lighting is crisp and modern, emphasizing professional competence and a tech-forward atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO0hmec4gEV4tgyARUCeKwzbN7l6N06yGKknG3xfvst2cb1Gql9CxTFbdJ5vg3BoMOxGVVySsCo9Vm7V3Z0tiNCvGVE1_jM6FteVYYU8D2nsmNeWua2fHTTjqXwazkDSK9OIAzX1G0dcL2Mto3ytPG-WgD83iRMtqWyQdNcrqjTDx2DkumVT2sks_C-PQzIKmolxAWRlIDjeqJL0rGnMf1Mv6wLZ7CiGhGLzJ9I3S8xMyPsDXdVn3hHnsmk7NaAOQyraT1JIc0Ig"/>
 </div>
+<h3 id="detail-name" class="font-headline-md text-headline-md text-primary">Caner Demir</h3>
+<p id="detail-role" class="text-on-surface-variant font-body-md">Senior Backend Developer</p>
+<span id="detail-dept" class="mt-2 inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-primary text-on-primary">TEKNOLOJİ</span>
+</div>
+<div class="space-y-6">
+<!-- Contact Info -->
 <div>
-<div class="font-title-sm text-title-sm font-bold text-slate-900">BIGsafer</div>
-<div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Kurumsal Paket</div>
+<h4 class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">contact_page</span>
+                                    İletişim Bilgileri
+                                </h4>
+<div class="space-y-2">
+<div class="flex justify-between items-center text-body-md">
+<span class="text-on-surface-variant">E-posta</span>
+<span id="detail-email" class="text-primary font-semibold">caner.demir@erpcore.com</span>
+</div>
+<div class="flex justify-between items-center text-body-md">
+<span class="text-on-surface-variant">Telefon</span>
+<span id="detail-phone" class="text-primary font-semibold">+90 (555) 123 45 67</span>
+</div>
+<div class="flex justify-between items-center text-body-md">
+<span class="text-on-surface-variant">Lokasyon</span>
+<span id="detail-location" class="text-primary font-semibold">İstanbul, TR</span>
 </div>
 </div>
 </div>
-<nav class="flex-1 space-y-0.5 overflow-y-auto custom-scrollbar px-2">
-<!-- 1. Ana Sayfa -->
-<a id="nav-home" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../bigsafer_erp_ana_sayfa/code.html">
-<span class="material-symbols-outlined mr-3">home</span>
-<span class="font-body-md text-body-md">Ana Sayfa</span>
-</a>
-<!-- 2. Analitik -->
-<a id="nav-analytics" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../erp_dashboard_genel_bak/code.html">
-<span class="material-symbols-outlined mr-3">dashboard</span>
-<span class="font-body-md text-body-md">Analitik</span>
-</a>
-<!-- 3. Müşteriler -->
-<a id="nav-crm" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../m_teriler_crm_mod_l/code.html">
-<span class="material-symbols-outlined mr-3">groups</span>
-<span class="font-body-md text-body-md">Müşteriler</span>
-</a>
-<!-- 4. Operasyonlar -->
-<a id="nav-operations" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../operasyon_i_takibi/code.html">
-<span class="material-symbols-outlined mr-3">engineering</span>
-<span class="font-body-md text-body-md">Operasyonlar</span>
-</a>
-<!-- 5. Muhasebe -->
-<a id="nav-accounting" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../muhasebe_finansal_zet/code.html">
-<span class="material-symbols-outlined mr-3">account_balance</span>
-<span class="font-body-md text-body-md">Muhasebe</span>
-</a>
-<!-- 6. Envanter -->
-<a id="nav-inventory" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../envanter_y_netimi/code.html">
-<span class="material-symbols-outlined mr-3">inventory_2</span>
-<span class="font-body-md text-body-md">Envanter</span>
-</a>
-<!-- 7. İnsan Kaynakları -->
-<a id="nav-hr" class="flex items-center bg-slate-50 text-slate-900 font-semibold rounded-lg px-3 py-2 transition-all" href="../personel_y_netimi/code.html">
-<span class="material-symbols-outlined mr-3">badge</span>
-<span class="font-body-md text-body-md">İnsan Kaynakları</span>
-</a>
-<!-- 8. Faturalar -->
-<a id="nav-invoices" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../fatura_ve_entegrasyon_y_netimi/code.html">
-<span class="material-symbols-outlined mr-3">description</span>
-<span class="font-body-md text-body-md">Faturalar</span>
-</a>
-<!-- 9. Finansal Raporlar -->
-<a id="nav-reports" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../finansal_raporlar/code.html">
-<span class="material-symbols-outlined mr-3">payments</span>
-<span class="font-body-md text-body-md">Raporlar</span>
-</a>
-<!-- 10. Fiyatlandırma -->
-<a id="nav-pricing" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../fiyatland_rma_ve_deme_y_netimi/code.html">
-<span class="material-symbols-outlined mr-3">settings_suggest</span>
-<span class="font-body-md text-body-md">Fiyatlandırma</span>
-</a>
-<!-- 11. Sözleşmeler -->
-<a id="nav-contracts" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../s_zle_me_y_netimi/code.html">
-<span class="material-symbols-outlined mr-3">history_edu</span>
-<span class="font-body-md text-body-md">Sözleşmeler</span>
-</a>
-</nav>
-<div class="p-4 border-t border-slate-100 mt-auto">
-<div class="bg-emerald-50 text-emerald-800 rounded-lg p-2 mb-2 flex items-center justify-between text-[11px] font-bold uppercase tracking-wider">
-<span>Sistem Aktif</span>
-<span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+<!-- Performance Meter -->
+<div>
+<h4 class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+                                    Performans Skoru
+                                </h4>
+<div class="flex items-center gap-4">
+<div class="flex-1 h-3 bg-surface-container-high rounded-full overflow-hidden">
+<div id="detail-perf-bar" class="h-full bg-secondary rounded-full" style="width: 88%;"></div>
 </div>
-<a class="flex items-center text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-lg px-3 py-1.5 transition-all text-xs" href="#">
-<span class="material-symbols-outlined mr-3 text-sm">rate_review</span>
-<span class="font-body-sm text-body-sm">Geri Bildirim</span>
-</a>
-<a class="flex items-center text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-lg px-3 py-1.5 transition-all text-xs" href="#">
-<span class="material-symbols-outlined mr-3 text-sm">logout</span>
-<span class="font-body-sm text-body-sm">Çıkış Yap</span>
-</a>
+<span id="detail-perf-text" class="font-mono-data text-primary font-bold">8.8 / 10</span>
+</div>
+<p class="text-xs text-on-surface-variant mt-1 italic">Son değerlendirme: 2 hafta önce</p>
+</div>
+<!-- Leave Status -->
+<div>
+<h4 class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">event_available</span>
+                                    İzin Durumu
+                                </h4>
+<div class="grid grid-cols-2 gap-4">
+<div class="p-3 bg-surface-container-low rounded-lg border border-outline-variant">
+<p class="text-xs text-on-surface-variant mb-1 uppercase">Kalan İzin</p>
+<p id="detail-leave-left" class="text-title-sm text-primary font-bold">14 Gün</p>
+</div>
+<div class="p-3 bg-surface-container-low rounded-lg border border-outline-variant">
+<p class="text-xs text-on-surface-variant mb-1 uppercase">Kullanılan</p>
+<p id="detail-leave-used" class="text-title-sm text-primary font-bold">6 Gün</p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 flex gap-3">
+<button class="flex-1 border border-outline-variant text-on-surface py-2 rounded-lg font-semibold hover:bg-surface-container-low transition-colors text-sm">
+                                Profili Düzenle
+                            </button>
+<button class="material-symbols-outlined p-2 border border-outline-variant text-on-surface-variant rounded-lg hover:bg-surface-container-low">
+                                more_horiz
+                            </button>
+</div>
+</div>
+<!-- Quick Stats Card -->
+<div class="bg-primary-container text-on-primary-fixed-variant rounded-xl p-6 relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="font-title-sm text-title-sm text-primary-fixed mb-2">Departman Özeti</h4>
+<div class="flex items-baseline gap-2">
+<span class="text-display-lg font-bold text-white">42</span>
+<span class="text-primary-fixed text-body-md">Toplam Çalışan</span>
+</div>
+<div class="mt-4 flex items-center gap-2 text-primary-fixed text-xs">
+<span class="material-symbols-outlined text-sm">bolt</span>
+<span>3 yeni personel bu ay katıldı</span>
+</div>
+</div>
+<!-- Abstract decorative background -->
+<div class="absolute right-0 top-0 w-32 h-32 bg-secondary opacity-20 -mr-16 -mt-16 rounded-full blur-3xl"></div>
+<div class="absolute left-0 bottom-0 w-24 h-24 bg-tertiary-fixed-dim opacity-10 -ml-12 -mb-12 rounded-full blur-2xl"></div>
 </div>
 </aside>
 </div>

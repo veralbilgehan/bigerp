@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIGsafer ERP - Not Defteri ve Pano Yönetimi</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts & Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0f172a',
+                        secondary: '#475569',
+                        outline: '#e2e8f0',
+                        'outline-variant': '#f1f5f9',
+                        background: '#f8fafc',
+                        surface: '#ffffff',
+                    },
+                    spacing: {
+                        'sidebar-expanded': '240px',
+                        'gutter': '16px',
+                        'container-padding': '24px'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #334155; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* Terminal Console Styling */
+        .terminal-log { font-family: 'JetBrains Mono', monospace; }
+        .log-api { color: #f59e0b; }
+        .log-sql { color: #38bdf8; }
+        .log-success { color: #10b981; }
+        .log-sql-keyword { color: #c084fc; font-weight: bold; }
+    </style>
+</head>
+<body class="bg-background font-body-md overflow-hidden text-slate-700">
+
+<!-- Left Side Rail + Sidebar -->
+<aside class="fixed left-0 top-0 h-screen flex flex-col z-40 bg-white border-r border-slate-100 w-sidebar-expanded">
+<div class="p-4 flex flex-col gap-1">
+<div class="flex items-center gap-3 mb-1">
+<div class="w-8 h-8 rounded bg-slate-900 flex items-center justify-center text-white">
+<span class="material-symbols-outlined">safety_divider</span>
+</div>
+<div>
+<div class="font-title-sm text-title-sm font-bold text-slate-900">BIGsafer</div>
+<div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Kurumsal Paket</div>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-0.5 overflow-y-auto custom-scrollbar px-2">
+<!-- 1. Ana Sayfa -->
+<a id="nav-home" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../bigsafer_erp_ana_sayfa/code.html">
+<span class="material-symbols-outlined mr-3">home</span>
+<span class="font-body-md text-body-md">Ana Sayfa</span>
+</a>
+<!-- 2. Analitik -->
+<a id="nav-analytics" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../erp_dashboard_genel_bak/code.html">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span class="font-body-md text-body-md">Analitik</span>
+</a>
+<!-- 3. Müşteriler -->
+<a id="nav-crm" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../m_teriler_crm_mod_l/code.html">
+<span class="material-symbols-outlined mr-3">groups</span>
+<span class="font-body-md text-body-md">Müşteriler</span>
+</a>
+<!-- 4. Operasyonlar -->
+<a id="nav-operations" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../operasyon_i_takibi/code.html">
+<span class="material-symbols-outlined mr-3">engineering</span>
+<span class="font-body-md text-body-md">Operasyonlar</span>
+</a>
+<!-- 5. Muhasebe -->
+<a id="nav-accounting" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../muhasebe_finansal_zet/code.html">
+<span class="material-symbols-outlined mr-3">account_balance</span>
+<span class="font-body-md text-body-md">Muhasebe</span>
+</a>
+<!-- 6. Envanter -->
+<a id="nav-inventory" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../envanter_y_netimi/code.html">
+<span class="material-symbols-outlined mr-3">inventory_2</span>
+<span class="font-body-md text-body-md">Envanter</span>
+</a>
+<!-- 7. İnsan Kaynakları -->
+<a id="nav-hr" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../personel_y_netimi/code.html">
+<span class="material-symbols-outlined mr-3">badge</span>
+<span class="font-body-md text-body-md">İnsan Kaynakları</span>
+</a>
+<!-- 8. Faturalar -->
+<a id="nav-invoices" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../fatura_ve_entegrasyon_y_netimi/code.html">
+<span class="material-symbols-outlined mr-3">description</span>
+<span class="font-body-md text-body-md">Faturalar</span>
+</a>
+<!-- 9. Finansal Raporlar -->
+<a id="nav-reports" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../finansal_raporlar/code.html">
+<span class="material-symbols-outlined mr-3">payments</span>
+<span class="font-body-md text-body-md">Raporlar</span>
+</a>
+<!-- 10. Fiyatlandırma -->
+<a id="nav-pricing" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../fiyatland_rma_ve_deme_y_netimi/code.html">
+<span class="material-symbols-outlined mr-3">settings_suggest</span>
+<span class="font-body-md text-body-md">Fiyatlandırma</span>
+</a>
+<!-- 11. Sözleşmeler -->
+<a id="nav-contracts" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../s_zle_me_y_netimi/code.html">
+<span class="material-symbols-outlined mr-3">history_edu</span>
+<span class="font-body-md text-body-md">Sözleşmeler</span>
+</a>
+<!-- 12. Not Defteri -->
+<a id="nav-notes" class="flex items-center bg-slate-50 text-slate-900 font-semibold rounded-lg px-3 py-2 transition-all" href="../not_defteri_pano/code.html">
+<span class="material-symbols-outlined mr-3">sticky_note_2</span>
+<span class="font-body-md text-body-md">Not Defteri</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-100 mt-auto">
+<div class="bg-emerald-50 text-emerald-800 rounded-lg p-2 mb-2 flex items-center justify-between text-[11px] font-bold uppercase tracking-wider">
+<span>Sistem Aktif</span>
+<span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+</div>
+<a class="flex items-center text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-lg px-3 py-1.5 transition-all text-xs" href="#">
+<span class="material-symbols-outlined mr-3 text-sm">rate_review</span>
+<span class="font-body-sm text-body-sm">Geri Bildirim</span>
+</a>
+<a class="flex items-center text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-lg px-3 py-1.5 transition-all text-xs" href="#">
+<span class="material-symbols-outlined mr-3 text-sm">logout</span>
+<span class="font-body-sm text-body-sm">Çıkış Yap</span>
+</a>
+</div>
+</aside>
+
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-0 ml-sidebar-expanded h-16 flex items-center justify-between px-gutter bg-white border-b border-slate-100 z-30">
+    <div class="flex items-center gap-6">
+        <h2 class="font-headline-md text-headline-md font-bold text-slate-900 flex items-center gap-2">
+            <span class="material-symbols-outlined text-[28px] text-slate-700">edit_document</span>
+            Kurumsal Pano ve Dijital Not Defteri
+        </h2>
+    </div>
+    <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2 text-right">
+            <div>
+                <p class="text-xs font-bold text-slate-900">Ahmet Yılmaz</p>
+                <p class="text-[10px] text-slate-500 uppercase tracking-widest">CFO &amp; Sistem Yöneticisi</p>
+            </div>
+            <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-700 font-bold border border-slate-200">
+                AY
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Work Area -->
+<main class="ml-sidebar-expanded pt-16 h-screen flex flex-col overflow-hidden">
+    
+    <!-- Body Content Grid -->
+    <div class="flex-1 flex overflow-hidden">
+        
+        <!-- Left Panel: Note List -->
+        <div class="w-80 border-r border-slate-100 bg-white flex flex-col h-full shrink-0">
+            <div class="p-4 border-b border-slate-100 space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="font-semibold text-slate-900 text-sm">Sayfalarım</span>
+                    <button onclick="createNewNote()" class="bg-slate-900 text-white text-xs px-3 py-1.5 rounded-lg font-bold flex items-center gap-1 hover:bg-slate-800 active:scale-95 transition-all">
+                        <span class="material-symbols-outlined text-sm">add</span>
+                        Yeni Sayfa
+                    </button>
+                </div>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+                    <input id="note-search" oninput="renderNoteList()" class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none focus:border-slate-400 transition-colors" placeholder="Notlarda ara..." type="text">
+                </div>
+            </div>
+            <!-- Note Cards Container -->
+            <div id="note-list" class="flex-1 overflow-y-auto custom-scrollbar p-2 space-y-1">
+                <!-- Dynamic List Render -->
+            </div>
+        </div>
+
+        <!-- Middle Panel: Notepad Editor -->
+        <div class="flex-1 bg-slate-50 flex flex-col h-full overflow-hidden p-6 relative">
+            <div class="flex-1 max-w-3xl w-full mx-auto bg-white rounded-xl border border-slate-100 shadow-[0_1px_3px_rgba(0,0,0,0.02)] flex flex-col p-8 overflow-hidden">
+                <!-- Editor Header -->
+                <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-4 shrink-0">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-slate-400">text_snippet</span>
+                        <input id="note-title" oninput="updateNote()" class="font-bold text-slate-800 text-lg outline-none border-b border-transparent focus:border-slate-300 w-96 transition-colors" placeholder="Başlıksız Not" type="text">
+                    </div>
+                    <div id="save-status" class="text-xs text-slate-400 italic flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                        Değişiklik yok
+                    </div>
+                </div>
+                
+                <!-- Textarea Editor -->
+                <div class="flex-1 overflow-y-auto custom-scrollbar">
+                    <textarea id="note-content" oninput="updateNote()" class="w-full h-full resize-none outline-none text-slate-700 leading-relaxed font-sans placeholder-slate-300" placeholder="Boş bir sayfa açtınız, buraya yazmaya başlayın..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel: Share & Security Settings -->
+        <div class="w-80 border-l border-slate-100 bg-white flex flex-col h-full shrink-0">
+            <div class="p-4 border-b border-slate-100">
+                <h3 class="font-semibold text-slate-900 text-sm flex items-center gap-2">
+                    <span class="material-symbols-outlined text-slate-500">lock</span>
+                    Gizlilik &amp; Paylaşım Ayarları
+                </h3>
+            </div>
+            
+            <div class="p-4 space-y-6 flex-1 overflow-y-auto custom-scrollbar">
+                <!-- Private toggle -->
+                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-bold text-xs text-slate-955 uppercase tracking-wider">Gizlilik Seviyesi</span>
+                        <span id="privacy-badge" class="bg-red-50 text-red-800 text-[10px] font-bold px-2 py-0.5 rounded">Sadece Ben</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer mt-1">
+                        <input id="is-private" onchange="togglePrivacy()" type="checkbox" checked class="sr-only peer">
+                        <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-slate-900"></div>
+                        <span class="ml-3 text-xs font-semibold text-slate-700">Gizli Not Olarak İşaretle</span>
+                    </label>
+                    <p class="text-[11px] text-slate-400 mt-2">Bu aktifken not sadece sizin tarafınızdan ve aşağıda yetki verdiğiniz kişilerce okunabilir.</p>
+                </div>
+                
+                <!-- Share list -->
+                <div id="share-section" class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-xs text-slate-900 uppercase tracking-wider">Erişim İzni Verilenler</span>
+                        <span id="share-count" class="text-slate-400 text-xs font-mono font-bold">0 Kişi</span>
+                    </div>
+                    
+                    <div class="border border-slate-100 rounded-xl overflow-hidden divide-y divide-slate-100">
+                        <!-- Employee list -->
+                        <label class="flex items-center justify-between p-3 hover:bg-slate-50 cursor-pointer transition-colors">
+                            <div class="flex items-center gap-3">
+                                <div class="w-7 h-7 rounded-full bg-indigo-50 text-indigo-700 text-xs font-bold flex items-center justify-center">MG</div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-800">Merve Güneş</p>
+                                    <p class="text-[10px] text-slate-400">İnsan Kaynakları Müdürü</p>
+                                </div>
+                            </div>
+                            <input type="checkbox" name="share-user" value="user-uuid-mg" onchange="updateSharing()" class="w-4 h-4 rounded text-slate-900 focus:ring-slate-900 border-slate-300">
+                        </label>
+                        
+                        <label class="flex items-center justify-between p-3 hover:bg-slate-50 cursor-pointer transition-colors">
+                            <div class="flex items-center gap-3">
+                                <div class="w-7 h-7 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold flex items-center justify-center">BO</div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-800">Bülent Ortakçı</p>
+                                    <p class="text-[10px] text-slate-400">Operasyon Direktörü</p>
+                                </div>
+                            </div>
+                            <input type="checkbox" name="share-user" value="user-uuid-bo" onchange="updateSharing()" class="w-4 h-4 rounded text-slate-900 focus:ring-slate-900 border-slate-300">
+                        </label>
+
+                        <label class="flex items-center justify-between p-3 hover:bg-slate-50 cursor-pointer transition-colors">
+                            <div class="flex items-center gap-3">
+                                <div class="w-7 h-7 rounded-full bg-amber-50 text-amber-700 text-xs font-bold flex items-center justify-center">SA</div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-800">Selim Akarsu</p>
+                                    <p class="text-[10px] text-slate-400">Bilişim Teknolojileri Yöneticisi</p>
+                                </div>
+                            </div>
+                            <input type="checkbox" name="share-user" value="user-uuid-sa" onchange="updateSharing()" class="w-4 h-4 rounded text-slate-900 focus:ring-slate-900 border-slate-300">
+                        </label>
+                        
+                        <label class="flex items-center justify-between p-3 hover:bg-slate-50 cursor-pointer transition-colors">
+                            <div class="flex items-center gap-3">
+                                <div class="w-7 h-7 rounded-full bg-rose-50 text-rose-700 text-xs font-bold flex items-center justify-center">DK</div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-800">Derya Kaya</p>
+                                    <p class="text-[10px] text-slate-400">Hukuk Müşaviri</p>
+                                </div>
+                            </div>
+                            <input type="checkbox" name="share-user" value="user-uuid-dk" onchange="updateSharing()" class="w-4 h-4 rounded text-slate-900 focus:ring-slate-900 border-slate-300">
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Security Warning -->
+                <div class="bg-amber-50 border border-amber-200/50 rounded-xl p-4 flex gap-3">
+                    <span class="material-symbols-outlined text-amber-600 select-none shrink-0">security</span>
+                    <div class="space-y-1">
+                        <p class="text-[11px] font-bold text-amber-900">Uçtan Uca Yetkilendirme</p>
+                        <p class="text-[10px] text-amber-800 leading-normal">Bu panodaki tüm gizlilik kontrolleri backend JWT doğrulaması ve NoteShares junction tablosuyla veritabanı seviyesinde korunmaktadır.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom: Live API & Database Simulation Console -->
+    <div class="h-56 bg-slate-955 border-t border-slate-800 flex flex-col shrink-0">
+        <div class="bg-slate-900 px-4 py-2 flex items-center justify-between text-xs text-slate-400 border-b border-slate-800">
+            <span class="font-bold flex items-center gap-1 text-slate-300">
+                <span class="material-symbols-outlined text-sm text-emerald-400">terminal</span>
+                Backend API &amp; Veritabanı Canlı Simülasyon Konsolu (JWT &amp; PostgreSQL)
+            </span>
+            <div class="flex gap-2">
+                <button onclick="clearConsole()" class="hover:text-white transition-colors flex items-center gap-1 font-mono text-[10px] px-2 py-0.5 bg-slate-800 rounded">
+                    <span class="material-symbols-outlined text-xs">delete_sweep</span>
+                    KONSOLU TEMİZLE
+                </button>
+            </div>
+        </div>
+        <!-- Logs list -->
+        <div id="terminal-logs" class="flex-grow p-4 overflow-y-auto custom-scrollbar terminal-log text-[11px] leading-relaxed text-slate-300 space-y-1">
+            <!-- Simulated logs printed here -->
+        </div>
+    </div>
+
+</main>
+
+<script>
+    // Constants
+    const CURRENT_USER_ID = "f0b2a8d1-7c9e-4e5b-8d3f-2a1b9c8d7e6f"; // Ahmet Yılmaz UUID
+    const CURRENT_USER_NAME = "Ahmet Yılmaz";
+    
+    // Notes state
+    let notes = [];
+    let currentNoteId = null;
+    let saveTimeout = null;
+
+    // Simulated user dictionary
+    const userNames = {
+        "user-uuid-mg": "Merve Güneş",
+        "user-uuid-bo": "Bülent Ortakçı",
+        "user-uuid-sa": "Selim Akarsu",
+        "user-uuid-dk": "Derya Kaya"
+    };
+
+    // Initialize application
+    window.addEventListener('load', () => {
+        loadNotes();
+        logTerminal("API", `JWT yetkilendirmesi doğrulandı. Kullanıcı: ${CURRENT_USER_NAME} (${CURRENT_USER_ID})`);
+        logTerminal("SUCCESS", "Backend bağlantısı başarıyla kuruldu. Port: 8080. PostgreSQL: Bağlandı.");
+    });
+
+    function loadNotes() {
+        const stored = localStorage.getItem('erp_notes');
+        if (stored) {
+            notes = JSON.parse(stored);
+        } else {
+            // Default sample notes
+            notes = [
+                {
+                    id: "9e2b1a8d-7c9e-4e5b-8d3f-2a1b9c8d7e6f",
+                    title: "Q3 Finansal Bütçe Stratejisi",
+                    content: "Bütçe planlama aşamasında departman hedeflerinin belirlenmesi:\n1. IT altyapı güncellemeleri için ek ₺45,000 bütçe ayrıldı.\n2. Pazarlama departmanı için ROI hedefleri %15 artırıldı.\n3. Hukuk onay süreçleri hızlandırılacak.",
+                    creator_id: CURRENT_USER_ID,
+                    is_private: true,
+                    shared_users: ["user-uuid-mg", "user-uuid-sa"],
+                    created_at: new Date(Date.now() - 36000000).toISOString()
+                },
+                {
+                    id: "a3f5c7e9-1b2c-3d4e-5f6a-7b8c9d0e1f2a",
+                    title: "Tedarik Sözleşmesi Değerlendirmesi",
+                    content: "Yeni lojistik sözleşmesindeki gizlilik ve mücbir sebep maddeleri tekrar incelenecek. Derya Hanım'ın geri dönüşleri bekleniyor.",
+                    creator_id: CURRENT_USER_ID,
+                    is_private: true,
+                    shared_users: ["user-uuid-dk"],
+                    created_at: new Date(Date.now() - 72000000).toISOString()
+                }
+            ];
+            saveNotesToStorage();
+        }
+        
+        if (notes.length > 0) {
+            selectNote(notes[0].id);
+        } else {
+            createNewNote();
+        }
+        renderNoteList();
+    }
+
+    function saveNotesToStorage() {
+        localStorage.setItem('erp_notes', JSON.stringify(notes));
+    }
+
+    function renderNoteList() {
+        const container = document.getElementById('note-list');
+        const query = document.getElementById('note-search').value.toLowerCase();
+        container.innerHTML = '';
+
+        const filtered = notes.filter(n => 
+            n.title.toLowerCase().includes(query) || 
+            n.content.toLowerCase().includes(query)
+        );
+
+        filtered.forEach(note => {
+            const isActive = note.id === currentNoteId;
+            const badgeText = note.is_private ? 
+                (note.shared_users.length > 0 ? "Paylaşıldı" : "Sadece Ben") : "Genel";
+            const badgeColor = note.is_private ? 
+                (note.shared_users.length > 0 ? "bg-blue-50 text-blue-800" : "bg-red-50 text-red-800") : "bg-emerald-50 text-emerald-800";
+            
+            const card = document.createElement('div');
+            card.className = `p-3 rounded-xl border cursor-pointer transition-all ${
+                isActive ? 'bg-slate-50 border-slate-200' : 'bg-white border-transparent hover:bg-slate-50/50'
+            }`;
+            card.onclick = () => selectNote(note.id);
+            
+            card.innerHTML = `
+                <div class="flex items-start justify-between gap-2 mb-1">
+                    <span class="font-bold text-xs text-slate-800 truncate">${note.title || 'Başlıksız Not'}</span>
+                    <span class="${badgeColor} text-[9px] font-bold px-1.5 py-0.5 rounded shrink-0">${badgeText}</span>
+                </div>
+                <p class="text-[11px] text-slate-400 line-clamp-2 leading-normal mb-1">${note.content || 'İçerik boş...'}</p>
+                <div class="flex items-center justify-between text-[9px] text-slate-400 font-mono">
+                    <span>${new Date(note.created_at).toLocaleDateString('tr-TR')}</span>
+                    <button onclick="event.stopPropagation(); deleteNote('${note.id}')" class="hover:text-red-600 material-symbols-outlined text-xs p-0.5">delete</button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function selectNote(id) {
+        currentNoteId = id;
+        const note = notes.find(n => n.id === id);
+        if (!note) return;
+
+        // Populate editor
+        document.getElementById('note-title').value = note.title;
+        document.getElementById('note-content').value = note.content;
+        
+        // Populate sharing settings
+        document.getElementById('is-private').checked = note.is_private;
+        
+        // Update checkboxes
+        const checkboxes = document.getElementsByName('share-user');
+        checkboxes.forEach(cb => {
+            cb.checked = note.shared_users.includes(cb.value);
+        });
+
+        updateUIStates();
+        renderNoteList();
+
+        // Print API and SQL query log
+        logTerminal("API", `GET /api/notes/${id} - Request User: ${CURRENT_USER_NAME} (Authentication Token Verified)`);
+        logTerminal("SQL", `<span class="log-sql-keyword">SELECT</span> * <span class="log-sql-keyword">FROM</span> Notes <span class="log-sql-keyword">WHERE</span> id = '${id}';`);
+        
+        if (note.is_private) {
+            logTerminal("SQL", `<span class="log-sql-keyword">SELECT</span> shared_with_user_id <span class="log-sql-keyword">FROM</span> NoteShares <span class="log-sql-keyword">WHERE</span> note_id = '${id}';`);
+            logTerminal("SUCCESS", `Yetkilendirme Başarılı. Sahibi: ${note.creator_id === CURRENT_USER_ID ? 'Mevcut Kullanıcı' : 'Diğer'} | Paylaşılan Kişiler: [${note.shared_users.join(', ')}]`);
+        } else {
+            logTerminal("SUCCESS", `Erişim Onaylandı (Genel Not)`);
+        }
+    }
+
+    function createNewNote() {
+        const newId = uuidv4();
+        const newNote = {
+            id: newId,
+            title: "Yeni Boş Sayfa",
+            content: "",
+            creator_id: CURRENT_USER_ID,
+            is_private: true,
+            shared_users: [],
+            created_at: new Date().toISOString()
+        };
+
+        notes.unshift(newNote);
+        saveNotesToStorage();
+        selectNote(newId);
+        
+        logTerminal("API", `POST /api/notes - Payload: { creator_id: "${CURRENT_USER_ID}", is_private: true }`);
+        logTerminal("SQL", `<span class="log-sql-keyword">INSERT INTO</span> Notes (id, title, content, creator_id, is_private, created_at) <span class="log-sql-keyword">VALUES</span> ('${newId}', 'Yeni Boş Sayfa', '', '${CURRENT_USER_ID}', true, NOW());`);
+        logTerminal("SUCCESS", `Yeni not oluşturuldu ve idsi alındı. ID: ${newId}`);
+    }
+
+    function updateNote() {
+        const note = notes.find(n => n.id === currentNoteId);
+        if (!note) return;
+
+        const titleVal = document.getElementById('note-title').value;
+        const contentVal = document.getElementById('note-content').value;
+        
+        note.title = titleVal;
+        note.content = contentVal;
+
+        // Show updating status
+        const status = document.getElementById('save-status');
+        status.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span> Yazıyor...`;
+
+        // Debounce storage write and logging
+        clearTimeout(saveTimeout);
+        saveTimeout = setTimeout(() => {
+            saveNotesToStorage();
+            renderNoteList();
+            status.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Kaydedildi`;
+            
+            // Console API & SQL Logs
+            logTerminal("API", `PUT /api/notes/${note.id} - Body: { title: "${note.title}", content: "${note.content.substring(0,25)}..." }`);
+            logTerminal("SQL", `<span class="log-sql-keyword">UPDATE</span> Notes <span class="log-sql-keyword">SET</span> title = '${escapeSql(note.title)}', content = '${escapeSql(note.content)}' <span class="log-sql-keyword">WHERE</span> id = '${note.id}';`);
+        }, 800);
+    }
+
+    function deleteNote(id) {
+        notes = notes.filter(n => n.id !== id);
+        saveNotesToStorage();
+        
+        logTerminal("API", `DELETE /api/notes/${id} - Initiated by owner`);
+        logTerminal("SQL", `<span class="log-sql-keyword">DELETE FROM</span> Notes <span class="log-sql-keyword">WHERE</span> id = '${id}';`);
+        logTerminal("SUCCESS", `Not başarıyla silindi.`);
+
+        if (currentNoteId === id) {
+            if (notes.length > 0) {
+                selectNote(notes[0].id);
+            } else {
+                createNewNote();
+            }
+        } else {
+            renderNoteList();
+        }
+    }
+
+    function togglePrivacy() {
+        const note = notes.find(n => n.id === currentNoteId);
+        if (!note) return;
+
+        const isPrivate = document.getElementById('is-private').checked;
+        note.is_private = isPrivate;
+        
+        if (!isPrivate) {
+            note.shared_users = [];
+            const checkboxes = document.getElementsByName('share-user');
+            checkboxes.forEach(cb => cb.checked = false);
+        }
+
+        saveNotesToStorage();
+        updateUIStates();
+        renderNoteList();
+
+        logTerminal("API", `PUT /api/notes/${note.id}/privacy - Body: { is_private: ${isPrivate} }`);
+        logTerminal("SQL", `<span class="log-sql-keyword">UPDATE</span> Notes <span class="log-sql-keyword">SET</span> is_private = ${isPrivate} <span class="log-sql-keyword">WHERE</span> id = '${note.id}';`);
+        
+        if (!isPrivate) {
+            logTerminal("SQL", `<span class="log-sql-keyword">DELETE FROM</span> NoteShares <span class="log-sql-keyword">WHERE</span> note_id = '${note.id}';`);
+        }
+    }
+
+    function updateSharing() {
+        const note = notes.find(n => n.id === currentNoteId);
+        if (!note) return;
+
+        const checkboxes = document.getElementsByName('share-user');
+        const selected = [];
+        checkboxes.forEach(cb => {
+            if (cb.checked) selected.push(cb.value);
+        });
+
+        note.shared_users = selected;
+        saveNotesToStorage();
+        updateUIStates();
+        renderNoteList();
+
+        // Print sharing logs
+        logTerminal("API", `POST /api/notes/${note.id}/share - Payload: { user_ids: [${selected.map(id => `"${id}"`).join(', ')}] }`);
+        logTerminal("SQL", `<span class="log-sql-keyword">DELETE FROM</span> NoteShares <span class="log-sql-keyword">WHERE</span> note_id = '${note.id}';`);
+        
+        selected.forEach(userId => {
+            const shareId = uuidv4().substring(0,8);
+            logTerminal("SQL", `<span class="log-sql-keyword">INSERT INTO</span> NoteShares (id, note_id, shared_with_user_id) <span class="log-sql-keyword">VALUES</span> ('ns-${shareId}', '${note.id}', '${userId}');`);
+        });
+
+        logTerminal("SUCCESS", `${selected.length} kullanıcıya erişim yetkisi verildi.`);
+    }
+
+    function updateUIStates() {
+        const note = notes.find(n => n.id === currentNoteId);
+        if (!note) return;
+
+        const isPrivate = note.is_private;
+        const badge = document.getElementById('privacy-badge');
+        const shareSection = document.getElementById('share-section');
+
+        if (isPrivate) {
+            badge.innerHTML = "Sadece Ben";
+            badge.className = "bg-red-50 text-red-800 text-[10px] font-bold px-2 py-0.5 rounded";
+            shareSection.style.opacity = "1";
+            shareSection.style.pointerEvents = "auto";
+        } else {
+            badge.innerHTML = "Genel";
+            badge.className = "bg-emerald-50 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded";
+            shareSection.style.opacity = "0.4";
+            shareSection.style.pointerEvents = "none";
+        }
+
+        document.getElementById('share-count').innerText = `${note.shared_users.length} Kişi`;
+    }
+
+    // Terminal Logging helper
+    function logTerminal(type, message) {
+        const container = document.getElementById('terminal-logs');
+        const timestamp = new Date().toISOString().substring(11, 19);
+        const logLine = document.createElement('div');
+        
+        let prefix = "";
+        if (type === "API") {
+            prefix = `<span class="log-api font-bold">[API CALL ${timestamp}]</span>`;
+        } else if (type === "SQL") {
+            prefix = `<span class="log-sql font-bold">[SQL QUERY ${timestamp}]</span>`;
+        } else if (type === "SUCCESS") {
+            prefix = `<span class="log-success font-bold">[SYS SUCCESS ${timestamp}]</span>`;
+        }
+
+        logLine.innerHTML = `${prefix} ${message}`;
+        container.appendChild(logLine);
+        container.scrollTop = container.scrollHeight;
+    }
+
+    function clearConsole() {
+        document.getElementById('terminal-logs').innerHTML = '';
+        logTerminal("SUCCESS", "Konsol temizlendi.");
+    }
+
+    // Helpers
+    function uuidv4() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
+    function escapeSql(str) {
+        return str.replace(/'/g, "''");
+    }
+</script>
+</body>
+</html>
