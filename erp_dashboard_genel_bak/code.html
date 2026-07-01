@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html class="light" lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ERP Core - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#a2c9ff",
+                    "tertiary": "#321b00",
+                    "on-secondary-container": "#00477f",
+                    "error-container": "#ffdad6",
+                    "outline-variant": "#c4c6cf",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-high": "#dce9ff",
+                    "secondary-container": "#7db6ff",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-fixed-variant": "#004881",
+                    "on-primary-fixed": "#001b3c",
+                    "on-secondary-fixed": "#001c38",
+                    "surface-container-highest": "#d3e4fe",
+                    "surface": "#f8f9ff",
+                    "surface-container-low": "#eff4ff",
+                    "primary-fixed": "#d6e3ff",
+                    "on-primary-container": "#86a0cd",
+                    "on-error": "#ffffff",
+                    "surface-variant": "#d3e4fe",
+                    "primary-fixed-dim": "#adc7f7",
+                    "background": "#f8f9ff",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed": "#2b1700",
+                    "inverse-primary": "#adc7f7",
+                    "surface-tint": "#455f88",
+                    "tertiary-fixed-dim": "#f2bc82",
+                    "primary": "#002045",
+                    "on-tertiary": "#ffffff",
+                    "surface-dim": "#cbdbf5",
+                    "on-primary-fixed-variant": "#2d476f",
+                    "on-error-container": "#93000a",
+                    "on-surface-variant": "#43474e",
+                    "inverse-surface": "#213145",
+                    "surface-container": "#e5eeff",
+                    "secondary": "#1960a3",
+                    "on-tertiary-container": "#c6955e",
+                    "tertiary-container": "#4f2e00",
+                    "on-tertiary-fixed-variant": "#633f0f",
+                    "inverse-on-surface": "#eaf1ff",
+                    "tertiary-fixed": "#ffddba",
+                    "on-primary": "#ffffff",
+                    "secondary-fixed": "#d3e4ff",
+                    "primary-container": "#1a365d",
+                    "on-surface": "#0b1c30",
+                    "on-background": "#0b1c30",
+                    "outline": "#74777f",
+                    "surface-bright": "#f8f9ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "container-padding": "24px",
+                    "sidebar-expanded": "240px",
+                    "stack-compact": "8px",
+                    "gutter": "16px",
+                    "stack-comfortable": "16px",
+                    "nav-rail-width": "64px"
+            },
+            "fontFamily": {
+                    "mono-data": ["JetBrains Mono"],
+                    "title-sm": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-caps": ["Inter"]
+            },
+            "fontSize": {
+                    "mono-data": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9ff; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .chart-grid {
+            background-image: linear-gradient(#e5eeff 1px, transparent 1px), linear-gradient(90deg, #e5eeff 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+    </style>
+</head>
+<body class="text-on-background">
+<!-- SideNavBar Anchor -->
+<aside class="w-sidebar-expanded h-full left-0 top-0 fixed bg-surface border-r border-outline-variant flex flex-col py-gutter px-stack-comfortable z-50">
+<div class="mb-8 px-2">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Kurumsal Kaynak</h1>
+<p class="text-on-surface-variant font-body-sm text-body-sm opacity-70">Küresel Operasyonlar</p>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<!-- Active Tab: Dashboard -->
+<a class="bg-secondary-container text-on-secondary-container rounded-lg font-semibold flex items-center gap-3 px-3 py-2.5 transition-colors duration-150" href="../erp_dashboard_genel_bak/code.html">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-md text-body-md">Genel Bakış</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-low transition-colors duration-150 flex items-center gap-3 px-3 py-2.5 rounded-lg" href="../envanter_y_netimi/code.html">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-body-md text-body-md">Envanter</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-low transition-colors duration-150 flex items-center gap-3 px-3 py-2.5 rounded-lg" href="../finansal_raporlar/code.html">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-body-md text-body-md">Finans</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-low transition-colors duration-150 flex items-center gap-3 px-3 py-2.5 rounded-lg" href="../personel_y_netimi/code.html">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-body-md text-body-md">İnsan Kaynakları</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-low transition-colors duration-150 flex items-center gap-3 px-3 py-2.5 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-md text-body-md">Ayarlar</span>
+</a>
+</nav>
+<button class="mt-4 bg-primary text-on-primary py-2 px-4 rounded-lg flex items-center justify-center gap-2 font-title-sm text-title-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+            Yeni Rapor
+        </button>
+<div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
+<a class="text-on-surface-variant hover:bg-surface-container-low transition-colors duration-150 flex items-center gap-3 px-3 py-2.5 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-body-md text-body-md">Destek</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-low transition-colors duration-150 flex items-center gap-3 px-3 py-2.5 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-body-md text-body-md">Çıkış Yap</span>
+</a>
+</div>
+</aside>
+<!-- TopNavBar Anchor -->
+<header class="flex justify-between items-center h-16 px-container-padding ml-sidebar-expanded w-[calc(100%-240px)] fixed top-0 bg-surface border-b border-outline-variant z-40">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-bold text-primary">ERP Çekirdek</span>
+<div class="flex items-center gap-6">
+<a class="text-primary border-b-2 border-primary py-5 font-title-sm text-title-sm" href="../bigsafer_erp_ana_sayfa/code.html">Ana Sayfa</a>
+<a class="text-on-surface-variant hover:text-primary transition-all font-title-sm text-title-sm" href="../finansal_raporlar/code.html">Raporlar</a>
+<a class="text-on-surface-variant hover:text-primary transition-all font-title-sm text-title-sm" href="#">Denetim</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">search</span>
+<input class="bg-surface-container-low border border-outline-variant rounded-full pl-10 pr-4 py-1.5 w-64 focus:ring-2 focus:ring-primary outline-none text-body-sm font-body-sm" placeholder="Genel Arama..." type="text"/>
+</div>
+<div class="flex items-center gap-2 border-l border-outline-variant pl-4">
+<button class="p-2 hover:bg-surface-container transition-colors rounded-full relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 hover:bg-surface-container transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+</button>
+<button class="p-2 hover:bg-surface-container transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+</button>
+</div>
+<div class="flex items-center gap-3 border-l border-outline-variant pl-4 ml-2">
+<img class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="Professional headshot of a corporate executive in a blue suit, looking confidently at the camera against a neutral grey studio background. The lighting is soft and professional, emphasizing a modern corporate leadership aesthetic with high clarity and balanced contrast." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMoM8S5iKAVdqAFcTxjqV41-GDYRwxhDLFlzU6UQhtF0vj-UuteniBHkry8dF19RiBVC-LOYnJp58KTdMH7SLVOOGWEhS1Pd3pnsqXivDAWAYaaKZyu7WEVMXb64Lqu29a1K2TWjMApTRz68Q-UgLTDN4i4FNmLjFdbRnt2tjTBHQqCrAmjx3VZcumWr4opZl_eQbIdltyXl79kd4T0Mv6B7h0knGg_MpjvJfiano_EFC2VXv2bUbTquC5sBNDKuAFk_eSlahF1Q"/>
+<div class="hidden xl:block">
+<p class="font-title-sm text-title-sm leading-none">Mert Yılmaz</p>
+<p class="text-[10px] uppercase tracking-wider text-outline font-bold">Yönetici</p>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-sidebar-expanded pt-24 pb-12 px-container-padding">
+<!-- KPI Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-gutter">
+<!-- Total Sales -->
+<div class="bg-surface-container-lowest border border-outline-variant p-stack-comfortable flex flex-col justify-between group hover:border-primary transition-colors">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-on-surface-variant font-label-caps text-label-caps mb-1">TOPLAM SATIŞ</p>
+<h2 class="font-display-lg text-display-lg text-primary">₺1,248,000</h2>
+</div>
+<div class="bg-primary-container p-2 rounded">
+<span class="material-symbols-outlined text-white" data-icon="trending_up">trending_up</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2">
+<span class="text-emerald-600 font-bold text-body-sm">+12.5%</span>
+<span class="text-on-surface-variant font-body-sm opacity-60">geçen aya göre</span>
+</div>
+</div>
+<!-- Active Orders -->
+<div class="bg-surface-container-lowest border border-outline-variant p-stack-comfortable flex flex-col justify-between hover:border-secondary transition-colors">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-on-surface-variant font-label-caps text-label-caps mb-1">AKTİF SİPARİŞLER</p>
+<h2 class="font-display-lg text-display-lg text-primary">842</h2>
+</div>
+<div class="bg-secondary-container p-2 rounded">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="shopping_cart">shopping_cart</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2">
+<span class="text-emerald-600 font-bold text-body-sm">48 yeni</span>
+<span class="text-on-surface-variant font-body-sm opacity-60">son 24 saat</span>
+</div>
+</div>
+<!-- Inventory Value -->
+<div class="bg-surface-container-lowest border border-outline-variant p-stack-comfortable flex flex-col justify-between hover:border-tertiary-container transition-colors">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-on-surface-variant font-label-caps text-label-caps mb-1">ENVANTER DEĞERİ</p>
+<h2 class="font-display-lg text-display-lg text-primary">₺4.2M</h2>
+</div>
+<div class="bg-tertiary-container p-2 rounded">
+<span class="material-symbols-outlined text-on-tertiary-container" data-icon="inventory_2">inventory_2</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2">
+<span class="text-on-surface-variant font-body-sm opacity-60">3,420 kalem ürün</span>
+</div>
+</div>
+<!-- Employee Count -->
+<div class="bg-surface-container-lowest border border-outline-variant p-stack-comfortable flex flex-col justify-between hover:border-outline transition-colors">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-on-surface-variant font-label-caps text-label-caps mb-1">PERSONEL SAYISI</p>
+<h2 class="font-display-lg text-display-lg text-primary">124</h2>
+</div>
+<div class="bg-surface-container p-2 rounded">
+<span class="material-symbols-outlined text-primary" data-icon="groups">groups</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2">
+<span class="text-on-surface-variant font-body-sm opacity-60">8 Departman</span>
+</div>
+</div>
+</div>
+<!-- Middle Section & Right Activity Sidebar -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Main Column -->
+<div class="col-span-12 lg:col-span-8 space-y-gutter">
+<!-- Revenue Chart Placeholder -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-container-padding">
+<div class="flex justify-between items-center mb-6">
+<div>
+<h3 class="font-headline-md text-headline-md text-primary">Aylık Gelir Grafiği</h3>
+<p class="text-on-surface-variant font-body-sm">2024 Mali Yılı Analizi</p>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1 bg-surface-container rounded font-label-caps text-label-caps text-primary">AYLIK</button>
+<button class="px-3 py-1 hover:bg-surface-container rounded font-label-caps text-label-caps text-on-surface-variant">YILLIK</button>
+</div>
+</div>
+<div class="h-64 chart-grid relative rounded-lg border border-outline-variant/30 flex items-end justify-between px-8 pb-4">
+<!-- Simplified Visual Bars for Chart -->
+<div class="w-12 bg-secondary-container rounded-t h-[40%] transition-all hover:h-[45%] cursor-pointer group relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">₺320k</div>
+</div>
+<div class="w-12 bg-secondary-container rounded-t h-[55%] transition-all hover:h-[60%] cursor-pointer group relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">₺440k</div>
+</div>
+<div class="w-12 bg-secondary-container rounded-t h-[45%] transition-all hover:h-[50%] cursor-pointer group relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">₺360k</div>
+</div>
+<div class="w-12 bg-primary rounded-t h-[80%] transition-all hover:h-[85%] cursor-pointer group relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">₺640k</div>
+</div>
+<div class="w-12 bg-secondary-container rounded-t h-[65%] transition-all hover:h-[70%] cursor-pointer group relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">₺520k</div>
+</div>
+<div class="w-12 bg-secondary-container rounded-t h-[75%] transition-all hover:h-[80%] cursor-pointer group relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">₺590k</div>
+</div>
+</div>
+<div class="flex justify-between px-8 mt-2 text-on-surface-variant font-label-caps text-label-caps">
+<span>Oca</span><span>Şub</span><span>Mar</span><span>Nis</span><span>May</span><span>Haz</span>
+</div>
+</div>
+<!-- Pending Transactions Table -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden">
+<div class="p-gutter border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-title-sm text-title-sm text-primary">Bekleyen İşlemler</h3>
+<a class="text-primary font-body-sm underline" href="#">Tümünü Gör</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low text-on-surface-variant font-label-caps text-label-caps uppercase">
+<tr>
+<th class="px-gutter py-3">İşlem ID</th>
+<th class="px-gutter py-3">Müşteri</th>
+<th class="px-gutter py-3">Tutar</th>
+<th class="px-gutter py-3">Tarih</th>
+<th class="px-gutter py-3">Durum</th>
+<th class="px-gutter py-3">İşlem</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant font-body-md text-body-md">
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-gutter py-4 font-mono-data text-mono-data">#TR-8429</td>
+<td class="px-gutter py-4">Global Tech Ltd.</td>
+<td class="px-gutter py-4 font-semibold">₺42,500.00</td>
+<td class="px-gutter py-4 opacity-70">12 May 2024</td>
+<td class="px-gutter py-4">
+<span class="bg-tertiary-fixed text-on-tertiary-fixed-variant px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Onay Bekliyor</span>
+</td>
+<td class="px-gutter py-4">
+<button class="text-primary hover:bg-primary-container hover:text-white p-1 rounded transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-gutter py-4 font-mono-data text-mono-data">#TR-8427</td>
+<td class="px-gutter py-4">Arda Yapı A.Ş.</td>
+<td class="px-gutter py-4 font-semibold">₺18,200.00</td>
+<td class="px-gutter py-4 opacity-70">11 May 2024</td>
+<td class="px-gutter py-4">
+<span class="bg-secondary-fixed text-on-secondary-fixed-variant px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">İşleniyor</span>
+</td>
+<td class="px-gutter py-4">
+<button class="text-primary hover:bg-primary-container hover:text-white p-1 rounded transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-gutter py-4 font-mono-data text-mono-data">#TR-8421</td>
+<td class="px-gutter py-4">Moda Tekstil</td>
+<td class="px-gutter py-4 font-semibold">₺5,400.00</td>
+<td class="px-gutter py-4 opacity-70">10 May 2024</td>
+<td class="px-gutter py-4">
+<span class="bg-error-container text-on-error-container px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Ödeme Hatası</span>
+</td>
+<td class="px-gutter py-4">
+<button class="text-primary hover:bg-primary-container hover:text-white p-1 rounded transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Side Activity Column -->
+<div class="col-span-12 lg:col-span-4">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-container-padding sticky top-24">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary" data-icon="bolt">bolt</span>
+<h3 class="font-title-sm text-title-sm text-primary">Son Aktiviteler</h3>
+</div>
+<div class="space-y-6 relative before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-surface-container">
+<!-- Activity Item 1 -->
+<div class="relative pl-8">
+<div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center z-10 border-2 border-white">
+<span class="material-symbols-outlined text-[14px] text-emerald-800" data-icon="check_circle">check_circle</span>
+</div>
+<p class="font-body-md text-body-md">
+<span class="font-semibold">Merve Güneş</span> yeni bir satın alma talebi oluşturdu.
+                            </p>
+<span class="text-on-surface-variant font-body-sm text-[11px] opacity-60">12 dakika önce</span>
+<div class="mt-2 p-2 bg-surface-container-low rounded border border-outline-variant/30 text-body-sm">
+<p>Satınalma: #PR-2024-055 (₺12,000)</p>
+</div>
+</div>
+<!-- Activity Item 2 -->
+<div class="relative pl-8">
+<div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-primary-container flex items-center justify-center z-10 border-2 border-white">
+<span class="material-symbols-outlined text-[14px] text-white" data-icon="person">person</span>
+</div>
+<p class="font-body-md text-body-md">
+<span class="font-semibold">Ali Vural</span> sisteme giriş yaptı.
+                            </p>
+<span class="text-on-surface-variant font-body-sm text-[11px] opacity-60">45 dakika önce</span>
+</div>
+<!-- Activity Item 3 -->
+<div class="relative pl-8">
+<div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-tertiary-container flex items-center justify-center z-10 border-2 border-white">
+<span class="material-symbols-outlined text-[14px] text-on-tertiary-container" data-icon="warning">warning</span>
+</div>
+<p class="font-body-md text-body-md">
+<span class="font-semibold">Stok Uyarısı:</span> "X-204 Anakart" stokları kritik seviyenin altında.
+                            </p>
+<span class="text-on-surface-variant font-body-sm text-[11px] opacity-60">2 saat önce</span>
+</div>
+<!-- Activity Item 4 -->
+<div class="relative pl-8">
+<div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-secondary-container flex items-center justify-center z-10 border-2 border-white">
+<span class="material-symbols-outlined text-[14px] text-on-secondary-container" data-icon="upload_file">upload_file</span>
+</div>
+<p class="font-body-md text-body-md">
+<span class="font-semibold">Finans Raporu</span> dışa aktarıldı.
+                            </p>
+<span class="text-on-surface-variant font-body-sm text-[11px] opacity-60">4 saat önce</span>
+</div>
+</div>
+<button class="w-full mt-8 py-2 border border-outline-variant rounded font-label-caps text-label-caps text-on-surface-variant hover:bg-surface-container transition-colors uppercase tracking-widest">
+                        Tümünü Görüntüle
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Simple Micro-interaction: Chart Bar Highlighting
+        document.querySelectorAll('.chart-grid div').forEach(bar => {
+            bar.addEventListener('mouseenter', () => {
+                bar.style.opacity = '0.9';
+            });
+            bar.addEventListener('mouseleave', () => {
+                bar.style.opacity = '1';
+            });
+        });
+    </script>
+<script src="../shared_logic.js"></script>
+</body></html>

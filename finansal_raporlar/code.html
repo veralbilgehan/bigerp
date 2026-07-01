@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html class="light" lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ERP Core - Finansal Raporlar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 16px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#a2c9ff",
+                        "tertiary": "#321b00",
+                        "on-secondary-container": "#00477f",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#c4c6cf",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#dce9ff",
+                        "secondary-container": "#7db6ff",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#004881",
+                        "on-primary-fixed": "#001b3c",
+                        "on-secondary-fixed": "#001c38",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface": "#f8f9ff",
+                        "surface-container-low": "#eff4ff",
+                        "primary-fixed": "#d6e3ff",
+                        "on-primary-container": "#86a0cd",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#d3e4fe",
+                        "primary-fixed-dim": "#adc7f7",
+                        "background": "#f8f9ff",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#2b1700",
+                        "inverse-primary": "#adc7f7",
+                        "surface-tint": "#455f88",
+                        "tertiary-fixed-dim": "#f2bc82",
+                        "primary": "#002045",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#cbdbf5",
+                        "on-primary-fixed-variant": "#2d476f",
+                        "on-error-container": "#93000a",
+                        "on-surface-variant": "#43474e",
+                        "inverse-surface": "#213145",
+                        "surface-container": "#e5eeff",
+                        "secondary": "#1960a3",
+                        "on-tertiary-container": "#c6955e",
+                        "tertiary-container": "#4f2e00",
+                        "on-tertiary-fixed-variant": "#633f0f",
+                        "inverse-on-surface": "#eaf1ff",
+                        "tertiary-fixed": "#ffddba",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed": "#d3e4ff",
+                        "primary-container": "#1a365d",
+                        "on-surface": "#0b1c30",
+                        "on-background": "#0b1c30",
+                        "outline": "#74777f",
+                        "surface-bright": "#f8f9ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "container-padding": "24px",
+                        "sidebar-expanded": "240px",
+                        "stack-compact": "8px",
+                        "gutter": "16px",
+                        "stack-comfortable": "16px",
+                        "nav-rail-width": "64px"
+                    },
+                    "fontFamily": {
+                        "mono-data": ["JetBrains Mono"],
+                        "title-sm": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "mono-data": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "display-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- SideNavBar -->
+<aside class="w-sidebar-expanded h-full left-0 top-0 fixed flex flex-col py-gutter px-stack-comfortable bg-surface border-r border-outline-variant z-50">
+<div class="mb-10 px-2">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Kurumsal Kaynak</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Küresel Operasyonlar</p>
+</div>
+<nav class="flex-grow space-y-2">
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-low transition-colors duration-150 rounded-lg" href="../erp_dashboard_genel_bak/code.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Genel Bakış</span>
+</a>
+<a class="flex items-center gap-3 p-3 bg-secondary-container text-on-secondary-container rounded-lg font-semibold" href="../finansal_raporlar/code.html">
+<span class="material-symbols-outlined">finance</span>
+<span class="font-body-md text-body-md">Finans</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-low transition-colors duration-150 rounded-lg" href="../envanter_y_netimi/code.html">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-body-md text-body-md">Envanter</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-low transition-colors duration-150 rounded-lg" href="../personel_y_netimi/code.html">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-body-md text-body-md">İnsan Kaynakları</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-low transition-colors duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md">Ayarlar</span>
+</a>
+</nav>
+<div class="pt-6 border-t border-outline-variant space-y-2">
+<button class="w-full flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-low transition-colors duration-150 rounded-lg">
+<span class="material-symbols-outlined">help</span>
+<span class="font-body-md text-body-md">Destek</span>
+</button>
+<button class="w-full flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-low transition-colors duration-150 rounded-lg">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body-md text-body-md">Çıkış Yap</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-sidebar-expanded min-h-screen">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center h-16 px-container-padding sticky top-0 bg-surface border-b border-outline-variant z-40">
+<div class="flex items-center gap-6">
+<span class="font-headline-md text-headline-md font-bold text-primary">ERP Çekirdek</span>
+<div class="hidden md:flex gap-4">
+<a class="font-title-sm text-title-sm text-on-surface-variant hover:text-primary" href="../bigsafer_erp_ana_sayfa/code.html">Ana Sayfa</a>
+<a class="font-title-sm text-title-sm text-primary border-b-2 border-primary" href="../finansal_raporlar/code.html">Raporlar</a>
+<a class="font-title-sm text-title-sm text-on-surface-variant hover:text-primary" href="#">Denetim</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-full">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-full">
+<span class="material-symbols-outlined">history</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-full">
+<span class="material-symbols-outlined">chat</span>
+</button>
+</div>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-semibold flex items-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                    Yeni Rapor
+                </button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a middle-aged corporate executive in a crisp navy blue suit, set against a blurred modern office background with soft daylight. The lighting is flattering and professional, emphasizing a clean and organized corporate environment consistent with high-end ERP software interfaces." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXIlZXQiUbT80xLB3wxmlTiDtJ1Cguj3uwoxGgl6GZQwW2FAn_-fJ0pTen_Fs5a71Zc3XAFtaVlyUg5mjI7xH07VVc4hdg4LrcNHL6wGy9kBidISd7wHnzl7oUcsolUmgRKmcQOeUFiqqE2_syfiDRFD7ipwy1KEHJWGwk-v0SmIhvVC8wIL608vBDFM75Jbfgo37xCOmaQ7GEJ6f0eb-VR7EuaybcCEQy9TNkm9mOf2IB4u2UFtjlpM1UCMT13cCEPSb-7rNHzA"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-container-padding space-y-6">
+<!-- Filters Section -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Finansal Raporlar</h2>
+<p class="text-on-surface-variant font-body-sm">Global operasyonlar için genel nakit durumu ve gelir analizi.</p>
+</div>
+<div class="flex items-center gap-3 bg-surface p-2 rounded-lg border border-outline-variant">
+<span class="material-symbols-outlined text-outline">calendar_today</span>
+<input class="bg-transparent border-none focus:ring-0 font-mono-data text-on-surface w-48 text-sm cursor-pointer" readonly="" type="text" value="01 Oca 2024 - 31 Ara 2024"/>
+<button class="p-1 hover:bg-surface-container rounded transition-colors">
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+</div>
+<!-- Dashboard Grid -->
+<div class="bento-grid">
+<!-- Doughnut Chart Section -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container-lowest p-6 rounded-xl border border-outline-variant flex flex-col justify-between">
+<div class="flex justify-between items-start mb-6">
+<h3 class="font-title-sm text-title-sm text-on-surface">Gelir / Gider Dağılımı</h3>
+<button class="material-symbols-outlined text-outline">more_horiz</button>
+</div>
+<div class="relative flex justify-center items-center py-8">
+<!-- Custom CSS Chart for demonstration -->
+<div class="w-48 h-48 rounded-full border-[16px] border-secondary-container flex flex-col items-center justify-center relative shadow-inner">
+<div class="absolute inset-[-16px] w-48 h-48 rounded-full border-[16px] border-tertiary-fixed-dim" style="clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 50%);"></div>
+<span class="font-headline-md text-headline-md text-primary">₺2.4M</span>
+<span class="text-on-surface-variant text-[11px] font-label-caps">TOPLAM HACİM</span>
+</div>
+</div>
+<div class="space-y-3 mt-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-secondary-container"></span>
+<span class="text-on-surface-variant text-body-sm">Satış Gelirleri</span>
+</div>
+<span class="font-mono-data text-on-surface">₺1.850.000</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-tertiary-fixed-dim"></span>
+<span class="text-on-surface-variant text-body-sm">Operasyonel Giderler</span>
+</div>
+<span class="font-mono-data text-on-surface">₺550.000</span>
+</div>
+</div>
+</div>
+<!-- Cash Flow Table Section -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-xl border border-outline-variant flex flex-col">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-title-sm text-title-sm text-on-surface">Nakit Akış Detayları</h3>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-sm border border-outline-variant rounded-lg hover:bg-surface-container transition-colors">Export CSV</button>
+<button class="px-3 py-1 text-sm bg-primary text-on-primary rounded-lg">Detaylı Analiz</button>
+</div>
+</div>
+<div class="overflow-x-auto flex-grow">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low text-on-surface-variant font-label-caps">
+<tr>
+<th class="px-6 py-3 font-semibold border-b border-outline-variant">Tarih</th>
+<th class="px-6 py-3 font-semibold border-b border-outline-variant">Açıklama</th>
+<th class="px-6 py-3 font-semibold border-b border-outline-variant">Kategori</th>
+<th class="px-6 py-3 font-semibold border-b border-outline-variant text-right">Miktar</th>
+<th class="px-6 py-3 font-semibold border-b border-outline-variant text-center">Bakiye</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant text-body-md">
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="px-6 py-4 font-mono-data text-on-surface-variant">12 Eki 2024</td>
+<td class="px-6 py-4 font-semibold">Q3 Yazılım Lisans Yenileme</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-surface-container-high rounded text-xs">Teknoloji</span></td>
+<td class="px-6 py-4 text-right text-error font-mono-data">-₺45.000,00</td>
+<td class="px-6 py-4 text-center font-mono-data text-on-surface">₺1.240.000</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-6 py-4 font-mono-data text-on-surface-variant">10 Eki 2024</td>
+<td class="px-6 py-4 font-semibold">Hizmet Faturası - Proje X</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-secondary-fixed rounded text-xs text-on-secondary-fixed-variant">Danışmanlık</span></td>
+<td class="px-6 py-4 text-right text-secondary font-mono-data">+₺120.000,00</td>
+<td class="px-6 py-4 text-center font-mono-data text-on-surface">₺1.285.000</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-6 py-4 font-mono-data text-on-surface-variant">08 Eki 2024</td>
+<td class="px-6 py-4 font-semibold">Ofis Kira Ödemesi</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-surface-container-high rounded text-xs">Sabit Gider</span></td>
+<td class="px-6 py-4 text-right text-error font-mono-data">-₺15.200,00</td>
+<td class="px-6 py-4 text-center font-mono-data text-on-surface">₺1.165.000</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-6 py-4 font-mono-data text-on-surface-variant">05 Eki 2024</td>
+<td class="px-6 py-4 font-semibold">Amazon Web Services</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-surface-container-high rounded text-xs">Bulut Altyapı</span></td>
+<td class="px-6 py-4 text-right text-error font-mono-data">-₺8.400,00</td>
+<td class="px-6 py-4 text-center font-mono-data text-on-surface">₺1.180.200</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Latest Invoices Section -->
+<div class="col-span-12 bg-surface-container-lowest rounded-xl border border-outline-variant flex flex-col">
+<div class="p-6 border-b border-outline-variant">
+<h3 class="font-title-sm text-title-sm text-on-surface">Son Faturalar ve Ödeme Durumu</h3>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low text-on-surface-variant font-label-caps">
+<tr>
+<th class="px-6 py-3 font-semibold border-b border-outline-variant">Fatura No</th>
+<th class="px-6 py-3 font-semibold border-b border-outline-variant">Müşteri / Tedarikçi</th>
+<th class="px-6 py-3 font-semibold border-b border-outline-variant">Vade Tarihi</th>
+<th class="px-6 py-3 font-semibold border-b border-outline-variant">Tutar</th>
+<th class="px-6 py-3 font-semibold border-b border-outline-variant">Durum</th>
+<th class="px-6 py-3 font-semibold border-b border-outline-variant text-right">İşlem</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant text-body-md">
+<tr>
+<td class="px-6 py-4 font-mono-data text-primary">#INV-2024-001</td>
+<td class="px-6 py-4">Global Tech Solutions Ltd.</td>
+<td class="px-6 py-4 font-mono-data">25 Eki 2024</td>
+<td class="px-6 py-4 font-mono-data font-bold">₺84.500,00</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-bold w-fit">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                                            Ödendi
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant"><span class="material-symbols-outlined">visibility</span></button>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-4 font-mono-data text-primary">#INV-2024-002</td>
+<td class="px-6 py-4">Metropoll Lojistik A.Ş.</td>
+<td class="px-6 py-4 font-mono-data">30 Eki 2024</td>
+<td class="px-6 py-4 font-mono-data font-bold">₺12.300,00</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-orange-100 text-orange-900 text-xs font-bold w-fit">
+<span class="w-1.5 h-1.5 rounded-full bg-orange-600"></span>
+                                            Beklemede
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant"><span class="material-symbols-outlined">visibility</span></button>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-4 font-mono-data text-primary">#INV-2024-003</td>
+<td class="px-6 py-4">Siber Güvenlik Sistemleri</td>
+<td class="px-6 py-4 font-mono-data text-error font-bold">15 Eki 2024</td>
+<td class="px-6 py-4 font-mono-data font-bold">₺5.600,00</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-100 text-red-900 text-xs font-bold w-fit">
+<span class="w-1.5 h-1.5 rounded-full bg-red-600"></span>
+                                            Gecikmiş
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-surface-container rounded-lg text-on-surface-variant"><span class="material-symbols-outlined">visibility</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Simple micro-interactions for active state feedback
+        document.querySelectorAll('button, a').forEach(elem => {
+            elem.addEventListener('mousedown', () => {
+                elem.classList.add('opacity-90', 'scale-[0.98]');
+            });
+            elem.addEventListener('mouseup', () => {
+                elem.classList.remove('opacity-90', 'scale-[0.98]');
+            });
+            elem.addEventListener('mouseleave', () => {
+                elem.classList.remove('opacity-90', 'scale-[0.98]');
+            });
+        });
+    </script>
+<script src="../shared_logic.js"></script>
+</body></html>

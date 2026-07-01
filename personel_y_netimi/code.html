@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+
+<html class="light" lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ERP Core - Personel Yönetimi</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .sidebar-item-active {
+            @apply bg-secondary-container text-on-secondary-container rounded-lg font-semibold;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+<!-- Insert Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#a2c9ff",
+                    "tertiary": "#321b00",
+                    "on-secondary-container": "#00477f",
+                    "error-container": "#ffdad6",
+                    "outline-variant": "#c4c6cf",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-high": "#dce9ff",
+                    "secondary-container": "#7db6ff",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-fixed-variant": "#004881",
+                    "on-primary-fixed": "#001b3c",
+                    "on-secondary-fixed": "#001c38",
+                    "surface-container-highest": "#d3e4fe",
+                    "surface": "#f8f9ff",
+                    "surface-container-low": "#eff4ff",
+                    "primary-fixed": "#d6e3ff",
+                    "on-primary-container": "#86a0cd",
+                    "on-error": "#ffffff",
+                    "surface-variant": "#d3e4fe",
+                    "primary-fixed-dim": "#adc7f7",
+                    "background": "#f8f9ff",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed": "#2b1700",
+                    "inverse-primary": "#adc7f7",
+                    "surface-tint": "#455f88",
+                    "tertiary-fixed-dim": "#f2bc82",
+                    "primary": "#002045",
+                    "on-tertiary": "#ffffff",
+                    "surface-dim": "#cbdbf5",
+                    "on-primary-fixed-variant": "#2d476f",
+                    "on-error-container": "#93000a",
+                    "on-surface-variant": "#43474e",
+                    "inverse-surface": "#213145",
+                    "surface-container": "#e5eeff",
+                    "secondary": "#1960a3",
+                    "on-tertiary-container": "#c6955e",
+                    "tertiary-container": "#4f2e00",
+                    "on-tertiary-fixed-variant": "#633f0f",
+                    "inverse-on-surface": "#eaf1ff",
+                    "tertiary-fixed": "#ffddba",
+                    "on-primary": "#ffffff",
+                    "secondary-fixed": "#d3e4ff",
+                    "primary-container": "#1a365d",
+                    "on-surface": "#0b1c30",
+                    "on-background": "#0b1c30",
+                    "outline": "#74777f",
+                    "surface-bright": "#f8f9ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "container-padding": "24px",
+                    "sidebar-expanded": "240px",
+                    "stack-compact": "8px",
+                    "gutter": "16px",
+                    "stack-comfortable": "16px",
+                    "nav-rail-width": "64px"
+            },
+            "fontFamily": {
+                    "mono-data": ["JetBrains Mono"],
+                    "title-sm": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-caps": ["Inter"]
+            },
+            "fontSize": {
+                    "mono-data": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md">
+<!-- SideNavBar Anchor -->
+<aside class="fixed left-0 top-0 h-screen w-sidebar-expanded bg-surface border-r border-outline-variant flex flex-col py-gutter px-stack-comfortable z-50">
+<div class="mb-8 px-2">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Kurumsal Kaynak</h1>
+<p class="font-body-sm text-on-surface-variant">Küresel Operasyonlar</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-low transition-colors duration-150 rounded-lg" href="../erp_dashboard_genel_bak/code.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md">Genel Bakış</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-low transition-colors duration-150 rounded-lg" href="../envanter_y_netimi/code.html">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-body-md">Envanter</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-low transition-colors duration-150 rounded-lg" href="../finansal_raporlar/code.html">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-body-md">Finans</span>
+</a>
+<!-- Active State: Human Resources -->
+<a class="flex items-center gap-3 px-3 py-2 bg-secondary-container text-on-secondary-container rounded-lg font-semibold" href="../personel_y_netimi/code.html">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-body-md">İnsan Kaynakları</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-low transition-colors duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md">Ayarlar</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-4 space-y-1">
+<button class="w-full mb-4 bg-primary text-on-primary py-2 px-4 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                Yeni Rapor
+            </button>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-low transition-colors duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-body-md">Destek</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-low transition-colors duration-150 rounded-lg" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body-md">Çıkış Yap</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Shell -->
+<main class="ml-sidebar-expanded min-h-screen flex flex-col">
+<!-- TopNavBar Anchor -->
+<header class="sticky top-0 z-40 bg-surface border-b border-outline-variant flex justify-between items-center h-16 px-container-padding">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-bold text-primary">ERP Çekirdek</span>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-container-low border border-outline-variant rounded-full text-body-sm w-64 focus:ring-2 focus:ring-primary focus:outline-none transition-all" placeholder="Arama yap..." type="text"/>
+</div>
+</div>
+<nav class="flex items-center gap-6">
+<div class="hidden md:flex items-center gap-6">
+<a class="font-title-sm text-title-sm text-on-surface-variant hover:text-primary transition-colors" href="../bigsafer_erp_ana_sayfa/code.html">Ana Sayfa</a>
+<a class="font-title-sm text-title-sm text-on-surface-variant hover:text-primary transition-colors" href="../finansal_raporlar/code.html">Raporlar</a>
+<a class="font-title-sm text-title-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Denetim</a>
+</div>
+<div class="h-6 w-px bg-outline-variant mx-2"></div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary">history</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary">chat</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional corporate headshot of a senior HR manager in a bright, modern office setting. The individual is wearing a charcoal suit and has a confident, approachable expression. Soft sunlight filters through large windows in the background, creating a high-key, clean aesthetic consistent with a data-driven enterprise environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDre0YFQBwjgbPVeAz1EGoUETfkPZgeuOMjDJsfW8wbJHY_xnfVxr91sQXD38p3irx8YOXt7fufprql1ttNg3OjkQbFsrNukDbxyXrwhtlUaSoT20CV-OLxIHwkVOCHsORM9r-nA0ihk-KBaUhEOJ2qbF_nSRI6laZ81ltiins2EChPW3RItyEym4crX66Fyh6t-YLkp2k7HGqjKeSuB_6V-TmxRAzIq-sk3ReUs0lgvFm_vj_R6Fr-lb6hUSfsHUJKQnOPENt8A"/>
+</div>
+</div>
+</nav>
+</header>
+<!-- Page Content: Bento Grid Layout -->
+<div class="p-container-padding flex-1 bg-background">
+<!-- Context Header -->
+<div class="flex justify-between items-end mb-8">
+<div>
+<h2 class="font-display-lg text-display-lg text-primary">Personel Yönetimi</h2>
+<p class="text-on-surface-variant font-body-md mt-1">Global operasyonlar için merkezi insan kaynakları paneli.</p>
+</div>
+<button class="flex items-center gap-2 bg-primary text-on-primary px-6 py-2.5 rounded-full font-semibold hover:bg-primary-container transition-all shadow-sm">
+<span class="material-symbols-outlined">person_add</span>
+                    Yeni Personel Kaydı
+                </button>
+</div>
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Main Personnel List Table (8 columns) -->
+<section class="col-span-12 lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col">
+<div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<h3 class="font-title-sm text-title-sm text-primary">Aktif Personel Listesi</h3>
+<div class="flex gap-2">
+<button class="p-1.5 hover:bg-surface-container-high rounded border border-outline-variant transition-colors">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+</button>
+<button class="p-1.5 hover:bg-surface-container-high rounded border border-outline-variant transition-colors">
+<span class="material-symbols-outlined text-sm">download</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto flex-1">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-6 py-3 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider border-b border-outline-variant">Personel</th>
+<th class="px-6 py-3 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider border-b border-outline-variant">Departman</th>
+<th class="px-6 py-3 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider border-b border-outline-variant">Rol</th>
+<th class="px-6 py-3 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider border-b border-outline-variant">Başlangıç</th>
+<th class="px-6 py-3 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider border-b border-outline-variant text-right">Durum</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 (Active/Selected) -->
+<tr class="group hover:bg-surface-container-low cursor-pointer transition-colors bg-secondary-container/10"
+    data-name="Caner Demir"
+    data-email="caner.demir@erpcore.com"
+    data-phone="+90 (555) 123 45 67"
+    data-location="İstanbul, TR"
+    data-role="Senior Backend Developer"
+    data-dept="TEKNOLOJİ"
+    data-perf="8.8"
+    data-leave-left="14"
+    data-leave-used="6"
+    data-img="https://lh3.googleusercontent.com/aida-public/AB6AXuCOBbpaEo5m7ZdiEHPBcD1qvEQfP5MtVKVZ3WJZKLmiozMaFKQl3wy57j-Xc5us8yPEBNw9ddNTBH7GS8x5NtGG8dacHEKqs4MGQ4asyzTRqmu4T81BQTrsP5PEndE626Qu-z84Msd0dk0CkUtrsCKXvK1xIwf0t4g78aLbuVXJsfrpWyp_u-kxLobQwgq6dbnDCCgrx897gZLLDACkIC5JQHF0whz8qSP12nnsfLDq_e-4nD0fkvm00kekkoyk_DWkY5SlY_K1sw">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary font-bold overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close-up portrait of a young male software engineer with glasses, wearing a casual navy blue sweater. He is positioned against a blurred background of a high-tech office with glowing screens. The lighting is crisp and modern, emphasizing professional competence and a tech-forward atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVBbpaEo5m7ZdiEHPBcD1qvEQfP5MtVKVZ3WJZKLmiozMaFKQl3wy57j-Xc5us8yPEBNw9ddNTBH7GS8x5NtGG8dacHEKqs4MGQ4asyzTRqmu4T81BQTrsP5PEndE626Qu-z84Msd0dk0CkUtrsCKXvK1xIwf0t4g78aLbuVXJsfrpWyp_u-kxLobQwgq6dbnDCCgrx897gZLLDACkIC5JQHF0whz8qSP12nnsfLDq_e-4nD0fkvm00kekkoyk_DWkY5SlY_K1sw"/>
+</div>
+<div>
+<p class="font-body-md font-bold text-primary">Caner Demir</p>
+<p class="text-xs text-on-surface-variant">caner.demir@erpcore.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-body-md text-on-surface">Teknoloji</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-body-md text-on-surface">Sr. Backend Dev</span>
+</td>
+<td class="px-6 py-4">
+<span class="font-mono-data text-mono-data text-on-surface-variant">12.04.2021</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-surface-container-highest text-secondary">Aktif</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-surface-container-low cursor-pointer transition-colors"
+    data-name="Zeynep Arslan"
+    data-email="zeynep.arslan@erpcore.com"
+    data-phone="+90 (555) 987 65 43"
+    data-location="Ankara, TR"
+    data-role="Mali Müşavir"
+    data-dept="FİNANS"
+    data-perf="9.2"
+    data-leave-left="18"
+    data-leave-used="4"
+    data-img="https://lh3.googleusercontent.com/aida-public/AB6AXuBYo2p9ERWDrr1ib5B9OEihr6aet6q5ttQy8fmN1GLls_WCs9IeCzPKdp6nK_M42_8T7mX-S5v6UdEqhiikY-UBHpHCKfezVZZBm2-d34U-iJgwfUn_WJbEjFBcwmbFD1cHNVA_cZELOSp9aYQsDRvZaNaFqq8q7g7dTzrSBUNKMXPIM1lEIgtiMJBOzUPl8Odrj6h35NzamX9ZQckzid2V7afQCRwU0-nc0jxYOgQHvlZ1KZ7mOgWJZhf4CdPorUXTjwtfhT9gJw">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-tertiary font-bold overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a middle-aged female executive with a warm, professional smile. She is wearing a cream-colored blazer and stands in a bright, airy office lobby with minimalist furniture. The color palette is composed of soft beige and white tones, creating an atmosphere of trust and corporate excellence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYo2p9ERWDrr1ib5B9OEihr6aet6q5ttQy8fmN1GLls_WCs9IeCzPKdp6nK_M42_8T7mX-S5v6UdEqhiikY-UBHpHCKfezVZZBm2-d34U-iJgwfUn_WJbEjFBcwmbFD1cHNVA_cZELOSp9aYQsDRvZaNaFqq8q7g7dTzrSBUNKMXPIM1lEIgtiMJBOzUPl8Odrj6h35NzamX9ZQckzid2V7afQCRwU0-nc0jxYOgQHvlZ1KZ7mOgWJZhf4CdPorUXTjwtfhT9gJw"/>
+</div>
+<div>
+<p class="font-body-md font-bold text-primary">Zeynep Arslan</p>
+<p class="text-xs text-on-surface-variant">zeynep.arslan@erpcore.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-body-md text-on-surface">Finans</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-body-md text-on-surface">Mali Müşavir</span>
+</td>
+<td class="px-6 py-4">
+<span class="font-mono-data text-mono-data text-on-surface-variant">05.01.2019</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-surface-container-highest text-secondary">Aktif</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-surface-container-low cursor-pointer transition-colors"
+    data-name="Mert Yıldız"
+    data-email="mert.yildiz@erpcore.com"
+    data-phone="+90 (555) 456 78 90"
+    data-location="Bursa, TR"
+    data-role="Proje Müdürü"
+    data-dept="ÜRETİM"
+    data-perf="8.5"
+    data-leave-left="10"
+    data-leave-used="10"
+    data-img="https://lh3.googleusercontent.com/aida-public/AB6AXuC7SOLAdtX1NRmtDZ0cMi0zV_5a03Usc6fZ2ofE795-fkV26W7ZbhxSooDNmDFRFZqK4xRjoTg34gHCpg3sipet-b2j1cZnwMXf2Fd4PaVfXV_swO4qf5YXqnOf_CH-2VfIN_usUkntIpx0d26tJtNk6IuVKFvxqIavdPVrbFaRGA2DbSF4Vc9HkaBA1HenSkScJkd56MDaLn5UOFf76YbkqNnhbBPqBjMq8mXF2ptyeO8RKnK5GJFeVmxWz-qa6lmHGKelzgGOuA">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed font-bold overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Professional profile photo of a creative director in a minimalist studio. He has a short beard and is wearing a stylish black turtleneck. The background is a clean grey wall with subtle shadows, reflecting a sophisticated, high-end design aesthetic focused on modern professional identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7SOLAdtX1NRmtDZ0cMi0zV_5a03Usc6fZ2ofE795-fkV26W7ZbhxSooDNmDFRFZqK4xRjoTg34gHCpg3sipet-b2j1cZnwMXf2Fd4PaVfXV_swO4qf5YXqnOf_CH-2VfIN_usUkntIpx0d26tJtNk6IuVKFvxqIavdPVrbFaRGA2DbSF4Vc9HkaBA1HenSkScJkd56MDaLn5UOFf76YbkqNnhbBPqBjMq8mXF2ptyeO8RKnK5GJFeVmxWz-qa6lmHGKelzgGOuA"/>
+</div>
+<div>
+<p class="font-body-md font-bold text-primary">Mert Yıldız</p>
+<p class="text-xs text-on-surface-variant">mert.yildiz@erpcore.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-body-md text-on-surface">Üretim</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-body-md text-on-surface">Proje Müdürü</span>
+</td>
+<td class="px-6 py-4">
+<span class="font-mono-data text-mono-data text-on-surface-variant">20.08.2022</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-error-container text-on-error-container">İzinli</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-surface-container-low cursor-pointer transition-colors"
+    data-name="Elif Kaya"
+    data-email="elif.kaya@erpcore.com"
+    data-phone="+90 (555) 321 09 87"
+    data-location="İzmir, TR"
+    data-role="İK Uzmanı"
+    data-dept="İNSAN KAYNAKLARI"
+    data-perf="9.5"
+    data-leave-left="21"
+    data-leave-used="2"
+    data-img="https://lh3.googleusercontent.com/aida-public/AB6AXuCm70HPHVH26IePkeOsWMIml8n2bK5ybjg05JaXJ0FD3zsgiQ4L4S0xX1pwjHMn2ImqZSazvffKYMzg32H-zxEFCGguZDJjTcj1NJcWYJaREIT5ROn1XFrLHjf3_zDdo8VYVMq854FTT6RpJPGprsqcfK9iCnt2X8ab1pPH-744XOX6ybyUsCwXf94-tm27oSPUyHjMZnUpG0JedsCI9EUkZ5TJBep5od8wibVRt9pf_-t5vIrHgWmNY-j20rV3mvhCL4vjJ6OVwA">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-primary font-bold overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A portrait of a focused young female HR specialist in a bright, contemporary workspace. She is wearing a modern teal blouse and has her hair neatly tied back. The lighting is balanced and professional, with a clean office environment in the background, signaling reliability and organized human resource management." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCm70HPHVH26IePkeOsWMIml8n2bK5ybjg05JaXJ0FD3zsgiQ4L4S0xX1pwjHMn2ImqZSazvffKYMzg32H-zxEFCGguZDJjTcj1NJcWYJaREIT5ROn1XFrLHjf3_zDdo8VYVMq854FTT6RpJPGprsqcfK9iCnt2X8ab1pPH-744XOX6ybyUsCwXf94-tm27oSPUyHjMZnUpG0JedsCI9EUkZ5TJBep5od8wibVRt9pf_-t5vIrHgWmNY-j20rV3mvhCL4vjJ6OVwA"/>
+</div>
+<div>
+<p class="font-body-md font-bold text-primary">Elif Kaya</p>
+<p class="text-xs text-on-surface-variant">elif.kaya@erpcore.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-body-md text-on-surface">İnsan Kaynakları</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-body-md text-on-surface">İK Uzmanı</span>
+</td>
+<td class="px-6 py-4">
+<span class="font-mono-data text-mono-data text-on-surface-variant">15.11.2020</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-surface-container-highest text-secondary">Aktif</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Detail Panel (4 columns) -->
+<aside class="col-span-12 lg:col-span-4 flex flex-col gap-gutter">
+<!-- Selected Person Detail Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
+<div class="flex flex-col items-center text-center mb-6">
+<div class="w-24 h-24 rounded-full border-4 border-secondary-container mb-4 overflow-hidden">
+<img id="detail-img" class="w-full h-full object-cover" data-alt="Close-up portrait of a young male software engineer with glasses, wearing a casual navy blue sweater. He is positioned against a blurred background of a high-tech office with glowing screens. The lighting is crisp and modern, emphasizing professional competence and a tech-forward atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO0hmec4gEV4tgyARUCeKwzbN7l6N06yGKknG3xfvst2cb1Gql9CxTFbdJ5vg3BoMOxGVVySsCo9Vm7V3Z0tiNCvGVE1_jM6FteVYYU8D2nsmNeWua2fHTTjqXwazkDSK9OIAzX1G0dcL2Mto3ytPG-WgD83iRMtqWyQdNcrqjTDx2DkumVT2sks_C-PQzIKmolxAWRlIDjeqJL0rGnMf1Mv6wLZ7CiGhGLzJ9I3S8xMyPsDXdVn3hHnsmk7NaAOQyraT1JIc0Ig"/>
+</div>
+<h3 id="detail-name" class="font-headline-md text-headline-md text-primary">Caner Demir</h3>
+<p id="detail-role" class="text-on-surface-variant font-body-md">Senior Backend Developer</p>
+<span id="detail-dept" class="mt-2 inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-primary text-on-primary">TEKNOLOJİ</span>
+</div>
+<div class="space-y-6">
+<!-- Contact Info -->
+<div>
+<h4 class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">contact_page</span>
+                                    İletişim Bilgileri
+                                </h4>
+<div class="space-y-2">
+<div class="flex justify-between items-center text-body-md">
+<span class="text-on-surface-variant">E-posta</span>
+<span id="detail-email" class="text-primary font-semibold">caner.demir@erpcore.com</span>
+</div>
+<div class="flex justify-between items-center text-body-md">
+<span class="text-on-surface-variant">Telefon</span>
+<span id="detail-phone" class="text-primary font-semibold">+90 (555) 123 45 67</span>
+</div>
+<div class="flex justify-between items-center text-body-md">
+<span class="text-on-surface-variant">Lokasyon</span>
+<span id="detail-location" class="text-primary font-semibold">İstanbul, TR</span>
+</div>
+</div>
+</div>
+<!-- Performance Meter -->
+<div>
+<h4 class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+                                    Performans Skoru
+                                </h4>
+<div class="flex items-center gap-4">
+<div class="flex-1 h-3 bg-surface-container-high rounded-full overflow-hidden">
+<div id="detail-perf-bar" class="h-full bg-secondary rounded-full" style="width: 88%;"></div>
+</div>
+<span id="detail-perf-text" class="font-mono-data text-primary font-bold">8.8 / 10</span>
+</div>
+<p class="text-xs text-on-surface-variant mt-1 italic">Son değerlendirme: 2 hafta önce</p>
+</div>
+<!-- Leave Status -->
+<div>
+<h4 class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">event_available</span>
+                                    İzin Durumu
+                                </h4>
+<div class="grid grid-cols-2 gap-4">
+<div class="p-3 bg-surface-container-low rounded-lg border border-outline-variant">
+<p class="text-xs text-on-surface-variant mb-1 uppercase">Kalan İzin</p>
+<p id="detail-leave-left" class="text-title-sm text-primary font-bold">14 Gün</p>
+</div>
+<div class="p-3 bg-surface-container-low rounded-lg border border-outline-variant">
+<p class="text-xs text-on-surface-variant mb-1 uppercase">Kullanılan</p>
+<p id="detail-leave-used" class="text-title-sm text-primary font-bold">6 Gün</p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 flex gap-3">
+<button class="flex-1 border border-outline-variant text-on-surface py-2 rounded-lg font-semibold hover:bg-surface-container-low transition-colors text-sm">
+                                Profili Düzenle
+                            </button>
+<button class="material-symbols-outlined p-2 border border-outline-variant text-on-surface-variant rounded-lg hover:bg-surface-container-low">
+                                more_horiz
+                            </button>
+</div>
+</div>
+<!-- Quick Stats Card -->
+<div class="bg-primary-container text-on-primary-fixed-variant rounded-xl p-6 relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="font-title-sm text-title-sm text-primary-fixed mb-2">Departman Özeti</h4>
+<div class="flex items-baseline gap-2">
+<span class="text-display-lg font-bold text-white">42</span>
+<span class="text-primary-fixed text-body-md">Toplam Çalışan</span>
+</div>
+<div class="mt-4 flex items-center gap-2 text-primary-fixed text-xs">
+<span class="material-symbols-outlined text-sm">bolt</span>
+<span>3 yeni personel bu ay katıldı</span>
+</div>
+</div>
+<!-- Abstract decorative background -->
+<div class="absolute right-0 top-0 w-32 h-32 bg-secondary opacity-20 -mr-16 -mt-16 rounded-full blur-3xl"></div>
+<div class="absolute left-0 bottom-0 w-24 h-24 bg-tertiary-fixed-dim opacity-10 -ml-12 -mb-12 rounded-full blur-2xl"></div>
+</div>
+</aside>
+</div>
+</div>
+</main>
+<script>
+        // Simple row selection interaction
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('click', () => {
+                document.querySelectorAll('tbody tr').forEach(r => r.classList.remove('bg-secondary-container/10'));
+                row.classList.add('bg-secondary-container/10');
+                
+                // Dynamic preview card update
+                const name = row.getAttribute('data-name');
+                const email = row.getAttribute('data-email');
+                const phone = row.getAttribute('data-phone');
+                const location = row.getAttribute('data-location');
+                const role = row.getAttribute('data-role');
+                const dept = row.getAttribute('data-dept');
+                const perf = row.getAttribute('data-perf');
+                const leaveLeft = row.getAttribute('data-leave-left');
+                const leaveUsed = row.getAttribute('data-leave-used');
+                const img = row.getAttribute('data-img');
+                
+                if (name) {
+                    document.getElementById('detail-name').innerText = name;
+                    document.getElementById('detail-email').innerText = email;
+                    document.getElementById('detail-phone').innerText = phone;
+                    document.getElementById('detail-location').innerText = location;
+                    document.getElementById('detail-role').innerText = role;
+                    document.getElementById('detail-dept').innerText = dept;
+                    document.getElementById('detail-perf-text').innerText = perf + ' / 10';
+                    document.getElementById('detail-perf-bar').style.width = (parseFloat(perf) * 10) + '%';
+                    document.getElementById('detail-leave-left').innerText = leaveLeft + ' Gün';
+                    document.getElementById('detail-leave-used').innerText = leaveUsed + ' Gün';
+                    document.getElementById('detail-img').src = img;
+                }
+            });
+        });
+    </script>
+<script src="../shared_logic.js"></script>
+</body></html>

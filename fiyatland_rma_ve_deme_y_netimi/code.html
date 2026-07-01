@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+
+<html class="light" lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ERP Finance Pro - Fiyatlandırma ve Ödeme Yönetimi</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #c4c6cf; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #74777f; }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#d3e4ff",
+                        "primary-container": "#1a365d",
+                        "secondary": "#1960a3",
+                        "on-primary-fixed-variant": "#2d476f",
+                        "surface-container-high": "#dce9ff",
+                        "outline-variant": "#c4c6cf",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-secondary-fixed": "#001c38",
+                        "secondary-container": "#7db6ff",
+                        "on-primary-fixed": "#001b3c",
+                        "surface-container": "#e5eeff",
+                        "secondary-fixed-dim": "#a2c9ff",
+                        "on-tertiary-container": "#c6955e",
+                        "background": "#f8f9ff",
+                        "primary-fixed": "#d6e3ff",
+                        "surface-container-low": "#eff4ff",
+                        "surface-dim": "#cbdbf5",
+                        "error": "#ba1a1a",
+                        "surface": "#f8f9ff",
+                        "outline": "#74777f",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#004881",
+                        "on-background": "#0b1c30",
+                        "primary": "#002045",
+                        "surface-bright": "#f8f9ff",
+                        "surface-tint": "#455f88",
+                        "on-error": "#ffffff",
+                        "tertiary": "#321b00",
+                        "surface-container-highest": "#d3e4fe",
+                        "tertiary-container": "#4f2e00",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed": "#2b1700",
+                        "on-surface-variant": "#43474e",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#adc7f7",
+                        "primary-fixed-dim": "#adc7f7",
+                        "on-surface": "#0b1c30",
+                        "on-secondary-container": "#00477f",
+                        "inverse-surface": "#213145",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#d3e4fe",
+                        "tertiary-fixed": "#ffddba",
+                        "on-tertiary-fixed-variant": "#633f0f",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#f2bc82",
+                        "on-primary-container": "#86a0cd"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-comfortable": "16px",
+                        "nav-rail-width": "64px",
+                        "stack-compact": "8px",
+                        "sidebar-expanded": "240px",
+                        "container-padding": "24px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "mono-data": ["JetBrains Mono"],
+                        "label-caps": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "title-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "mono-data": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "display-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-container-padding h-16 w-full fixed top-0 z-50 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline flat no shadows">
+<div class="flex items-center gap-8">
+<span class="font-display-lg text-display-lg text-primary dark:text-primary-fixed">ERP Finance Pro</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors px-3 py-1 rounded cursor-pointer" href="../bigsafer_erp_ana_sayfa/code.html">Genel Bakış</a>
+<a class="text-secondary font-bold border-b-2 border-secondary pb-1 px-3 cursor-pointer" href="../fiyatland_rma_ve_deme_y_netimi/code.html">Fiyatlandırma</a>
+<a class="text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors px-3 py-1 rounded cursor-pointer" href="../fatura_ve_entegrasyon_y_netimi/code.html">Faturalandırma</a>
+<a class="text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors px-3 py-1 rounded cursor-pointer" href="../finansal_raporlar/code.html">Analitik</a>
+</nav>
+</div>
+<div class="flex items-center gap-3">
+<button class="bg-surface-container-high text-on-surface px-4 py-2 rounded-lg font-label-caps text-label-caps hover:bg-surface-container-highest transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">upload_file</span>
+                Toplu CSV Yükle
+            </button>
+<button class="bg-primary-container text-white px-4 py-2 rounded-lg font-label-caps text-label-caps hover:opacity-90 active:opacity-80 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+                Müşteri Ekle
+            </button>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-sidebar-expanded flex flex-col py-4 px-2 z-40 bg-surface-container-low dark:bg-on-background transition-all duration-200 ease-in-out border-r border-outline-variant">
+<div class="px-4 mb-6">
+<div class="flex items-center gap-3 p-2 rounded-xl bg-surface-container">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-white font-bold">FM</div>
+<div>
+<p class="font-label-caps text-label-caps text-primary leading-tight">Finance Manager</p>
+<p class="text-xs text-on-surface-variant">Admin Account</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container dark:hover:bg-secondary-container/20 rounded-lg transition-all" href="../fiyatland_rma_ve_deme_y_netimi/code.html">
+<span class="material-symbols-outlined">settings_suggest</span>
+<span class="font-body-md text-body-md">Hizmetler</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-surface-container-high text-on-secondary-container font-semibold rounded-lg transition-all" href="../fiyatland_rma_ve_deme_y_netimi/code.html">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-body-md text-body-md">Ödemeler</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container dark:hover:bg-secondary-container/20 rounded-lg transition-all" href="../m_teriler_crm_mod_l/code.html">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-md text-body-md">Müşteriler</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container dark:hover:bg-secondary-container/20 rounded-lg transition-all" href="../fatura_ve_entegrasyon_y_netimi/code.html">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-body-md text-body-md">Faturalar</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container dark:hover:bg-secondary-container/20 rounded-lg transition-all" href="../finansal_raporlar/code.html">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-body-md text-body-md">Raporlar</span>
+</a>
+</nav>
+<div class="mt-auto space-y-1 border-t border-outline-variant pt-4">
+<button class="w-full bg-primary-container/10 text-primary font-label-caps text-label-caps py-3 rounded-lg mb-4 hover:bg-primary-container/20 transition-colors">
+                Genel Fiyatlandırma
+            </button>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-caps text-label-caps">Ayarlar</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-caps text-label-caps">Destek</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-sidebar-expanded mt-16 p-container-padding min-h-screen">
+<!-- Header Actions Banner -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+<div>
+<h1 class="font-headline-md text-headline-md text-primary mb-1">Fiyatlandırma ve Ödeme Yönetimi</h1>
+<p class="text-on-surface-variant font-body-sm">Kurumsal hizmetlerinizi ve müşteri tahsilatlarını bu panelden yönetebilirsiniz.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-lg font-semibold shadow-sm hover:bg-primary-container transition-all">
+<span class="material-symbols-outlined">add_circle</span>
+                    Yeni Müşteri Ekle
+                </button>
+<button class="flex items-center gap-2 px-5 py-2.5 border-2 border-primary text-primary rounded-lg font-semibold hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined">category</span>
+                    Yeni Hizmet/Ürün Tanımla
+                </button>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Hizmetlerimiz Accordion Section (Left Col) -->
+<div class="col-span-12 lg:col-span-4 space-y-gutter">
+<section class="bg-white border border-outline-variant rounded-xl overflow-hidden">
+<div class="flex items-center justify-between p-4 cursor-pointer hover:bg-surface-container-low transition-colors select-none" onclick="toggleAccordion('services-content')">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">inventory_2</span>
+<h2 class="font-title-sm text-title-sm">Hizmetlerimiz</h2>
+</div>
+<span class="material-symbols-outlined transition-transform" id="services-icon">expand_more</span>
+</div>
+<div class="transition-all duration-300 overflow-hidden" id="services-content">
+<div class="p-4 pt-0 space-y-3">
+<!-- Service Item -->
+<div class="group flex items-center justify-between p-3 rounded-lg border border-transparent hover:border-outline-variant hover:bg-background transition-all">
+<div>
+<p class="font-semibold text-on-surface">Hizmet A</p>
+<p class="font-mono-data text-mono-data text-secondary">3.000 TL</p>
+</div>
+<div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 hover:bg-surface-container text-on-surface-variant rounded"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-1.5 hover:bg-error/10 text-error rounded"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+<!-- Service Item -->
+<div class="group flex items-center justify-between p-3 rounded-lg border border-transparent hover:border-outline-variant hover:bg-background transition-all">
+<div>
+<p class="font-semibold text-on-surface">Hizmet B</p>
+<p class="font-mono-data text-mono-data text-secondary">5.500 TL</p>
+</div>
+<div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 hover:bg-surface-container text-on-surface-variant rounded"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-1.5 hover:bg-error/10 text-error rounded"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+<!-- Service Item -->
+<div class="group flex items-center justify-between p-3 rounded-lg border border-transparent hover:border-outline-variant hover:bg-background transition-all">
+<div>
+<p class="font-semibold text-on-surface">Hizmet C - Premium</p>
+<p class="font-mono-data text-mono-data text-secondary">12.250 TL</p>
+</div>
+<div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 hover:bg-surface-container text-on-surface-variant rounded"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-1.5 hover:bg-error/10 text-error rounded"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- İşlem Detay Kutusu -->
+<section class="bg-white border border-outline-variant rounded-xl p-6 shadow-sm sticky top-24">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary p-2 bg-primary/10 rounded-lg">person_search</span>
+<h2 class="font-title-sm text-title-sm">İşlem Detay Kutusu</h2>
+</div>
+<div class="space-y-6">
+<div>
+<label class="block text-xs font-label-caps text-on-surface-variant mb-2">SEÇİLİ MÜŞTERİ</label>
+<div class="p-3 bg-surface-container-low rounded-lg flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-secondary text-white flex items-center justify-center font-bold">AK</div>
+<span class="font-semibold">Ahmet Yılmaz K.</span>
+</div>
+</div>
+<div>
+<label class="block text-xs font-label-caps text-on-surface-variant mb-2">DURUM YÖNETİMİ</label>
+<div class="flex gap-2">
+<button class="flex-1 py-2 px-1 text-center rounded border-2 border-emerald-500 bg-emerald-50 text-emerald-700 text-xs font-bold">Aktif</button>
+<button class="flex-1 py-2 px-1 text-center rounded border border-outline-variant bg-white text-on-surface-variant text-xs hover:bg-surface-container transition-all">Pasif</button>
+<button class="flex-1 py-2 px-1 text-center rounded border border-outline-variant bg-white text-on-surface-variant text-xs hover:bg-surface-container transition-all">Bekle</button>
+</div>
+</div>
+<div>
+<label class="block text-xs font-label-caps text-on-surface-variant mb-2">HİZMET EKLE/ÇIKAR</label>
+<div class="flex flex-wrap gap-2">
+<span class="flex items-center gap-1 bg-secondary-fixed text-on-secondary-fixed px-2 py-1 rounded text-xs">
+                                    Hizmet A <button class="material-symbols-outlined text-xs hover:text-error transition-colors">close</button>
+</span>
+<span class="flex items-center gap-1 bg-secondary-fixed text-on-secondary-fixed px-2 py-1 rounded text-xs">
+                                    Hizmet B <button class="material-symbols-outlined text-xs hover:text-error transition-colors">close</button>
+</span>
+<button class="flex items-center gap-1 border border-dashed border-primary text-primary px-2 py-1 rounded text-xs hover:bg-primary/5">
+<span class="material-symbols-outlined text-xs">add</span> Ekle
+                                </button>
+</div>
+</div>
+<div class="pt-4 border-t border-outline-variant">
+<div class="flex justify-between items-center mb-4">
+<span class="text-on-surface-variant font-body-sm">Toplam Tahsilat:</span>
+<span class="font-mono-data text-headline-md text-primary">8.500 TL</span>
+</div>
+<button class="w-full bg-secondary text-white py-3 rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-secondary/90 shadow-md active:scale-95 transition-all">
+<span class="material-symbols-outlined">payments</span>
+                                Ödeme Al
+                            </button>
+</div>
+</div>
+</section>
+</div>
+<!-- Müşteri Detayları ve Ödeme Tablosu (Right Col) -->
+<div class="col-span-12 lg:col-span-8">
+<section class="bg-white border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">analytics</span>
+<h2 class="font-title-sm text-title-sm">Müşteri Detayları ve Ödeme Tablosu</h2>
+</div>
+<div class="flex gap-2 w-full md:w-auto">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-body-sm" placeholder="Müşteri ara..." type="text"/>
+</div>
+<button class="p-2 border border-outline-variant rounded-lg hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-caps text-label-caps border-b border-outline-variant">
+<th class="px-6 py-4">Müşteri Adı</th>
+<th class="px-6 py-4">Aldığı Hizmetler</th>
+<th class="px-6 py-4">Birim Fiyat</th>
+<th class="px-6 py-4">Toplam Tutar</th>
+<th class="px-6 py-4">Ödeme Durumu</th>
+<th class="px-6 py-4 text-right">İşlemler</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center font-semibold text-primary">AY</div>
+<span class="font-medium text-on-surface">Ahmet Yılmaz</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 bg-secondary/10 text-secondary text-[11px] rounded uppercase font-bold">Hizmet A</span>
+<span class="px-2 py-0.5 bg-secondary/10 text-secondary text-[11px] rounded uppercase font-bold">Hizmet B</span>
+</div>
+</td>
+<td class="px-6 py-4 font-mono-data text-on-surface-variant">8.500 TL</td>
+<td class="px-6 py-4 font-mono-data font-bold text-primary">8.500 TL</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Ödendi
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-primary/10 text-primary rounded-lg transition-all" title="Detay">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center font-semibold text-primary">MS</div>
+<span class="font-medium text-on-surface">Mehmet Sever</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 bg-secondary/10 text-secondary text-[11px] rounded uppercase font-bold">Hizmet B</span>
+</div>
+</td>
+<td class="px-6 py-4 font-mono-data text-on-surface-variant">5.500 TL</td>
+<td class="px-6 py-4 font-mono-data font-bold text-primary">5.500 TL</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold uppercase">
+<span class="w-2 h-2 rounded-full bg-amber-500"></span> Beklemede
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-primary/10 text-primary rounded-lg transition-all">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center font-semibold text-primary">EA</div>
+<span class="font-medium text-on-surface">Elif Aksoy</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 bg-secondary/10 text-secondary text-[11px] rounded uppercase font-bold">Hizmet C</span>
+</div>
+</td>
+<td class="px-6 py-4 font-mono-data text-on-surface-variant">12.250 TL</td>
+<td class="px-6 py-4 font-mono-data font-bold text-primary">12.250 TL</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-100 text-rose-800 text-xs font-bold uppercase">
+<span class="w-2 h-2 rounded-full bg-rose-500"></span> Gecikti
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-primary/10 text-primary rounded-lg transition-all">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center font-semibold text-primary">CO</div>
+<span class="font-medium text-on-surface">Caner Öz</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 bg-secondary/10 text-secondary text-[11px] rounded uppercase font-bold">Hizmet A</span>
+</div>
+</td>
+<td class="px-6 py-4 font-mono-data text-on-surface-variant">3.000 TL</td>
+<td class="px-6 py-4 font-mono-data font-bold text-primary">3.000 TL</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span> Ödendi
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-primary/10 text-primary rounded-lg transition-all">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 bg-surface-container-low border-t border-outline-variant flex items-center justify-between">
+<span class="text-body-sm text-on-surface-variant">Gösterilen: 4 / Toplam: 128 Müşteri</span>
+<div class="flex gap-2">
+<button class="p-2 rounded hover:bg-white transition-all disabled:opacity-50" disabled=""><span class="material-symbols-outlined">chevron_left</span></button>
+<button class="px-3 py-1 bg-primary text-white rounded font-bold text-sm">1</button>
+<button class="px-3 py-1 hover:bg-white rounded font-medium text-sm">2</button>
+<button class="px-3 py-1 hover:bg-white rounded font-medium text-sm">3</button>
+<button class="p-2 rounded hover:bg-white transition-all"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+</section>
+<!-- Analytics Cards Row -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter mt-gutter">
+<div class="bg-white p-6 border border-outline-variant rounded-xl">
+<div class="flex items-center justify-between mb-2">
+<span class="text-on-surface-variant font-label-caps text-label-caps">TOPLAM TAHSİLAT</span>
+<span class="material-symbols-outlined text-emerald-600">trending_up</span>
+</div>
+<p class="font-mono-data text-display-lg text-primary">1.250.000₺</p>
+<p class="text-[11px] text-emerald-600 mt-2 font-bold">+12% geçen aya göre</p>
+</div>
+<div class="bg-white p-6 border border-outline-variant rounded-xl">
+<div class="flex items-center justify-between mb-2">
+<span class="text-on-surface-variant font-label-caps text-label-caps">BEKLEYEN ÖDEME</span>
+<span class="material-symbols-outlined text-amber-600">schedule</span>
+</div>
+<p class="font-mono-data text-display-lg text-primary">45.500₺</p>
+<p class="text-[11px] text-amber-600 mt-2 font-bold">14 Aktif Fatura</p>
+</div>
+<div class="bg-white p-6 border border-outline-variant rounded-xl">
+<div class="flex items-center justify-between mb-2">
+<span class="text-on-surface-variant font-label-caps text-label-caps">GECİKEN ÖDEME</span>
+<span class="material-symbols-outlined text-rose-600">warning</span>
+</div>
+<p class="font-mono-data text-display-lg text-primary">8.200₺</p>
+<p class="text-[11px] text-rose-600 mt-2 font-bold">3 Müşteri</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB for quick action (Optional based on Guidelines context but useful for mobile/quick-access) -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50 md:hidden">
+<span class="material-symbols-outlined text-[30px]">add</span>
+</button>
+<script>
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById('services-icon');
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // Initialize accordion as open
+        window.onload = () => {
+            const content = document.getElementById('services-content');
+            content.style.maxHeight = content.scrollHeight + "px";
+            document.getElementById('services-icon').style.transform = 'rotate(180deg)';
+        };
+
+        // Tab selection logic for visual feedback
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (link.textContent.trim() === 'Payments' || link.textContent.trim() === 'Pricing') return;
+                e.preventDefault();
+                // Simple visual interaction
+                link.classList.add('opacity-50');
+                setTimeout(() => link.classList.remove('opacity-50'), 200);
+            });
+        });
+    </script>
+<script src="../shared_logic.js"></script>
+</body></html>

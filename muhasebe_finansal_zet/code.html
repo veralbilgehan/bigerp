@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+
+<html class="light" lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cognitive ERP - Muhasebe Modülü</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9ff;
+        }
+        .sidebar-active {
+            border-left: 4px solid #1960a3;
+        }
+        /* Custom scrollbar for data-heavy sections */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "surface-container-highest": "#d3e4fe",
+                "surface-container-high": "#dce9ff",
+                "on-background": "#0b1c30",
+                "error-container": "#ffdad6",
+                "on-tertiary-fixed-variant": "#633f0f",
+                "on-error-container": "#93000a",
+                "outline": "#74777f",
+                "on-secondary": "#ffffff",
+                "on-tertiary-container": "#c6955e",
+                "on-secondary-fixed": "#001c38",
+                "background": "#f8f9ff",
+                "secondary-fixed-dim": "#a2c9ff",
+                "secondary-container": "#7db6ff",
+                "on-surface-variant": "#43474e",
+                "secondary": "#1960a3",
+                "on-primary-fixed": "#001b3c",
+                "on-primary-container": "#86a0cd",
+                "secondary-fixed": "#d3e4ff",
+                "tertiary-container": "#4f2e00",
+                "on-primary": "#ffffff",
+                "inverse-surface": "#213145",
+                "on-secondary-container": "#00477f",
+                "surface-variant": "#d3e4fe",
+                "inverse-on-surface": "#eaf1ff",
+                "surface-container-lowest": "#ffffff",
+                "primary-fixed-dim": "#adc7f7",
+                "primary": "#002045",
+                "outline-variant": "#c4c6cf",
+                "error": "#ba1a1a",
+                "on-tertiary-fixed": "#2b1700",
+                "surface-container": "#e5eeff",
+                "surface-tint": "#455f88",
+                "tertiary-fixed-dim": "#f2bc82",
+                "on-surface": "#0b1c30",
+                "on-primary-fixed-variant": "#2d476f",
+                "primary-fixed": "#d6e3ff",
+                "inverse-primary": "#adc7f7",
+                "surface-container-low": "#eff4ff",
+                "on-error": "#ffffff",
+                "surface": "#f8f9ff",
+                "on-secondary-fixed-variant": "#004881",
+                "surface-dim": "#cbdbf5",
+                "on-tertiary": "#ffffff",
+                "tertiary": "#321b00",
+                "tertiary-fixed": "#ffddba",
+                "primary-container": "#1a365d",
+                "surface-bright": "#f8f9ff"
+              },
+              "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+              },
+              "spacing": {
+                "gutter": "16px",
+                "sidebar-expanded": "240px",
+                "stack-compact": "8px",
+                "nav-rail-width": "64px",
+                "container-padding": "24px",
+                "stack-comfortable": "16px"
+              },
+              "fontFamily": {
+                "title-sm": ["Inter"],
+                "body-md": ["Inter"],
+                "headline-md": ["Inter"],
+                "body-sm": ["Inter"],
+                "label-caps": ["Inter"],
+                "mono-data": ["JetBrains Mono"],
+                "display-lg": ["Inter"]
+              },
+              "fontSize": {
+                "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                "mono-data": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                "display-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- Sidebar Shell -->
+<aside class="fixed left-0 top-0 h-screen flex flex-col z-40 bg-primary dark:bg-primary-container border-r border-outline-variant w-sidebar-expanded transition-all duration-300">
+<div class="p-6 flex flex-col items-start gap-2">
+<h1 class="font-headline-md text-headline-md font-bold text-on-primary">Cognitive ERP</h1>
+<p class="text-on-primary-container text-xs opacity-80">Sistem Yöneticisi</p>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-150 text-primary-fixed dark:text-primary-fixed-dim hover:bg-primary-container" href="../bigsafer_erp_ana_sayfa/code.html">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-md text-body-md">Genel Bakış</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-150 bg-surface-container-highest dark:bg-surface-container-high text-on-surface font-bold border-l-4 border-secondary" href="../muhasebe_finansal_zet/code.html">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="font-body-md text-body-md">Muhasebe</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-150 text-primary-fixed dark:text-primary-fixed-dim hover:bg-primary-container" href="../operasyon_i_takibi/code.html">
+<span class="material-symbols-outlined" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="font-body-md text-body-md">Operasyonlar</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-150 text-primary-fixed dark:text-primary-fixed-dim hover:bg-primary-container" href="../m_teriler_crm_mod_l/code.html">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-body-md text-body-md">Müşteriler</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-150 text-primary-fixed dark:text-primary-fixed-dim hover:bg-primary-container" href="../s_zle_me_y_netimi/code.html">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-body-md text-body-md">Sözleşmeler</span>
+</a>
+</nav>
+<div class="p-3 mt-auto border-t border-on-primary-fixed-variant">
+<button class="w-full py-3 bg-secondary text-on-secondary rounded-lg font-bold flex items-center justify-center gap-2 mb-4 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span>Hızlı Giriş</span>
+</button>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-primary-fixed hover:bg-on-primary-fixed-variant transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-md text-body-md">Ayarlar</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-primary-fixed hover:bg-on-primary-fixed-variant transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-body-md text-body-md">Destek</span>
+</a>
+</div>
+</aside>
+<!-- Header / TopNavBar -->
+<header class="fixed top-0 right-0 left-0 ml-sidebar-expanded h-16 flex items-center justify-between px-gutter z-30 border-b border-outline-variant bg-surface-container-lowest">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-extrabold text-primary">Cognitive Enterprise</span>
+<div class="relative hidden lg:block group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-container-low border-none rounded-full text-sm w-64 focus:ring-2 focus:ring-secondary" placeholder="Modüllerde ara..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<nav class="hidden xl:flex items-center gap-6 mr-6">
+<a class="font-title-sm text-title-sm text-on-surface-variant font-medium hover:text-secondary-fixed-variant transition-colors" href="#">Yönergeler</a>
+<a class="font-title-sm text-title-sm text-secondary border-b-2 border-secondary pb-1 font-bold" href="../bigsafer_erp_ana_sayfa/code.html">Analitik</a>
+<a class="font-title-sm text-title-sm text-on-surface-variant font-medium hover:text-secondary-fixed-variant transition-colors" href="#">Kaynaklar</a>
+</nav>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+</button>
+</div>
+<div class="h-8 w-px bg-outline-variant mx-2"></div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="text-xs font-bold text-on-surface">Ahmet Yılmaz</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider">CFO</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden border border-outline-variant shadow-sm">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a corporate executive in a dark blue business suit, photographed in a modern office with glass windows and soft natural lighting. The style is clean, corporate, and high-fidelity with a shallow depth of field, emphasizing a trustworthy and expert personality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuADGja2CM17uiSj9L1T7-gKFvXX3Nw43zJY22VzhNXOX6TDx6an5526aD0ro8ZZZbNnDvAbfeC_PArIo0eAMMtF0UIl3qL0q-yA2pvPnaXNsaSb8G1W3oTPl9v8kJ580ovkAO8aOAvm7GDuQu0IrITe-NbI14J7aWib4u6ccMQmj-Rbdtaf8lUgAeIkw8CbgpYw3AlW7QA6P0U_i_rFCxE3MMIzPSke-wn_f7yiV0_aszTXDdLmUs8yrHm5-qYrYt86isD_fZQrfw"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-sidebar-expanded pt-16 min-h-screen">
+<div class="p-8 max-w-[1600px] mx-auto">
+<!-- Page Header Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+<div>
+<h2 class="font-display-lg text-display-lg text-primary mb-1">Muhasebe Genel Bakış</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Q3 2024 Dönemi Finansal Performans Raporu</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-5 py-2.5 bg-surface-container-lowest border border-outline-variant text-on-surface rounded-lg hover:bg-surface-container-low transition-all font-semibold shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="upload_file">upload_file</span>
+                        Toplu Giriş
+                    </button>
+<button class="flex items-center gap-2 px-5 py-2.5 bg-primary text-on-primary rounded-lg hover:opacity-90 transition-all font-semibold shadow-md">
+<span class="material-symbols-outlined text-[20px]" data-icon="add_circle">add_circle</span>
+                        Yeni Fatura
+                    </button>
+</div>
+</div>
+<!-- Bento Grid - Financial Overview -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<!-- Top-line Metrics -->
+<div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl relative overflow-hidden group hover:border-secondary transition-colors">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-emerald-50 text-emerald-700 rounded-lg">
+<span class="material-symbols-outlined" data-icon="trending_up">trending_up</span>
+</div>
+<span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-1 rounded">+12.5%</span>
+</div>
+<p class="text-on-surface-variant font-label-caps text-label-caps mb-1">AYLIK TOPLAM GELİR</p>
+<h3 class="text-3xl font-bold text-primary font-display-lg">₺1,452,000</h3>
+<div class="absolute bottom-0 left-0 w-full h-1 bg-emerald-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl relative overflow-hidden group hover:border-error transition-colors">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-red-50 text-red-700 rounded-lg">
+<span class="material-symbols-outlined" data-icon="trending_down">trending_down</span>
+</div>
+<span class="text-xs font-bold text-red-600 bg-red-100 px-2 py-1 rounded">+4.2%</span>
+</div>
+<p class="text-on-surface-variant font-label-caps text-label-caps mb-1">AYLIK TOPLAM GİDER</p>
+<h3 class="text-3xl font-bold text-primary font-display-lg">₺842,500</h3>
+<div class="absolute bottom-0 left-0 w-full h-1 bg-red-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+</div>
+<div class="bg-primary-container text-on-primary p-6 rounded-xl relative overflow-hidden group shadow-lg">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-white/10 text-white rounded-lg">
+<span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+</div>
+<span class="text-xs font-bold text-on-primary-container bg-white/20 px-2 py-1 rounded">Stabil</span>
+</div>
+<p class="text-on-primary-container font-label-caps text-label-caps mb-1">TOPLAM KASA / BANKA</p>
+<h3 class="text-3xl font-bold text-white font-display-lg">₺2,108,340</h3>
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-[100px]" data-icon="payments">payments</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl group hover:border-secondary transition-colors">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-amber-50 text-amber-700 rounded-lg">
+<span class="material-symbols-outlined" data-icon="update">update</span>
+</div>
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-white bg-surface-dim"></div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-surface-variant"></div>
+</div>
+</div>
+<p class="text-on-surface-variant font-label-caps text-label-caps mb-1">TEKRARLAYAN ÖDEMELER</p>
+<h3 class="text-3xl font-bold text-primary font-display-lg">14 <span class="text-sm font-normal text-on-surface-variant">Bekleyen</span></h3>
+</div>
+</div>
+<!-- Detailed Analysis Section -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+<!-- Main Transactions Table -->
+<div class="xl:col-span-2 bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm flex flex-col">
+<div class="p-6 border-b border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-4">
+<h4 class="font-title-sm text-title-sm text-primary">Son İşlemler</h4>
+<div class="flex bg-surface-container-low p-1 rounded-lg">
+<button class="px-3 py-1 text-xs font-bold bg-white shadow-sm rounded-md">Hepsi</button>
+<button class="px-3 py-1 text-xs font-bold text-on-surface-variant hover:text-primary">Gelir</button>
+<button class="px-3 py-1 text-xs font-bold text-on-surface-variant hover:text-primary">Gider</button>
+</div>
+</div>
+<button class="text-secondary text-sm font-bold flex items-center gap-1 hover:underline">
+                            Tümünü Gör <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-6 py-4 font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant">Açıklama / Tarih</th>
+<th class="px-6 py-4 font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant">Kategori</th>
+<th class="px-6 py-4 font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant">Durum</th>
+<th class="px-6 py-4 font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant text-right">Tutar</th>
+<th class="px-6 py-4 border-b border-outline-variant"></th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md">
+<!-- Data rows inspired by realistic accounting records -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4 border-b border-outline-variant">
+<div class="font-bold text-on-surface">Kurumsal Yazılım Satışı</div>
+<div class="text-xs text-on-surface-variant">12.09.2024 • INV-4022</div>
+</td>
+<td class="px-6 py-4 border-b border-outline-variant">
+<span class="px-2 py-1 bg-primary-container text-white text-[10px] rounded font-bold uppercase tracking-tighter">SATIŞ</span>
+</td>
+<td class="px-6 py-4 border-b border-outline-variant">
+<span class="flex items-center gap-1.5 text-emerald-600 font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Tamamlandı
+                                        </span>
+</td>
+<td class="px-6 py-4 border-b border-outline-variant text-right font-mono-data text-mono-data font-bold text-emerald-700">
+                                        + ₺45.200,00
+                                    </td>
+<td class="px-6 py-4 border-b border-outline-variant text-right">
+<button class="p-2 opacity-0 group-hover:opacity-100 hover:bg-surface-container-high rounded transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4 border-b border-outline-variant">
+<div class="font-bold text-on-surface">Merkez Ofis Kirası</div>
+<div class="text-xs text-on-surface-variant">10.09.2024 • RENT-09</div>
+</td>
+<td class="px-6 py-4 border-b border-outline-variant">
+<span class="px-2 py-1 bg-surface-container-highest text-primary text-[10px] rounded font-bold uppercase tracking-tighter">KİRA</span>
+</td>
+<td class="px-6 py-4 border-b border-outline-variant">
+<span class="flex items-center gap-1.5 text-emerald-600 font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Ödendi
+                                        </span>
+</td>
+<td class="px-6 py-4 border-b border-outline-variant text-right font-mono-data text-mono-data font-bold text-red-700">
+                                        - ₺128.000,00
+                                    </td>
+<td class="px-6 py-4 border-b border-outline-variant text-right">
+<button class="p-2 opacity-0 group-hover:opacity-100 hover:bg-surface-container-high rounded transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4 border-b border-outline-variant">
+<div class="font-bold text-on-surface">Personel Maaş Ödemeleri</div>
+<div class="text-xs text-on-surface-variant">05.09.2024 • PAYROLL-AUG</div>
+</td>
+<td class="px-6 py-4 border-b border-outline-variant">
+<span class="px-2 py-1 bg-surface-container-highest text-primary text-[10px] rounded font-bold uppercase tracking-tighter">MAAŞ</span>
+</td>
+<td class="px-6 py-4 border-b border-outline-variant">
+<span class="flex items-center gap-1.5 text-emerald-600 font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> İşlendi
+                                        </span>
+</td>
+<td class="px-6 py-4 border-b border-outline-variant text-right font-mono-data text-mono-data font-bold text-red-700">
+                                        - ₺612.450,00
+                                    </td>
+<td class="px-6 py-4 border-b border-outline-variant text-right">
+<button class="p-2 opacity-0 group-hover:opacity-100 hover:bg-surface-container-high rounded transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4 border-b border-outline-variant">
+<div class="font-bold text-on-surface">KDV Tahakkuku - Ağustos</div>
+<div class="text-xs text-on-surface-variant">01.09.2024 • TAX-KDV8</div>
+</td>
+<td class="px-6 py-4 border-b border-outline-variant">
+<span class="px-2 py-1 bg-red-100 text-red-900 text-[10px] rounded font-bold uppercase tracking-tighter">VERGİ</span>
+</td>
+<td class="px-6 py-4 border-b border-outline-variant">
+<span class="flex items-center gap-1.5 text-amber-600 font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span> Beklemede
+                                        </span>
+</td>
+<td class="px-6 py-4 border-b border-outline-variant text-right font-mono-data text-mono-data font-bold text-on-surface">
+                                        ₺94.320,00
+                                    </td>
+<td class="px-6 py-4 border-b border-outline-variant text-right">
+<button class="p-2 opacity-0 group-hover:opacity-100 hover:bg-surface-container-high rounded transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4 border-b border-outline-variant">
+<div class="font-bold text-on-surface">AWS Cloud Infrastructure</div>
+<div class="text-xs text-on-surface-variant">28.08.2024 • OP-8822</div>
+</td>
+<td class="px-6 py-4 border-b border-outline-variant">
+<span class="px-2 py-1 bg-surface-container-highest text-primary text-[10px] rounded font-bold uppercase tracking-tighter">BİLİŞİM</span>
+</td>
+<td class="px-6 py-4 border-b border-outline-variant">
+<span class="flex items-center gap-1.5 text-emerald-600 font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Ödendi
+                                        </span>
+</td>
+<td class="px-6 py-4 border-b border-outline-variant text-right font-mono-data text-mono-data font-bold text-red-700">
+                                        - ₺12.180,50
+                                    </td>
+<td class="px-6 py-4 border-b border-outline-variant text-right">
+<button class="p-2 opacity-0 group-hover:opacity-100 hover:bg-surface-container-high rounded transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Right Column: Quick Insights & Recurring Invoices -->
+<div class="space-y-8">
+<!-- Cash Flow Minimal Chart -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-title-sm text-title-sm text-primary">Nakit Akış Tahmini</h4>
+<span class="material-symbols-outlined text-on-surface-variant cursor-help" data-icon="info" title="Gelecek 30 günlük öngörü">info</span>
+</div>
+<div class="flex items-end gap-2 h-32 mb-6">
+<div class="flex-1 bg-surface-container-highest rounded-t-sm relative group" style="height: 60%">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-primary text-white text-[10px] px-1 rounded">Q1</div>
+</div>
+<div class="flex-1 bg-surface-container-highest rounded-t-sm relative group" style="height: 45%"></div>
+<div class="flex-1 bg-surface-container-highest rounded-t-sm relative group" style="height: 75%"></div>
+<div class="flex-1 bg-secondary rounded-t-sm relative group" style="height: 90%">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 bg-secondary text-white text-[10px] px-1.5 py-0.5 rounded font-bold">BU AY</div>
+</div>
+<div class="flex-1 bg-primary-container/20 rounded-t-sm border-t-2 border-dashed border-primary-container relative group" style="height: 80%"></div>
+<div class="flex-1 bg-primary-container/20 rounded-t-sm border-t-2 border-dashed border-primary-container relative group" style="height: 85%"></div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between text-xs">
+<span class="text-on-surface-variant">Tahmini Tahsilat</span>
+<span class="font-bold text-emerald-600">₺245.000</span>
+</div>
+<div class="w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
+<div class="bg-emerald-500 h-full w-[70%]"></div>
+</div>
+<div class="flex justify-between text-xs">
+<span class="text-on-surface-variant">Tahmini Giderler</span>
+<span class="font-bold text-red-600">₺112.500</span>
+</div>
+<div class="w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
+<div class="bg-red-500 h-full w-[45%]"></div>
+</div>
+</div>
+</div>
+<!-- Recurring Invoices -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-title-sm text-title-sm text-primary">Tekrarlayan Faturalar</h4>
+<button class="p-1 hover:bg-surface-container-low rounded-md">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant" data-icon="settings_suggest">settings_suggest</span>
+</button>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-4 p-3 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="router">router</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-surface">İnternet &amp; IP Telefon</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Her Ayın 15'i</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-mono-data font-bold">₺4.850</p>
+<span class="text-[10px] bg-secondary-fixed text-on-secondary-fixed px-1.5 py-0.5 rounded">Aktif</span>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-surface">Özel Güvenlik Hizmetleri</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Her Ayın 22'si</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-mono-data font-bold">₺22.400</p>
+<span class="text-[10px] bg-secondary-fixed text-on-secondary-fixed px-1.5 py-0.5 rounded">Aktif</span>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="cloud">cloud</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-surface">Google Workspace Enterprise</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Her Ayın 28'i</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-mono-data font-bold">₺8.120</p>
+<span class="text-[10px] bg-secondary-fixed text-on-secondary-fixed px-1.5 py-0.5 rounded">Aktif</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-2 text-sm font-bold text-on-surface-variant border border-dashed border-outline-variant rounded-lg hover:bg-surface-container-low hover:text-primary transition-all">
+                            + Yeni Otomatize İşlem
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB (Suppressed on Details screens but relevant here for Desktop Quick Actions) -->
+<div class="fixed bottom-8 right-8 flex flex-col gap-3 group">
+<button class="w-14 h-14 bg-secondary text-on-secondary rounded-full shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined text-[28px]" data-icon="bolt">bolt</span>
+</button>
+<!-- Tooltip menu hidden by default, visible on hover if implemented -->
+</div>
+<!-- Background Decoration -->
+<div class="fixed inset-0 pointer-events-none z-[-1] opacity-[0.03]">
+
+</div>
+<script>
+        // Simple interactivity for the table and cards
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('click', () => {
+                // Focus interaction simulation
+                console.log('Opening transaction details...');
+            });
+        });
+
+        // Toggle focus rings on search
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('ring-2', 'ring-secondary');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('ring-2', 'ring-secondary');
+        });
+    </script>
+<script src="../shared_logic.js"></script>
+</body></html>

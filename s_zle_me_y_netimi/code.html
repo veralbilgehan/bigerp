@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+
+<html class="light" lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cognitive ERP - Sözleşme Sihirbazı</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "surface-container-highest": "#d3e4fe",
+                "surface-container-high": "#dce9ff",
+                "on-background": "#0b1c30",
+                "error-container": "#ffdad6",
+                "on-tertiary-fixed-variant": "#633f0f",
+                "on-error-container": "#93000a",
+                "outline": "#74777f",
+                "on-secondary": "#ffffff",
+                "on-tertiary-container": "#c6955e",
+                "on-secondary-fixed": "#001c38",
+                "background": "#f8f9ff",
+                "secondary-fixed-dim": "#a2c9ff",
+                "secondary-container": "#7db6ff",
+                "on-surface-variant": "#43474e",
+                "secondary": "#1960a3",
+                "on-primary-fixed": "#001b3c",
+                "on-primary-container": "#86a0cd",
+                "secondary-fixed": "#d3e4ff",
+                "tertiary-container": "#4f2e00",
+                "on-primary": "#ffffff",
+                "inverse-surface": "#213145",
+                "on-secondary-container": "#00477f",
+                "surface-variant": "#d3e4fe",
+                "inverse-on-surface": "#eaf1ff",
+                "surface-container-lowest": "#ffffff",
+                "primary-fixed-dim": "#adc7f7",
+                "primary": "#002045",
+                "outline-variant": "#c4c6cf",
+                "error": "#ba1a1a",
+                "on-tertiary-fixed": "#2b1700",
+                "surface-container": "#e5eeff",
+                "surface-tint": "#455f88",
+                "tertiary-fixed-dim": "#f2bc82",
+                "on-surface": "#0b1c30",
+                "on-primary-fixed-variant": "#2d476f",
+                "primary-fixed": "#d6e3ff",
+                "inverse-primary": "#adc7f7",
+                "surface-container-low": "#eff4ff",
+                "on-error": "#ffffff",
+                "surface": "#f8f9ff",
+                "on-secondary-fixed-variant": "#004881",
+                "surface-dim": "#cbdbf5",
+                "on-tertiary": "#ffffff",
+                "tertiary": "#321b00",
+                "tertiary-fixed": "#ffddba",
+                "primary-container": "#1a365d",
+                "surface-bright": "#f8f9ff"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+            },
+            "spacing": {
+                "gutter": "16px",
+                "sidebar-expanded": "240px",
+                "stack-compact": "8px",
+                "nav-rail-width": "64px",
+                "container-padding": "24px",
+                "stack-comfortable": "16px"
+            },
+            "fontFamily": {
+                "title-sm": ["Inter"],
+                "body-md": ["Inter"],
+                "headline-md": ["Inter"],
+                "body-sm": ["Inter"],
+                "label-caps": ["Inter"],
+                "mono-data": ["JetBrains Mono"],
+                "display-lg": ["Inter"]
+            },
+            "fontSize": {
+                "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                "mono-data": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                "display-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9ff; overflow-x: hidden; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #c4c6cf; border-radius: 10px; }
+        .doc-page { box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: transform 0.2s ease; }
+        .input-focus-ring:focus { outline: none; box-shadow: 0 0 0 2px #1960a3; }
+        .nav-item-active { border-left-width: 4px; border-color: #1960a3; }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- Left Side Rail + Sidebar -->
+<aside class="fixed left-0 top-0 h-screen flex flex-col z-40 bg-primary dark:bg-primary-container docked left-0 h-full w-sidebar-expanded border-r border-outline-variant">
+<div class="p-6">
+<h1 class="font-headline-md text-headline-md font-bold text-on-primary">Cognitive ERP</h1>
+<p class="text-primary-fixed dark:text-primary-fixed-dim font-body-sm text-body-sm opacity-80">Sistem Yöneticisi</p>
+</div>
+<nav class="flex-1 mt-4 px-3 space-y-1 overflow-y-auto custom-scrollbar">
+<!-- Dashboard -->
+<a class="flex items-center px-4 py-3 text-primary-fixed dark:text-primary-fixed-dim hover:bg-on-primary-fixed-variant transition-all rounded" href="../bigsafer_erp_ana_sayfa/code.html">
+<span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span>
+<span class="font-body-md text-body-md">Genel Bakış</span>
+</a>
+<!-- Accounting -->
+<a class="flex items-center px-4 py-3 text-primary-fixed dark:text-primary-fixed-dim hover:bg-on-primary-fixed-variant transition-all rounded" href="../muhasebe_finansal_zet/code.html">
+<span class="material-symbols-outlined mr-3" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="font-body-md text-body-md">Muhasebe</span>
+</a>
+<!-- Operations -->
+<a class="flex items-center px-4 py-3 text-primary-fixed dark:text-primary-fixed-dim hover:bg-on-primary-fixed-variant transition-all rounded" href="../operasyon_i_takibi/code.html">
+<span class="material-symbols-outlined mr-3" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="font-body-md text-body-md">Operasyonlar</span>
+</a>
+<!-- CRM -->
+<a class="flex items-center px-4 py-3 text-primary-fixed dark:text-primary-fixed-dim hover:bg-on-primary-fixed-variant transition-all rounded" href="../m_teriler_crm_mod_l/code.html">
+<span class="material-symbols-outlined mr-3" data-icon="groups">groups</span>
+<span class="font-body-md text-body-md">Müşteriler</span>
+</a>
+<!-- Contracts (Active) -->
+<a class="flex items-center px-4 py-3 bg-surface-container-highest dark:bg-surface-container-high text-on-surface font-bold border-l-4 border-secondary rounded" href="../s_zle_me_y_netimi/code.html">
+<span class="material-symbols-outlined mr-3" data-icon="description">description</span>
+<span class="font-body-md text-body-md">Sözleşmeler</span>
+</a>
+</nav>
+<div class="p-4 border-t border-outline-variant/20">
+<button class="w-full py-3 px-4 bg-secondary text-on-secondary font-bold rounded flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-lg" data-icon="add">add</span>
+                Hızlı Giriş
+            </button>
+<div class="mt-6 space-y-1">
+<a class="flex items-center px-4 py-2 text-primary-fixed dark:text-primary-fixed-dim hover:bg-on-primary-fixed-variant rounded" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="settings">settings</span>
+<span class="font-body-sm text-body-sm">Ayarlar</span>
+</a>
+<a class="flex items-center px-4 py-2 text-primary-fixed dark:text-primary-fixed-dim hover:bg-on-primary-fixed-variant rounded" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="help">help</span>
+<span class="font-body-sm text-body-sm">Destek</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 right-0 left-0 ml-sidebar-expanded h-16 flex items-center justify-between px-gutter z-30 bg-surface-container-lowest border-b border-outline-variant">
+<div class="flex items-center gap-6">
+<h2 class="font-headline-md text-headline-md font-extrabold text-primary">Kurumsal Zeka</h2>
+<nav class="hidden md:flex items-center gap-4 ml-4">
+<a class="font-title-sm text-title-sm text-on-surface-variant font-medium hover:text-secondary-fixed-variant transition-colors" href="#">Yönergeler</a>
+<a class="font-title-sm text-title-sm text-on-surface-variant font-medium hover:text-secondary-fixed-variant transition-colors" href="../bigsafer_erp_ana_sayfa/code.html">Analitik</a>
+<a class="font-title-sm text-title-sm text-on-surface-variant font-medium hover:text-secondary-fixed-variant transition-colors" href="#">Kaynaklar</a>
+</nav>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative hidden lg:block mr-4">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-sm font-body-sm w-64 focus:ring-2 focus:ring-secondary outline-none" placeholder="Genel Arama..." type="text"/>
+</div>
+<button class="material-symbols-outlined p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors" data-icon="notifications">notifications</button>
+<button class="material-symbols-outlined p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors" data-icon="history">history</button>
+<div class="h-8 w-px bg-outline-variant mx-1"></div>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-title-sm text-body-sm font-semibold hover:bg-primary-container transition-all">Yeni Sözleşme</button>
+<img class="w-10 h-10 rounded-full border border-outline-variant object-cover" data-alt="A professional headshot of a corporate system administrator in a high-tech office environment. The person is wearing business casual attire, with a soft blur background of digital dashboards and data visualizations. The lighting is clean and bright, typical of a modern enterprise software interface, using a primary blue and white color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdc2jBHDi6qRl5UrHRgn9vVyo9WT8P9_XCdKtn7kwsVMyVE415nNCjRiCf81SPC28mSYiCzUHUihMtHfpeNQoDlA_6VdWm2t4SrmarTTWPtQxQ9PK8bLiLJ3F07cGf9WMNy3oNMQgxUwp0xXeydNUUIGSvPHGzH6gQi2kbFNA_SlI1JXYeMkdsvTf7sRNSHjB6fBx81HDyTWjiDqeRF6QN8CoBX3hUTcrri8kHktENq59B7OhnbxwJYwnpia1WdUdXu9FVM3fwVQ"/>
+</div>
+</header>
+<!-- Main Content Grid -->
+<main class="ml-sidebar-expanded pt-16 h-screen flex flex-col overflow-hidden">
+<!-- Action Header -->
+<section class="px-gutter py-4 bg-white border-b border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+<span class="font-body-md text-body-md font-semibold">Geri Dön</span>
+</button>
+<div class="h-4 w-px bg-outline-variant"></div>
+<h3 class="font-title-sm text-title-sm text-primary">Sözleşme Oluşturma Sihirbazı</h3>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-2 px-4 py-2 text-on-surface-variant border border-outline-variant rounded hover:bg-surface-container-low transition-colors font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-lg" data-icon="save">save</span>
+                    Taslak Olarak Kaydet
+                </button>
+<button class="flex items-center gap-2 px-4 py-2 text-on-surface-variant border border-outline-variant rounded hover:bg-surface-container-low transition-colors font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-lg" data-icon="picture_as_pdf">picture_as_pdf</span>
+                    PDF İndir
+                </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-secondary text-on-secondary rounded hover:bg-primary transition-all font-body-sm text-body-sm font-bold shadow-sm">
+<span class="material-symbols-outlined text-lg" data-icon="description">description</span>
+                    Word (.docx) İndir
+                </button>
+</div>
+</section>
+<div class="flex flex-1 overflow-hidden">
+<!-- Left Panel: Templates & Variables -->
+<section class="w-[400px] bg-white border-r border-outline-variant flex flex-col">
+<!-- Tab Switching -->
+<div class="flex border-b border-outline-variant">
+<button class="flex-1 py-3 font-body-sm text-body-sm font-bold border-b-2 border-secondary text-secondary">
+                        Değişkenler &amp; Veri
+                    </button>
+<button class="flex-1 py-3 font-body-sm text-body-sm font-medium text-on-surface-variant hover:bg-surface-container-low transition-colors">
+                        Şablon Kütüphanesi
+                    </button>
+</div>
+<div class="flex-1 overflow-y-auto p-gutter custom-scrollbar space-y-6">
+<!-- Template Selection (Brief View) -->
+<div>
+<label class="block font-label-caps text-label-caps text-outline mb-2">AKTİF ŞABLON</label>
+<div class="p-3 bg-surface-container-low border border-outline-variant rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary" data-icon="verified_user">verified_user</span>
+<div>
+<p class="font-body-md text-body-md font-bold">Gizlilik Sözleşmesi (NDA)</p>
+<p class="text-[11px] text-outline">v2.4 - Hukuk Onaylı</p>
+</div>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant" data-icon="expand_more">expand_more</button>
+</div>
+</div>
+<!-- Variable Inputs -->
+<div class="space-y-4">
+<label class="block font-label-caps text-label-caps text-outline">SÖZLEŞME DEĞİŞKENLERİ</label>
+<!-- Input Group -->
+<div class="space-y-1">
+<label class="font-body-sm text-body-sm font-semibold text-on-surface-variant">Taraf A (Hizmet Alan)</label>
+<input id="input-party-a" class="w-full p-2.5 bg-surface-container-lowest border border-outline-variant rounded input-focus-ring font-body-md text-body-md" placeholder="Kurum veya Kişi Adı" type="text" value="Cognitive Enterprise Solutions Ltd."/>
+</div>
+<div class="space-y-1">
+<label class="font-body-sm text-body-sm font-semibold text-on-surface-variant">Taraf B (Hizmet Veren)</label>
+<input id="input-party-b" class="w-full p-2.5 bg-surface-container-lowest border border-outline-variant rounded input-focus-ring font-body-md text-body-md" placeholder="Yüklenici Firma Adı" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="space-y-1">
+<label class="font-body-sm text-body-sm font-semibold text-on-surface-variant">Sözleşme Bedeli</label>
+<div class="relative">
+<input id="input-price" class="w-full p-2.5 pr-10 bg-surface-container-lowest border border-outline-variant rounded input-focus-ring font-mono-data text-mono-data" placeholder="0.00" type="number"/>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 text-outline font-bold text-xs">TRY</span>
+</div>
+</div>
+<div class="space-y-1">
+<label class="font-body-sm text-body-sm font-semibold text-on-surface-variant">Yürürlük Tarihi</label>
+<input id="input-date" class="w-full p-2.5 bg-surface-container-lowest border border-outline-variant rounded input-focus-ring font-body-md text-body-md" type="date"/>
+</div>
+</div>
+<div class="space-y-1">
+<label class="font-body-sm text-body-sm font-semibold text-on-surface-variant">Sözleşme Süresi (Ay)</label>
+<select class="w-full p-2.5 bg-surface-container-lowest border border-outline-variant rounded input-focus-ring font-body-md text-body-md">
+<option>12 Ay</option>
+<option>24 Ay</option>
+<option>Belirsiz Süreli</option>
+</select>
+</div>
+<div class="space-y-1">
+<label class="font-body-sm text-body-sm font-semibold text-on-surface-variant">Tahkim Yeri</label>
+<input class="w-full p-2.5 bg-surface-container-lowest border border-outline-variant rounded input-focus-ring font-body-md text-body-md" type="text" value="İstanbul Çağlayan Adliyeleri"/>
+</div>
+<div class="pt-2">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="w-4 h-4 text-secondary border-outline-variant rounded focus:ring-secondary" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface-variant group-hover:text-primary transition-colors">Gizlilik maddesini standart formda ekle</span>
+</label>
+</div>
+</div>
+<!-- Assistant / Suggestions -->
+<div class="p-4 bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-xl border border-on-tertiary-container/10">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-lg" data-icon="auto_awesome">auto_awesome</span>
+<span class="font-title-sm text-body-sm font-bold">Zeki İpucu</span>
+</div>
+<p class="font-body-sm text-body-sm leading-relaxed">Benzer bedelli sözleşmelerde genellikle <strong>%0.9 damga vergisi</strong> maddesi otomatik eklenmektedir. Eklemek ister misiniz?</p>
+<button class="mt-3 text-xs font-bold underline hover:no-underline uppercase tracking-wider">Hükmü Ekle</button>
+</div>
+</div>
+<!-- Template Thumbnails (Bottom Quick Select) -->
+<div class="p-4 bg-surface-container-lowest border-t border-outline-variant">
+<p class="font-label-caps text-[10px] text-outline mb-3">HIZLI ŞABLON DEĞİŞTİR</p>
+<div class="flex gap-2">
+<div class="flex-1 p-2 border-2 border-secondary bg-surface-container-high rounded cursor-pointer text-center">
+<span class="material-symbols-outlined block text-secondary mb-1" data-icon="lock" style="font-variation-settings: 'FILL' 1;">lock</span>
+<span class="text-[10px] font-bold">GİZLİLİK</span>
+</div>
+<div class="flex-1 p-2 border border-outline-variant hover:border-secondary transition-colors rounded cursor-pointer text-center group">
+<span class="material-symbols-outlined block text-outline group-hover:text-secondary mb-1" data-icon="home_work">home_work</span>
+<span class="text-[10px] font-bold">KİRA</span>
+</div>
+<div class="flex-1 p-2 border border-outline-variant hover:border-secondary transition-colors rounded cursor-pointer text-center group">
+<span class="material-symbols-outlined block text-outline group-hover:text-secondary mb-1" data-icon="handshake">handshake</span>
+<span class="text-[10px] font-bold">HİZMET</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Panel: Document Editor/Preview -->
+<section class="flex-1 bg-surface-container-low flex flex-col relative overflow-hidden">
+<!-- Editor Toolbar -->
+<div class="h-12 bg-white border-b border-outline-variant flex items-center px-gutter gap-4 shadow-sm z-10">
+<div class="flex items-center gap-1 border-r border-outline-variant pr-4">
+<button class="p-1.5 hover:bg-surface-container-high rounded transition-colors material-symbols-outlined text-xl" data-icon="format_bold">format_bold</button>
+<button class="p-1.5 hover:bg-surface-container-high rounded transition-colors material-symbols-outlined text-xl" data-icon="format_italic">format_italic</button>
+<button class="p-1.5 hover:bg-surface-container-high rounded transition-colors material-symbols-outlined text-xl" data-icon="format_underlined">format_underlined</button>
+</div>
+<div class="flex items-center gap-1 border-r border-outline-variant pr-4">
+<button class="p-1.5 hover:bg-surface-container-high rounded transition-colors material-symbols-outlined text-xl" data-icon="format_align_left">format_align_left</button>
+<button class="p-1.5 hover:bg-surface-container-high rounded transition-colors material-symbols-outlined text-xl" data-icon="format_align_center">format_align_center</button>
+<button class="p-1.5 hover:bg-surface-container-high rounded transition-colors material-symbols-outlined text-xl" data-icon="format_list_bulleted">format_list_bulleted</button>
+</div>
+<div class="flex items-center gap-3">
+<select class="bg-transparent border-none text-body-sm font-body-sm focus:ring-0">
+<option>Inter</option>
+<option>Times New Roman</option>
+<option>Arial</option>
+</select>
+<div class="h-4 w-px bg-outline-variant"></div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-lg text-outline" data-icon="zoom_in">zoom_in</span>
+<span class="text-body-sm font-body-sm">100%</span>
+</div>
+</div>
+<div class="ml-auto flex items-center gap-2">
+<span class="flex items-center gap-1 text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded">
+<span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                            Otomatik Kaydedildi
+                        </span>
+</div>
+</div>
+<!-- Document Canvas -->
+<div class="flex-1 overflow-y-auto p-12 flex justify-center custom-scrollbar" id="document-canvas">
+<!-- Page Container -->
+<div class="w-[800px] min-h-[1131px] bg-white doc-page p-[80px] relative">
+<!-- Branding Header -->
+<div class="flex justify-between items-start mb-16">
+<div class="w-24 h-12 bg-surface-container-highest border border-primary flex items-center justify-center font-bold text-xs">LOGO</div>
+<div class="text-right">
+<p class="text-[10px] font-bold uppercase tracking-widest text-outline">Gizli &amp; Özel</p>
+<p class="text-xs font-mono-data text-outline-variant">DOC_ID: 11_NDA_2023_V4</p>
+</div>
+</div>
+<!-- Content -->
+<div class="space-y-8 text-on-background">
+<h1 class="text-center font-display-lg text-display-lg font-extrabold uppercase border-b-2 border-primary pb-4">GİZLİLİK SÖZLEŞMESİ</h1>
+<section>
+<h4 class="font-title-sm text-title-sm mb-3 border-l-4 border-secondary pl-3">1. TARAFLAR</h4>
+<p class="font-body-md text-body-md leading-relaxed text-justify">
+                                    İşbu Gizlilik Sözleşmesi ("Sözleşme"), <span id="doc-party-a" class="bg-secondary-container/20 px-1 font-bold text-secondary">Cognitive Enterprise Solutions Ltd.</span> ("Hizmet Alan") ile öte tarafta <span id="doc-party-b" class="bg-secondary-container/20 px-1 font-bold text-secondary">________________________</span> ("Hizmet Veren") arasında imzalanmıştır. Taraflar bundan böyle münferiden "Taraf" ve müştereken "Taraflar" olarak anılacaktır.
+                                </p>
+</section>
+<section>
+<h4 class="font-title-sm text-title-sm mb-3 border-l-4 border-secondary pl-3">2. KONU VE KAPSAM</h4>
+<p class="font-body-md text-body-md leading-relaxed text-justify">
+                                    İşbu sözleşmenin konusu, Taraflar arasında kurulması planlanan iş ilişkisi kapsamında paylaşılacak olan her türlü ticari, teknik, mali ve idari bilginin "Gizli Bilgi" olarak korunması ve üçüncü şahıslara aktarılmasının önlenmesidir.
+                                </p>
+</section>
+<section>
+<h4 class="font-title-sm text-title-sm mb-3 border-l-4 border-secondary pl-3">3. GİZLİ BİLGİ TANIMI</h4>
+<ul class="list-disc ml-6 space-y-2 font-body-md text-body-md">
+<li>Yazılım kaynak kodları, veri tabanı yapıları ve algoritmalar.</li>
+<li>Müşteri listeleri, pazarlama stratejileri ve fiyatlandırma politikaları.</li>
+<li>Taraflar arasındaki tüm sözlü, yazılı veya elektronik iletişim.</li>
+</ul>
+</section>
+<section>
+<h4 class="font-title-sm text-title-sm mb-3 border-l-4 border-secondary pl-3">4. MALİ HÜKÜMLER</h4>
+<p class="font-body-md text-body-md leading-relaxed">
+                                    İşbu sözleşmenin ihlali durumunda, ihlal eden taraf <span id="doc-price" class="bg-secondary-container/20 px-1 font-bold text-secondary">________ TRY</span> tutarında cezai şartı herhangi bir mahkeme kararına gerek kalmaksızın derhal ödemeyi kabul ve taahhüt eder.
+                                </p>
+</section>
+<section>
+<h4 class="font-title-sm text-title-sm mb-3 border-l-4 border-secondary pl-3">5. YÜRÜRLÜK VE SÜRE</h4>
+<p class="font-body-md text-body-md leading-relaxed">
+                                    İşbu sözleşme <span id="doc-date" class="bg-secondary-container/20 px-1 font-bold text-secondary">________</span> tarihinde yürürlüğe girecek olup, Taraflar arasındaki iş ilişkisi sona erse dahi 5 (beş) yıl süreyle geçerliliğini koruyacaktır.
+                                </p>
+</section>
+<div class="mt-20 grid grid-cols-2 gap-20">
+<div class="border-t border-on-background pt-4 text-center">
+<p class="font-label-caps text-label-caps">HİZMET ALAN</p>
+<p class="font-body-sm text-body-sm mt-2 opacity-60">(İmza / Kaşe)</p>
+</div>
+<div class="border-t border-on-background pt-4 text-center">
+<p class="font-label-caps text-label-caps">HİZMET VEREN</p>
+<p class="font-body-sm text-body-sm mt-2 opacity-60">(İmza / Kaşe)</p>
+</div>
+</div>
+</div>
+<!-- Watermark -->
+<div class="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none rotate-45 select-none">
+<span class="text-8xl font-black">COGNITIVE ERP</span>
+</div>
+</div>
+</div>
+<!-- Floating Toolbar for Document Navigation -->
+<div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center bg-white/80 backdrop-blur-md border border-outline-variant rounded-full px-4 py-2 gap-4 shadow-xl border-t-2 border-t-secondary/20">
+<button class="material-symbols-outlined p-1 hover:bg-surface-container-high rounded-full" data-icon="chevron_left">chevron_left</button>
+<span class="text-xs font-bold text-on-surface">SAYFA 1 / 1</span>
+<button class="material-symbols-outlined p-1 hover:bg-surface-container-high rounded-full" data-icon="chevron_right">chevron_right</button>
+<div class="w-px h-4 bg-outline-variant mx-1"></div>
+<button class="material-symbols-outlined p-1 hover:bg-surface-container-high rounded-full text-secondary" data-icon="print">print</button>
+<button class="material-symbols-outlined p-1 hover:bg-surface-container-high rounded-full text-secondary" data-icon="comment">comment</button>
+</div>
+</section>
+</div>
+</main>
+<!-- Micro-interaction Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputs = document.querySelectorAll('input, select');
+            const canvas = document.getElementById('document-canvas');
+
+            // Simulate content highlighting when input is focused
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    // In a real app, this would scroll the doc to the relevant section
+                    console.log('Focusing related document part...');
+                });
+            });
+
+            // Live updates for document preview
+            const inputA = document.getElementById('input-party-a');
+            const inputB = document.getElementById('input-party-b');
+            const inputPrice = document.getElementById('input-price');
+            const inputDate = document.getElementById('input-date');
+
+            const docA = document.getElementById('doc-party-a');
+            const docB = document.getElementById('doc-party-b');
+            const docPrice = document.getElementById('doc-price');
+            const docDate = document.getElementById('doc-date');
+
+            if (inputA && docA) {
+                inputA.addEventListener('input', () => {
+                    docA.innerText = inputA.value || "________________________";
+                });
+            }
+            if (inputB && docB) {
+                inputB.addEventListener('input', () => {
+                    docB.innerText = inputB.value || "________________________";
+                });
+            }
+            if (inputPrice && docPrice) {
+                inputPrice.addEventListener('input', () => {
+                    docPrice.innerText = inputPrice.value ? parseFloat(inputPrice.value).toLocaleString('tr-TR') + " TRY" : "________ TRY";
+                });
+            }
+            if (inputDate && docDate) {
+                inputDate.addEventListener('input', () => {
+                    if (inputDate.value) {
+                        const dateParts = inputDate.value.split('-');
+                        docDate.innerText = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
+                    } else {
+                        docDate.innerText = "________";
+                    }
+                });
+            }
+
+            // Smooth scaling effect for the document
+            let scale = 1;
+            canvas.addEventListener('wheel', (e) => {
+                if(e.ctrlKey) {
+                    e.preventDefault();
+                    scale += e.deltaY * -0.001;
+                    scale = Math.min(Math.max(.5, scale), 2);
+                    const page = canvas.querySelector('.doc-page');
+                    page.style.transform = `scale(${scale})`;
+                }
+            });
+        });
+    </script>
+<script src="../shared_logic.js"></script>
+</body></html>
