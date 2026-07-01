@@ -165,56 +165,87 @@
 <body class="bg-background text-on-surface font-body-md overflow-hidden">
 <!-- SideNavBar (Authority: JSON) -->
 <aside class="fixed left-0 top-0 h-screen flex flex-col z-40 bg-primary dark:bg-primary-container border-r border-outline-variant docked left-0 h-full w-sidebar-expanded transition-all duration-300 sidebar-transition">
-<div class="p-gutter flex flex-col h-full">
-<!-- Brand -->
-<div class="mb-8 flex items-center gap-3">
-<div class="w-10 h-10 bg-secondary rounded flex items-center justify-center text-on-secondary">
-<span class="material-symbols-outlined">precision_manufacturing</span>
+<div class="p-4 flex flex-col gap-1">
+<div class="flex items-center gap-3 mb-1">
+<div class="w-8 h-8 rounded bg-slate-900 flex items-center justify-center text-white">
+<span class="material-symbols-outlined">safety_divider</span>
 </div>
-<div class="flex flex-col">
-<span class="font-headline-md text-headline-md font-bold text-on-primary leading-none">Cognitive ERP</span>
-<span class="text-on-primary-fixed-variant text-[10px] uppercase tracking-widest mt-1">Sistem Yöneticisi</span>
+<div>
+<div class="font-title-sm text-title-sm font-bold text-slate-900">BIGsafer</div>
+<div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Kurumsal Paket</div>
 </div>
 </div>
-<!-- CTA -->
-<button class="mb-6 w-full py-3 px-4 bg-secondary-container text-on-secondary-container rounded font-bold flex items-center justify-center gap-2 hover:bg-secondary-fixed transition-colors">
-<span class="material-symbols-outlined">add</span>
-                Hızlı Giriş
-            </button>
-<!-- Main Tabs (Active: Operations) -->
-<nav class="flex-1 space-y-1">
-<a class="flex items-center gap-3 px-4 py-3 rounded text-primary-fixed dark:text-primary-fixed-dim hover:bg-on-primary-fixed-variant duration-150 ease-in-out" href="../bigsafer_erp_ana_sayfa/code.html">
-<span class="material-symbols-outlined">dashboard</span>
-<span>Genel Bakış</span>
+</div>
+<nav class="flex-1 space-y-0.5 overflow-y-auto custom-scrollbar px-2">
+<!-- 1. Ana Sayfa -->
+<a id="nav-home" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../bigsafer_erp_ana_sayfa/code.html">
+<span class="material-symbols-outlined mr-3">home</span>
+<span class="font-body-md text-body-md">Ana Sayfa</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-3 rounded text-primary-fixed dark:text-primary-fixed-dim hover:bg-on-primary-fixed-variant duration-150 ease-in-out" href="../muhasebe_finansal_zet/code.html">
-<span class="material-symbols-outlined">account_balance_wallet</span>
-<span>Muhasebe</span>
+<!-- 2. Analitik -->
+<a id="nav-analytics" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../erp_dashboard_genel_bak/code.html">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span class="font-body-md text-body-md">Analitik</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-3 rounded bg-surface-container-highest dark:bg-surface-container-high text-on-surface font-bold border-l-4 border-secondary duration-150 ease-in-out" href="../operasyon_i_takibi/code.html">
-<span class="material-symbols-outlined">precision_manufacturing</span>
-<span>Operasyonlar</span>
+<!-- 3. Müşteriler -->
+<a id="nav-crm" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../m_teriler_crm_mod_l/code.html">
+<span class="material-symbols-outlined mr-3">groups</span>
+<span class="font-body-md text-body-md">Müşteriler</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-3 rounded text-primary-fixed dark:text-primary-fixed-dim hover:bg-on-primary-fixed-variant duration-150 ease-in-out" href="../m_teriler_crm_mod_l/code.html">
-<span class="material-symbols-outlined">groups</span>
-<span>Müşteriler</span>
+<!-- 4. Operasyonlar -->
+<a id="nav-operations" class="flex items-center bg-slate-50 text-slate-900 font-semibold rounded-lg px-3 py-2 transition-all" href="../operasyon_i_takibi/code.html">
+<span class="material-symbols-outlined mr-3">engineering</span>
+<span class="font-body-md text-body-md">Operasyonlar</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-3 rounded text-primary-fixed dark:text-primary-fixed-dim hover:bg-on-primary-fixed-variant duration-150 ease-in-out" href="../s_zle_me_y_netimi/code.html">
-<span class="material-symbols-outlined">description</span>
-<span>Sözleşmeler</span>
+<!-- 5. Muhasebe -->
+<a id="nav-accounting" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../muhasebe_finansal_zet/code.html">
+<span class="material-symbols-outlined mr-3">account_balance</span>
+<span class="font-body-md text-body-md">Muhasebe</span>
+</a>
+<!-- 6. Envanter -->
+<a id="nav-inventory" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../envanter_y_netimi/code.html">
+<span class="material-symbols-outlined mr-3">inventory_2</span>
+<span class="font-body-md text-body-md">Envanter</span>
+</a>
+<!-- 7. İnsan Kaynakları -->
+<a id="nav-hr" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../personel_y_netimi/code.html">
+<span class="material-symbols-outlined mr-3">badge</span>
+<span class="font-body-md text-body-md">İnsan Kaynakları</span>
+</a>
+<!-- 8. Faturalar -->
+<a id="nav-invoices" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../fatura_ve_entegrasyon_y_netimi/code.html">
+<span class="material-symbols-outlined mr-3">description</span>
+<span class="font-body-md text-body-md">Faturalar</span>
+</a>
+<!-- 9. Finansal Raporlar -->
+<a id="nav-reports" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../finansal_raporlar/code.html">
+<span class="material-symbols-outlined mr-3">payments</span>
+<span class="font-body-md text-body-md">Raporlar</span>
+</a>
+<!-- 10. Fiyatlandırma -->
+<a id="nav-pricing" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../fiyatland_rma_ve_deme_y_netimi/code.html">
+<span class="material-symbols-outlined mr-3">settings_suggest</span>
+<span class="font-body-md text-body-md">Fiyatlandırma</span>
+</a>
+<!-- 11. Sözleşmeler -->
+<a id="nav-contracts" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../s_zle_me_y_netimi/code.html">
+<span class="material-symbols-outlined mr-3">history_edu</span>
+<span class="font-body-md text-body-md">Sözleşmeler</span>
 </a>
 </nav>
-<!-- Footer Tabs -->
-<div class="mt-auto pt-6 border-t border-on-primary-fixed-variant space-y-1">
-<a class="flex items-center gap-3 px-4 py-2 text-primary-fixed dark:text-primary-fixed-dim hover:bg-on-primary-fixed-variant rounded" href="#">
-<span class="material-symbols-outlined">settings</span>
-<span>Ayarlar</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-2 text-primary-fixed dark:text-primary-fixed-dim hover:bg-on-primary-fixed-variant rounded" href="#">
-<span class="material-symbols-outlined">help</span>
-<span>Destek</span>
-</a>
+<div class="p-4 border-t border-slate-100 mt-auto">
+<div class="bg-emerald-50 text-emerald-800 rounded-lg p-2 mb-2 flex items-center justify-between text-[11px] font-bold uppercase tracking-wider">
+<span>Sistem Aktif</span>
+<span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
 </div>
+<a class="flex items-center text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-lg px-3 py-1.5 transition-all text-xs" href="#">
+<span class="material-symbols-outlined mr-3 text-sm">rate_review</span>
+<span class="font-body-sm text-body-sm">Geri Bildirim</span>
+</a>
+<a class="flex items-center text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-lg px-3 py-1.5 transition-all text-xs" href="#">
+<span class="material-symbols-outlined mr-3 text-sm">logout</span>
+<span class="font-body-sm text-body-sm">Çıkış Yap</span>
+</a>
 </div>
 </aside>
 <!-- Main Content Area -->

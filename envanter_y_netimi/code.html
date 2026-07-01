@@ -127,44 +127,86 @@
 <body class="bg-slate-50 text-slate-800 font-body-md overflow-hidden">
 <!-- SideNavBar Integration -->
 <aside class="fixed left-0 top-0 h-full w-sidebar-expanded bg-white border-r border-slate-100 flex flex-col py-gutter px-stack-comfortable z-50">
-<div class="mb-10 px-2">
-<h1 class="font-headline-md text-headline-md font-bold text-slate-900">Kurumsal Kaynak</h1>
-<p class="text-slate-500 text-body-sm">Küresel Operasyonlar</p>
+<div class="p-4 flex flex-col gap-1">
+<div class="flex items-center gap-3 mb-1">
+<div class="w-8 h-8 rounded bg-slate-900 flex items-center justify-center text-white">
+<span class="material-symbols-outlined">safety_divider</span>
 </div>
-<nav class="flex-1 space-y-1">
-<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50/50 hover:text-slate-950 transition-colors rounded-lg" href="../erp_dashboard_genel_bak/code.html">
-<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
-<span class="font-body-md">Genel Bakış</span>
+<div>
+<div class="font-title-sm text-title-sm font-bold text-slate-900">BIGsafer</div>
+<div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Kurumsal Paket</div>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-0.5 overflow-y-auto custom-scrollbar px-2">
+<!-- 1. Ana Sayfa -->
+<a id="nav-home" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../bigsafer_erp_ana_sayfa/code.html">
+<span class="material-symbols-outlined mr-3">home</span>
+<span class="font-body-md text-body-md">Ana Sayfa</span>
 </a>
-<a class="flex items-center gap-3 px-3 py-2 bg-slate-50 text-slate-900 rounded-lg font-semibold transition-colors" href="../envanter_y_netimi/code.html">
-<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
-<span class="font-body-md">Envanter</span>
+<!-- 2. Analitik -->
+<a id="nav-analytics" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../erp_dashboard_genel_bak/code.html">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span class="font-body-md text-body-md">Analitik</span>
 </a>
-<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50/50 hover:text-slate-950 transition-colors rounded-lg" href="../finansal_raporlar/code.html">
-<span class="material-symbols-outlined" data-icon="payments">payments</span>
-<span class="font-body-md">Finans</span>
+<!-- 3. Müşteriler -->
+<a id="nav-crm" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../m_teriler_crm_mod_l/code.html">
+<span class="material-symbols-outlined mr-3">groups</span>
+<span class="font-body-md text-body-md">Müşteriler</span>
 </a>
-<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50/50 hover:text-slate-950 transition-colors rounded-lg" href="../personel_y_netimi/code.html">
-<span class="material-symbols-outlined" data-icon="groups">groups</span>
-<span class="font-body-md">İnsan Kaynakları</span>
+<!-- 4. Operasyonlar -->
+<a id="nav-operations" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../operasyon_i_takibi/code.html">
+<span class="material-symbols-outlined mr-3">engineering</span>
+<span class="font-body-md text-body-md">Operasyonlar</span>
 </a>
-<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50/50 hover:text-slate-950 transition-colors rounded-lg" href="#">
-<span class="material-symbols-outlined" data-icon="settings">settings</span>
-<span class="font-body-md">Ayarlar</span>
+<!-- 5. Muhasebe -->
+<a id="nav-accounting" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../muhasebe_finansal_zet/code.html">
+<span class="material-symbols-outlined mr-3">account_balance</span>
+<span class="font-body-md text-body-md">Muhasebe</span>
+</a>
+<!-- 6. Envanter -->
+<a id="nav-inventory" class="flex items-center bg-slate-50 text-slate-900 font-semibold rounded-lg px-3 py-2 transition-all" href="../envanter_y_netimi/code.html">
+<span class="material-symbols-outlined mr-3">inventory_2</span>
+<span class="font-body-md text-body-md">Envanter</span>
+</a>
+<!-- 7. İnsan Kaynakları -->
+<a id="nav-hr" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../personel_y_netimi/code.html">
+<span class="material-symbols-outlined mr-3">badge</span>
+<span class="font-body-md text-body-md">İnsan Kaynakları</span>
+</a>
+<!-- 8. Faturalar -->
+<a id="nav-invoices" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../fatura_ve_entegrasyon_y_netimi/code.html">
+<span class="material-symbols-outlined mr-3">description</span>
+<span class="font-body-md text-body-md">Faturalar</span>
+</a>
+<!-- 9. Finansal Raporlar -->
+<a id="nav-reports" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../finansal_raporlar/code.html">
+<span class="material-symbols-outlined mr-3">payments</span>
+<span class="font-body-md text-body-md">Raporlar</span>
+</a>
+<!-- 10. Fiyatlandırma -->
+<a id="nav-pricing" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../fiyatland_rma_ve_deme_y_netimi/code.html">
+<span class="material-symbols-outlined mr-3">settings_suggest</span>
+<span class="font-body-md text-body-md">Fiyatlandırma</span>
+</a>
+<!-- 11. Sözleşmeler -->
+<a id="nav-contracts" class="flex items-center text-slate-600 hover:bg-slate-50/50 hover:text-slate-900 rounded-lg px-3 py-2 transition-all" href="../s_zle_me_y_netimi/code.html">
+<span class="material-symbols-outlined mr-3">history_edu</span>
+<span class="font-body-md text-body-md">Sözleşmeler</span>
 </a>
 </nav>
-<div class="mt-auto pt-6 border-t border-slate-100 space-y-1">
-<button class="w-full flex items-center justify-center gap-2 py-2 mb-4 bg-slate-900 text-white rounded-lg font-semibold hover:bg-slate-800 transition-colors">
-<span class="material-symbols-outlined text-[20px]" data-icon="add">add</span>
-                Yeni Rapor
-            </button>
-<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:bg-slate-50/50 hover:text-slate-900 transition-colors rounded-lg" href="#">
-<span class="material-symbols-outlined" data-icon="help">help</span>
-<span class="font-body-md">Destek</span>
+<div class="p-4 border-t border-slate-100 mt-auto">
+<div class="bg-emerald-50 text-emerald-800 rounded-lg p-2 mb-2 flex items-center justify-between text-[11px] font-bold uppercase tracking-wider">
+<span>Sistem Aktif</span>
+<span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+</div>
+<a class="flex items-center text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-lg px-3 py-1.5 transition-all text-xs" href="#">
+<span class="material-symbols-outlined mr-3 text-sm">rate_review</span>
+<span class="font-body-sm text-body-sm">Geri Bildirim</span>
 </a>
-<a class="flex items-center gap-3 px-3 py-2 text-rose-600 hover:bg-rose-50 transition-colors rounded-lg" href="#">
-<span class="material-symbols-outlined" data-icon="logout">logout</span>
-<span class="font-body-md">Çıkış Yap</span>
+<a class="flex items-center text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-lg px-3 py-1.5 transition-all text-xs" href="#">
+<span class="material-symbols-outlined mr-3 text-sm">logout</span>
+<span class="font-body-sm text-body-sm">Çıkış Yap</span>
 </a>
 </div>
 </aside>
