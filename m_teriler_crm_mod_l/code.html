@@ -256,6 +256,10 @@
 </nav>
 </div>
 <div class="flex items-center gap-4">
+<button class="border border-primary text-primary bg-white px-4 py-2 rounded-lg font-bold hover:bg-primary/5 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">upload_file</span>
+                    Toplu Müşteri Girişi
+                </button>
 <button class="bg-primary text-white px-4 py-2 rounded-lg font-bold hover:bg-primary/90 transition-all flex items-center gap-2">
 <span class="material-symbols-outlined text-sm">add</span>
                     Yeni Müşteri
@@ -417,8 +421,8 @@
 <div>
 <h1 class="font-display-lg text-display-lg text-primary" id="cust-name">ENSAR PROFİL</h1>
 <div class="flex items-center gap-4 mt-2">
-<span class="flex items-center gap-1 text-on-surface-variant text-body-sm"><span class="material-symbols-outlined text-sm">phone</span> +90 212 555 0000</span>
-<span class="flex items-center gap-1 text-on-surface-variant text-body-sm"><span class="material-symbols-outlined text-sm">mail</span> finance@ensarprofil.com</span>
+<span class="flex items-center gap-1 text-on-surface-variant text-body-sm"><span class="material-symbols-outlined text-sm">phone</span> <span id="cust-phone">+90 212 555 0000</span></span>
+<span class="flex items-center gap-1 text-on-surface-variant text-body-sm"><span class="material-symbols-outlined text-sm">mail</span> <span id="cust-tax">VD: İkitelli / No: 1234567890</span></span>
 </div>
 </div>
 </div>
@@ -539,7 +543,7 @@
 <div class="absolute inset-0 flex items-center justify-center bg-black/5">
 <span class="bg-white px-4 py-2 rounded-full shadow-lg font-bold text-primary flex items-center gap-2">
 <span class="material-symbols-outlined text-error">pin_drop</span>
-                                        Hadımköy OSB, İstanbul
+                                        <span id="cust-address">Hadımköy OSB, İstanbul</span>
                                     </span>
 </div>
 </div>
@@ -551,8 +555,8 @@
 <div class="flex items-center gap-3">
 <div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold">MH</div>
 <div>
-<p class="font-bold text-body-md">Murat Hakyemez</p>
-<p class="text-[11px] text-on-surface-variant">Satın Alma Müdürü</p>
+<p class="font-bold text-body-md" id="cust-authorized">Murat Hakyemez</p>
+<p class="text-[11px] text-on-surface-variant" id="cust-contact-phone">Satın Alma Müdürü / 0532 111 22 33</p>
 </div>
 </div>
 <button class="p-2 hover:bg-white rounded-full transition-all text-secondary">
@@ -583,12 +587,31 @@
 <span class="material-symbols-outlined">bolt</span>
 </button>
 <script>
-        function selectCustomer(name, balance, percent, status) {
+        function selectCustomer(name, balance, percent, status, address, phone, tax_office, tax_number, authorized_person, contact_phone) {
+            // Fallback defaults for backwards compatibility
+            address = address || "Hadımköy OSB, İstanbul";
+            phone = phone || "+90 212 555 00 00";
+            tax_office = tax_office || "İkitelli Vergi Dairesi";
+            tax_number = tax_number || "1234567890";
+            authorized_person = authorized_person || "Murat Hakyemez";
+            contact_phone = contact_phone || "0532 111 22 33";
+
             document.getElementById('cust-name').innerText = name;
             document.getElementById('cust-initial').innerText = name.charAt(0);
             document.getElementById('cust-balance').innerText = balance;
             document.getElementById('cust-percent').innerText = percent + '%';
             
+            // Set corporate phone & tax info
+            document.getElementById('cust-phone').innerText = phone;
+            document.getElementById('cust-tax').innerText = `VD: ${tax_office} / No: ${tax_number}`;
+            
+            // Set address
+            document.getElementById('cust-address').innerText = address;
+            
+            // Set authorized contact info
+            document.getElementById('cust-authorized').innerText = authorized_person;
+            document.getElementById('cust-contact-phone').innerText = `Yetkili İrtibat: ${contact_phone}`;
+
             const statusEl = document.getElementById('cust-status');
             const balanceEl = document.getElementById('cust-balance');
             const circle = document.getElementById('progress-circle');
