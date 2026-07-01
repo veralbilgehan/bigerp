@@ -456,6 +456,147 @@ document.addEventListener('DOMContentLoaded', () => {
         modalDiv.classList.add('show');
     }
 
+    function openAccountingModal() {
+        const fields = [
+            { label: 'İşlem Tarihi', name: 'date', type: 'date' },
+            { label: 'Müşteri / Cari', name: 'company', type: 'text', placeholder: 'örn: Ensar Profil A.Ş. veya Amazon Web Services' },
+            { label: 'Kategori', name: 'category', type: 'select', options: ['SATIŞ', 'KİRA', 'MAAŞ', 'VERGİ', 'BİLİŞİM', 'DİĞER'] },
+            { label: 'Açıklama', name: 'desc', type: 'text', placeholder: 'örn: Web Hizmetleri Ödemesi' },
+            { label: 'Evrak No / Kod', name: 'doc', type: 'text', placeholder: 'örn: INV-202601' },
+            { label: 'Tutar', name: 'amount', type: 'text', placeholder: '₺10.000,00' },
+            { label: 'İşlem Tipi', name: 'type', type: 'select', options: ['Gelir (+)', 'Gider (-)'] },
+            { label: 'Durum', name: 'status', type: 'select', options: ['Tamamlandı', 'Ödendi', 'Beklemede', 'İşlendi'] }
+        ];
+
+        window.openGlobalModal('Yeni Fiş / Fatura Girişi', fields, (data) => {
+            const tbody = document.querySelector('tbody');
+            if (!tbody) return;
+
+            const tr = document.createElement('tr');
+            tr.className = 'hover:bg-surface-container-low transition-colors group';
+
+            const sign = data.type === 'Gelir (+)' ? '+' : '-';
+            const colorClass = data.type === 'Gelir (+)' ? 'text-emerald-700' : 'text-red-700';
+            const statusColor = data.status === 'Beklemede' ? 'text-amber-600' : 'text-emerald-600';
+            const statusDot = data.status === 'Beklemede' ? 'bg-amber-600' : 'bg-emerald-600';
+
+            tr.innerHTML = `
+                <td class="px-6 py-4 border-b border-outline-variant">
+                    <div class="font-bold text-on-surface">${data.desc}</div>
+                    <div class="text-xs text-on-surface-variant">${data.date} • ${data.doc}</div>
+                </td>
+                <td class="px-6 py-4 border-b border-outline-variant font-semibold text-primary">
+                    ${data.company}
+                </td>
+                <td class="px-6 py-4 border-b border-outline-variant">
+                    <span class="px-2 py-1 bg-surface-container-highest text-primary text-[10px] rounded font-bold uppercase tracking-tighter">${data.category}</span>
+                </td>
+                <td class="px-6 py-4 border-b border-outline-variant">
+                    <span class="flex items-center gap-1.5 ${statusColor} font-bold">
+                        <span class="w-1.5 h-1.5 rounded-full ${statusDot}"></span> ${data.status}
+                    </span>
+                </td>
+                <td class="px-6 py-4 border-b border-outline-variant text-right font-mono-data text-mono-data font-bold ${colorClass}">
+                    ${sign} ${data.amount}
+                </td>
+                <td class="px-6 py-4 border-b border-outline-variant text-right">
+                    <button class="p-2 opacity-0 group-hover:opacity-100 hover:bg-surface-container-high rounded transition-all">
+                        <span class="material-symbols-outlined text-[20px]">more_vert</span>
+                    </button>
+                </td>
+            `;
+
+            tbody.prepend(tr);
+            showToast('İşlem Eklendi', `"${data.desc}" işlemi ${data.company} cari hesabına kaydedildi.`, 'success');
+        });
+    }
+
+    function openBulkAccountingModal() {
+        document.getElementById('global-modal-title').textContent = 'Toplu Fiş / Fatura Girişi';
+        const fieldsContainer = document.getElementById('global-modal-fields');
+        fieldsContainer.innerHTML = `
+            <div class="space-y-1.5">
+                <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider">Toplu Fatura Listesi (CSV / Metin formatında)</label>
+                <div class="text-[10px] text-slate-400 mb-1 leading-normal font-sans">
+                    Format: <b>Açıklama, Müşteri/Cari, Kategori, Evrak No, Tutar, Gelir/Gider (Gelir veya Gider)</b><br>
+                    Her satıra bir kayıt gelecek şekilde yazınız. Örn:<br>
+                    <i>Yazılım Hizmet Bedeli, Ensar Profil A.Ş., SATIŞ, INV-2024, 25.000 TL, Gelir<br>
+                    Ofis Kırtasiye Gideri, Nezih Kırtasiye, OFİS, EXP-55, 1.200 TL, Gider</i>
+                </div>
+                <textarea name="bulk_data" rows="6" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs outline-none focus:border-slate-400 transition-colors font-mono" placeholder="Yazılım Hizmet Bedeli, Ensar Profil A.Ş., SATIŞ, INV-2024, 25.000 TL, Gelir&#10;Ofis Kırtasiye Gideri, Nezih Kırtasiye, OFİS, EXP-55, 1.200 TL, Gider" required></textarea>
+            </div>
+        `;
+
+        const form = document.getElementById('global-modal-form');
+        form.onsubmit = (e) => {
+            e.preventDefault();
+            const bulkText = form.querySelector('textarea[name="bulk_data"]').value;
+            const lines = bulkText.split('\\n');
+            let addedCount = 0;
+            const tbody = document.querySelector('tbody');
+            if (!tbody) return;
+
+            lines.forEach(line => {
+                const parts = line.split(',');
+                if (parts.length >= 6) {
+                    const desc = parts[0].trim();
+                    const company = parts[1].trim();
+                    const category = parts[2].trim();
+                    const doc = parts[3].trim();
+                    const amount = parts[4].trim();
+                    const type = parts[5].trim();
+
+                    if (desc && company && amount) {
+                        const tr = document.createElement('tr');
+                        tr.className = 'hover:bg-surface-container-low transition-colors group';
+
+                        const sign = type === 'Gelir' ? '+' : '-';
+                        const colorClass = type === 'Gelir' ? 'text-emerald-700' : 'text-red-700';
+
+                        tr.innerHTML = `
+                            <td class="px-6 py-4 border-b border-outline-variant">
+                                <div class="font-bold text-on-surface">${desc}</div>
+                                <div class="text-xs text-on-surface-variant">01.07.2026 • ${doc}</div>
+                            </td>
+                            <td class="px-6 py-4 border-b border-outline-variant font-semibold text-primary">
+                                ${company}
+                            </td>
+                            <td class="px-6 py-4 border-b border-outline-variant">
+                                <span class="px-2 py-1 bg-surface-container-highest text-primary text-[10px] rounded font-bold uppercase tracking-tighter">${category}</span>
+                            </td>
+                            <td class="px-6 py-4 border-b border-outline-variant">
+                                <span class="flex items-center gap-1.5 text-emerald-600 font-bold">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Tamamlandı
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 border-b border-outline-variant text-right font-mono-data text-mono-data font-bold ${colorClass}">
+                                ${sign} ₺${amount}
+                            </td>
+                            <td class="px-6 py-4 border-b border-outline-variant text-right">
+                                <button class="p-2 opacity-0 group-hover:opacity-100 hover:bg-surface-container-high rounded transition-all">
+                                    <span class="material-symbols-outlined text-[20px]">more_vert</span>
+                                </button>
+                            </td>
+                        `;
+
+                        tbody.prepend(tr);
+                        addedCount++;
+                    }
+                }
+            });
+
+            closeModal();
+            if (addedCount > 0) {
+                showToast('Toplu Giriş Başarılı', `${addedCount} adet yeni fatura/işlem başarıyla eklendi.`, 'success');
+            } else {
+                showToast('Hata', 'Geçerli formatta işlem bilgisi bulunamadı.', 'error');
+            }
+        };
+
+        const modalDiv = document.getElementById('global-modal-backdrop');
+        modalDiv.classList.add('show');
+    }
+
     function openInventoryModal() {
         const fields = [
             { label: 'Ürün Kodu', name: 'code', type: 'text', placeholder: 'örn: PRO-X2-550' },
@@ -582,10 +723,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const text = clickable.textContent.toLowerCase().trim();
         const path = window.location.pathname;
 
-        if (text.includes('yeni') || text.includes('ekle') || text.includes('ata') || text.includes('personel kaydı') || text.includes('müşteri ekle') || text.includes('toplu')) {
+        if (text.includes('yeni') || text.includes('ekle') || text.includes('ata') || text.includes('personel kaydı') || text.includes('müşteri ekle') || text.includes('toplu') || text.includes('fatura') || text.includes('giriş')) {
             if (text.includes('toplu') && path.includes('m_teriler_crm_mod_l')) {
                 e.preventDefault();
                 openBulkCrmModal();
+                return;
+            } else if (text.includes('toplu') && path.includes('muhasebe_finansal_zet')) {
+                e.preventDefault();
+                openBulkAccountingModal();
+                return;
+            } else if (path.includes('muhasebe_finansal_zet') && (text.includes('yeni fatura') || text.includes('fatura') || text.includes('giriş'))) {
+                e.preventDefault();
+                openAccountingModal();
                 return;
             } else if (path.includes('personel_y_netimi')) {
                 e.preventDefault();
