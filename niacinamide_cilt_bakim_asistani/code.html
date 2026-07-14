@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Niacinamide Cilt Bakım Asistanı</title>
+    <style>
+        :root {
+            --primary: #2d5a27;
+            --primary-light: #eaf2e8;
+            --secondary: #1a365d;
+            --bg-chat: #f4f6f8;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --user-bubble: #2d5a27;
+            --bot-bubble: #ffffff;
+            --accent: #dd6b20;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #eaf2e8 0%, #d5e5d3 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 480px;
+            height: 650px;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid rgba(45, 90, 39, 0.1);
+        }
+
+        /* Chat Header */
+        .chat-header {
+            background-color: var(--primary);
+            color: #ffffff;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header-info h2 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .header-info p {
+            font-size: 12px;
+            color: #b8d8b2;
+        }
+
+        /* Chat Window / Messages */
+        .chat-window {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: var(--bg-chat);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            scroll-behavior: smooth;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 15px;
+            font-size: 14px;
+            line-height: 1.5;
+            word-wrap: break-word;
+            animation: fadeIn 0.3s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bot-msg {
+            background-color: var(--bot-bubble);
+            color: var(--text-dark);
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+
+        .user-msg {
+            background-color: var(--user-bubble);
+            color: #ffffff;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+            box-shadow: 0 2px 5px rgba(45, 90, 39, 0.1);
+        }
+
+        /* Action/Option Buttons */
+        .options-container {
+            padding: 15px 20px;
+            background-color: #ffffff;
+            border-top: 1px solid #eef1f4;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .btn-option {
+            background-color: #ffffff;
+            color: var(--primary);
+            border: 1.5px solid var(--primary);
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+
+        .btn-option:hover {
+            background-color: var(--primary);
+            color: #ffffff;
+        }
+
+        /* Typing Indicator animation */
+        .typing {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+            background-color: var(--bot-bubble);
+            align-self: flex-start;
+            border-radius: 15px;
+            border-bottom-left-radius: 5px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: #cbd5e0;
+            border-radius: 50%;
+            animation: bounce 1.3s linear infinite;
+        }
+
+        .dot:nth-child(2) { animation-delay: -1.1s; }
+        .dot:nth-child(3) { animation-delay: -0.9s; }
+
+        @keyframes bounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-4px); }
+        }
+
+        /* Responsive Custom Scrollbar */
+        .chat-window::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-window::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .chat-window::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="chat-header">
+        <div class="avatar">🌱</div>
+        <div class="header-info">
+            <h2>Cilt Bakım Asistanı</h2>
+            <p>Niacinamide Kullanım Rehberi</p>
+        </div>
+    </div>
+
+    <div class="chat-window" id="chatWindow">
+        </div>
+
+    <div class="options-container" id="optionsContainer">
+        </div>
+</div>
+
+<script>
+    const chatWindow = document.getElementById('chatWindow');
+    const optionsContainer = document.getElementById('optionsContainer');
+
+    // Bot Bilgi Bankası (Veri Yapısı)
+    const database = {
+        skinTypes: {
+            yagli: {
+                title: "Yağlı / Gözenekli Cilt",
+                response: "<strong>Harika bir tercih!</strong> Niacinamide, yağlı ve gözenekli ciltler için adeta mucizevidir. Sebum (yağ) üretimini dengeler ve genişlemiş gözenekleri sıkılaştırır. <u>Tavsiye:</u> Sebum kontrolünü maksimuma çıkarmak için <strong>%5 - %10 Niacinamide + Çinko (Zinc PCA)</strong> içeren hafif formüllü su bazlı serumları tercih edebilirsiniz."
+            },
+            kuru: {
+                title: "Kuru / Nemsiz Cilt",
+                response: "<strong>Güzel bir seçim!</strong> Genelde asitlerin aksine Niacinamide cildi kurutmaz. Hücreler arası seramid üretimini tetikler ve cildin nem tutma kapasitesini artırarak cilt bariyerini güçlendirir. <u>Tavsiye:</u> Niacinamide serumunuzun ardından mutlaka iyi bir nemlendirici sürün veya doğrudan <strong>Hyaluronik Asit</strong> içeren formüllerle birlikte kullanın."
+            },
+            hassas: {
+                title: "Hassas / Kızarık Cilt",
+                response: "<strong>Çok doğru bir içerik!</strong> Niacinamide, güçlü bir anti-enflamatuardır. Ciltteki kızarıklıkları yatıştırır ve hassasiyeti azaltır. <u>Tavsiye:</u> İlk başlarda <strong>%2 ila %5</strong> gibi daha düşük oranlarla başlayın. %10 gibi yüksek oranlar hassas cildinize ilk etapta ağır gelebilir."
+            },
+            lekeli: {
+                title: "Lekeli / Mat Cilt",
+                response: "<strong>Lekeler için harika bir silah!</strong> Niacinamide, melanin pigmentinin (koyu renk hücrelerin) cilt yüzeyine çıkmasını engeller. <u>Tavsiye:</u> Lekeleri daha hızlı açmak için <strong>Alfa Arbutin veya Traneksamik Asit</strong> içeren serumlarla kombine ederek kullanabilirsiniz."
+            }
+        },
+        questions: {
+            zararli: {
+                title: "Uyumsuz / Zararlı Aktifler ⚠️",
+                response: "Niacinamide genelde çok uyumludur ama şu iki içeriğe dikkat etmelisiniz:<br><br>1️⃣ <strong>Saf C Vitamini (L-Askorbik Asit):</strong> Farklı pH değerine sahip olduklarından birbirlerini nötrleyebilir ve cildinizde kızarıklık yapabilir. Birini sabah, diğerini akşam kullanın.<br>2️⃣ <strong>AHA/BHA Asitleri:</strong> Peeling asitleri düşük pH'lıdır. Hemen üzerine Niacinamide sürmek cildi yakabilir. Farklı rutinlere veya günlere bölmenizi öneririm."
+            },
+            faydali: {
+                title: "En İyi Eşleşmeler 🤝",
+                response: "Niacinamide'in gücünü katlayacak en iyi dostları:<br><br>💧 <strong>Hyaluronik Asit:</strong> Nemi cilde kilitler, harika bir dolgunluk verir.<br>🛡️ <strong>Çinko (Zinc):</strong> Sivilce ve siyah noktalara karşı mükemmel bir savaşçıdır.<br>✨ <strong>Alfa Arbutin:</strong> Lekeleri açmada ve cilt tonunu eşitlemede sinerjik çalışırlar.<br>🧬 <strong>Retinol:</strong> Niacinamide, Retinol'ün yaratabileceği kuruluk ve soyulmayı yatıştırır."
+            },
+            rutin: {
+                title: "Sabah mı Akşam mı? ⏰",
+                response: "Niacinamide'i <strong>hem sabah hem akşam</strong> güvenle kullanabilirsiniz! Güneşe karşı hassasiyet yaratmaz.<br><br>☀️ <strong>Sabah:</strong> Gün boyu sebum kontrolü sağlar ve güneş kreminden önce cildinizi dış etkenlerden korur.<br>🌙 <strong>Akşam:</strong> Uyku esnasında cildinizin bariyerini onarır ve nem kaybını engeller."
+            }
+        }
+    };
+
+    // Chatbot Akış Fonksiyonları
+    function addMessage(text, sender) {
+        const msgDiv = document.createElement('div');
+        msgDiv.classList.add('message', sender === 'bot' ? 'bot-msg' : 'user-msg');
+        msgDiv.innerHTML = text;
+        chatWindow.appendChild(msgDiv);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    function showTypingIndicator() {
+        const typingDiv = document.createElement('div');
+        typingDiv.classList.add('typing');
+        typingDiv.id = 'typingIndicator';
+        typingDiv.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+        chatWindow.appendChild(typingDiv);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+        const indicator = document.getElementById('typingIndicator');
+        if (indicator) indicator.remove();
+    }
+
+    // Botun yanıt verme simülasyonu
+    function botReply(text, delay = 1000) {
+        showTypingIndicator();
+        setTimeout(() => {
+            removeTypingIndicator();
+            addMessage(text, 'bot');
+        }, delay);
+    }
+
+    // İlk Karşılama Sahneleri
+    function initChat() {
+        botReply("Merhaba! 🌿 Ben senin kişisel Cilt Bakım Asistanıyım. Niacinamide (B3 Vitamini) kullanımı hakkında sana rehberlik etmek için buradayım.", 500);
+        setTimeout(() => {
+            botReply("Doğru adımlarla ilerlemek için; <strong>cilt tipini veya şu an en çok şikayetçi olduğun sorunu</strong> seçebilir misin? 👇", 1500);
+            setTimeout(showSkinTypeOptions, 2000);
+        }, 600);
+    }
+
+    // Seçenek Butonlarını Yükleme
+    function showSkinTypeOptions() {
+        optionsContainer.innerHTML = '';
+        Object.keys(database.skinTypes).forEach(key => {
+            const button = document.createElement('button');
+            button.classList.add('btn-option');
+            button.textContent = database.skinTypes[key].title;
+            button.onclick = () => handleSkinSelection(key);
+            optionsContainer.appendChild(button);
+        });
+    }
+
+    function handleSkinSelection(key) {
+        const selected = database.skinTypes[key];
+        addMessage(selected.title, 'user');
+        optionsContainer.innerHTML = ''; // Butonları temizle
+
+        botReply(selected.response, 1000);
+
+        // Bir sonraki aşama sorularını getir
+        setTimeout(() => {
+            botReply("Harika! Peki, Niacinamide hakkında başka neyi merak ediyorsun?", 1800);
+            setTimeout(showGeneralQuestions, 2200);
+        }, 1200);
+    }
+
+    function showGeneralQuestions() {
+        optionsContainer.innerHTML = '';
+        Object.keys(database.questions).forEach(key => {
+            const button = document.createElement('button');
+            button.classList.add('btn-option');
+            button.textContent = database.questions[key].title;
+            button.onclick = () => handleQuestionSelection(key);
+            optionsContainer.appendChild(button);
+        });
+
+        // Başa dönmek isteyenler için "Cilt Tipimi Değiştir" butonu ekleyelim
+        const resetBtn = document.createElement('button');
+        resetBtn.classList.add('btn-option');
+        resetBtn.style.borderColor = 'var(--accent)';
+        resetBtn.style.color = 'var(--accent)';
+        resetBtn.textContent = "🔄 Cilt Tipini Tekrar Seç";
+        resetBtn.onclick = () => {
+            addMessage("Cilt tipimi değiştirmek istiyorum.", 'user');
+            optionsContainer.innerHTML = '';
+            botReply("Tabii ki! Lütfen cilt tipini veya temel şikayetini seç:", 1000);
+            setTimeout(showSkinTypeOptions, 1200);
+        };
+        optionsContainer.appendChild(resetBtn);
+    }
+
+    function handleQuestionSelection(key) {
+        const selected = database.questions[key];
+        addMessage(selected.title, 'user');
+        optionsContainer.innerHTML = '';
+
+        botReply(selected.response, 1000);
+
+        // Tekrar genel soruları göster
+        setTimeout(showGeneralQuestions, 2500);
+    }
+
+    // Uygulamayı Başlat
+    window.onload = initChat;
+</script>
+
+</body>
+</html>
